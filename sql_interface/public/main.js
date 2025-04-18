@@ -348,7 +348,6 @@ function initBusinessTables() {
             <div class="pagination">
                 <button class="prev-page" ${currentOffset === 0 ? 'disabled' : ''}>Previous</button>
                 <button class="next-page" ${currentOffset + limit >= total ? 'disabled' : ''}>Next</button>
-                <button class="load-more-btn">Load 50 more</button>
             </div>
         `;
 
@@ -379,17 +378,11 @@ function initBusinessTables() {
         tableContent.appendChild(tableActions);
         tableContent.appendChild(table);
 
-        // Ajouter le bouton "Charger 50 de plus" en bas
-        const loadMoreContainer = document.createElement('div');
-        loadMoreContainer.className = 'load-more';
-        loadMoreContainer.innerHTML = `<button class="load-more-btn-bottom">Load 50 more rows</button>`;
-        tableContent.appendChild(loadMoreContainer);
-
+        
         // Gérer la pagination
         const prevButton = tableActions.querySelector('.prev-page');
         const nextButton = tableActions.querySelector('.next-page');
-        const loadMoreButton = tableActions.querySelector('.load-more-btn');
-        const loadMoreBottomButton = loadMoreContainer.querySelector('.load-more-btn-bottom');
+        
 
         prevButton.addEventListener('click', () => {
             loadTableData(tableName, Math.max(0, currentOffset - limit), limit);
@@ -399,14 +392,10 @@ function initBusinessTables() {
             loadTableData(tableName, currentOffset + limit, limit);
         });
 
-        loadMoreButton.addEventListener('click', () => {
-            loadTableData(tableName, currentOffset, 50);
-        });
-
-        loadMoreBottomButton.addEventListener('click', () => {
-            loadTableData(tableName, currentOffset, currentOffset + 50);
-        });
+   
     }
+
+    
     // Fonction pour initialiser le drag and drop
     function initDragAndDrop() {
         console.log("Initializing drag and drop...");

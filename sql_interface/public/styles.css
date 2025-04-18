@@ -113,7 +113,8 @@ table {
     font-size: 14px;
 }
 
-th, td {
+th,
+td {
     padding: 8px 12px;
     text-align: left;
     border: 1px solid #ddd;
@@ -252,7 +253,7 @@ tr:hover {
 .table-accordion.dragging {
     opacity: 0.7;
     background-color: #f8f8f8;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     border: 2px dashed #4CAF50;
     transform: scale(1.01);
     z-index: 1000;
@@ -274,7 +275,7 @@ tr:hover {
     transition: transform 0.3s;
 }
 
-.table-content.active ~ .table-header .toggle-icon,
+.table-content.active~.table-header .toggle-icon,
 .table-header:has(+ .table-content.active) .toggle-icon {
     transform: rotate(180deg);
 }
@@ -295,7 +296,102 @@ tr:hover {
 }
 
 @keyframes pulse {
-    0% { opacity: 0.6; }
-    50% { opacity: 1; }
-    100% { opacity: 0.6; }
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+/* Animation pour le swap des éléments */
+.table-accordion.swap-target {
+    animation: swap-animation 0.3s ease;
+    border-left: 3px solid #4CAF50;
+}
+
+@keyframes swap-animation {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Animation pour l'élément draggé quand il passe au-dessus d'un autre */
+.table-accordion.dragging {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Indicateur de position pour le drop */
+.drop-placeholder {
+    height: 3px;
+    background-color: #4CAF50;
+    margin: 8px 0;
+    border-radius: 3px;
+    animation: pulse 1.5s infinite;
+}
+
+/* Animation pour le swap lors du drag and drop */
+.table-accordion.swap-animation {
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Style pour la destination du drop */
+.drop-target {
+    border: 2px dashed #4CAF50;
+    background-color: rgba(76, 175, 80, 0.05);
+    border-radius: 4px;
+    transform: translateY(2px);
+    transition: all 0.2s ease;
+}
+
+/* Styles pour les marqueurs de position */
+.drop-indicator-top,
+.drop-indicator-bottom {
+    height: 3px;
+    background-color: #4CAF50;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    transition: opacity 0.15s ease;
+}
+
+.drop-indicator-top {
+    top: 0;
+}
+
+.drop-indicator-bottom {
+    bottom: 0;
+}
+
+/* Animation de pulsation pour les indicateurs */
+@keyframes pulse-indicator {
+    0% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.7;
+    }
+}
+
+.drop-indicator-animation {
+    animation: pulse-indicator 1s infinite;
 }
