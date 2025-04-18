@@ -1,0 +1,21 @@
+id	name	description	price	stock	category	supplier_id	created_at
+1	Ordinateur portable XPS	Ordinateur portable haute performance avec écran 15 pouces	1299.99	45	Électronique	3	2023-03-10 12:30:00
+2	Smartphone Galaxy S23	Smartphone dernière génération avec 256GB de stockage	899.99	120	Électronique	2	2023-04-15 09:45:22
+3	Machine à café expresso	Machine à café automatique avec mousseur à lait	349.99	30	Électroménager	5	2023-02-28 14:20:15
+4	Fauteuil ergonomique	Fauteuil de bureau ajustable avec support lombaire	249.99	15	Mobilier	4	2023-05-12 11:10:50
+5	Casque audio sans fil	Casque audio bluetooth avec réduction de bruit	199.99	75	Électronique	2	2023-06-08 16:35:40
+6	Tablette graphique	Tablette graphique professionnelle avec stylet	599.99	20	Électronique	3	2023-07-20 10:25:33
+7	Enceinte connectée	Enceinte intelligente avec assistant vocal	129.99	60	Électronique	2	2023-08-05 15:50:20
+8	Montre connectée	Montre intelligente avec suivi santé et GPS	299.99	40	Électronique	1	2023-08-18 13:15:42
+9	Appareil photo reflex	Appareil photo professionnel avec objectif 18-55mm	799.99	25	Électronique	6	2023-09-10 09:40:18
+10	Imprimante multifonction	Imprimante 3-en-1 avec connectivité WiFi	179.99	35	Informatique	3	2023-10-22 17:05:55
+11	Téléviseur 4K	Téléviseur LED 55 pouces avec HDR	699.99	30	Électronique	7	2023-11-14 12:20:30
+12	Robot aspirateur	Robot aspirateur intelligent avec cartographie	399.99	50	Électroménager	5	2023-12-01 14:10:15
+13	Clavier mécanique	Clavier gaming mécanique rétroéclairé	129.99	65	Informatique	3	2024-01-08 10:30:45
+14	Souris sans fil	Souris ergonomique rechargeable	49.99	100	Informatique	3	2024-01-25 16:15:22
+15	Caméra de surveillance	Caméra WiFi extérieure avec vision nocturne	149.99	40	Sécurité	8	2024-02-11 09:55:33
+16	Écouteurs intra-auriculaires	Écouteurs true wireless avec étui de charge	89.99	85	Électronique	2	2024-03-05 13:40:18
+17	Disque dur externe	Disque dur 2TB avec connexion USB-C	119.99	55	Informatique	1	2024-04-17 15:20:40
+18	Routeur WiFi	Routeur mesh double bande AC1200	159.99	30	Réseau	9	2024-05-09 11:10:55
+19	Batterie externe	Batterie 20000mAh avec charge rapide	59.99	70	Accessoires	2	2024-06-21 10:05:30
+20	Vidéoprojecteur	Vidéoprojecteur HD avec haut-parleur intégré	549.99	15	Électronique	7	2024-07-14 14:45:20
