@@ -8,13 +8,13 @@
     border-radius: 8px;
     margin-bottom: 20px;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .top-query textarea {
-    color: #4caf50;  /* Texte vert pour le code SQL */
+    color: #4caf50;
     font-size: 16px;
-    background-color: #222;
+    background-color: #222; /* Même couleur que le conteneur */
     border: none;
     padding: 15px;
     width: 100%;
@@ -23,6 +23,8 @@
     resize: vertical;
     margin: 0;
     border-radius: 8px;
+    /* Ajoutez cette ligne pour s'assurer que les dimensions incluent le padding */
+    box-sizing: border-box;
 }
 
 button {
