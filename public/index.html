@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SQL Query Interface - sqlab_island</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/main.css">
+
 </head>
+
 <body>
     <h1>SQL Query Interface</h1>
-    
+    <button id="toggle-theme">Changer de thème</button>
+
+
     <div class="connection-info">
         Connected to: <span>sqlab_island</span> on <span>localhost:3307</span>
     </div>
-    
+
     <!-- Système d'onglets -->
     <div class="tabs">
         <div class="tab active" data-tab="business-tables">Tables métier</div>
@@ -20,7 +25,7 @@
         <div class="tab" data-tab="execution">Exécution</div>
         <div class="tab" data-tab="control">Contrôle</div>
     </div>
-    
+
     <!-- Contenu des onglets -->
     <div id="business-tables" class="tab-content active">
         <h2>Tables métier</h2>
@@ -29,7 +34,7 @@
             <div class="loading">Chargement des tables...</div>
         </div>
     </div>
-    
+
     <div id="schema" class="tab-content">
         <h2>Schéma de la base de données</h2>
         <p>Cette section affichera le schéma de la base de données.</p>
@@ -37,18 +42,19 @@
             <div class="info">Fonctionnalité en cours de développement...</div>
         </div>
     </div>
-    
+
     <div id="execution" class="tab-content">
         <h2>Exécution des requêtes SQL</h2>
-        
+
         <div class="query-container">
-            <textarea id="query-input" placeholder="Entrez votre requête SQL ici...">SELECT table_name FROM information_schema.tables WHERE table_schema = 'sqlab_island' LIMIT 10;</textarea>
+            <textarea id="query-input"
+                placeholder="Entrez votre requête SQL ici...">SELECT table_name FROM information_schema.tables WHERE table_schema = 'sqlab_island' LIMIT 10;</textarea>
             <div>
                 <button id="execute-btn">Exécuter la requête</button>
             </div>
             <div class="status" id="status"></div>
         </div>
-        
+
         <div class="results" id="results">
             <h3>Résultats</h3>
             <div class="results-container">
@@ -67,7 +73,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="control" class="tab-content">
         <h2>Contrôle</h2>
         <p>Cette section permettra de contrôler différents aspects de l'application.</p>
@@ -75,8 +81,10 @@
             <div class="info">Fonctionnalité en cours de développement...</div>
         </div>
     </div>
-    
+
     <script src="tsv-loader.js"></script>
-    <script src="main.js"></script>
+    <script type="module" src="main.js"></script>
+
 </body>
+
 </html>
