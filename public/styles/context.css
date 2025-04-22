@@ -1,0 +1,33 @@
+/* Styles pour la zone de contexte et d'énoncé */
+.context-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.context-content {
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.placeholder-text {
+    color: #777;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Styles pour le thème sombre */
+.dark-theme .context-container {
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+.dark-theme .placeholder-text {
+    color: #aaa;
+}

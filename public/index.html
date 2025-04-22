@@ -18,16 +18,25 @@
         </div>
     </header>
 
+    <!-- Zone de contexte et d'énoncé -->
+    <div class="context-container">
+        <div class="context-content">
+            <p class="placeholder-text">Contexte et énoncé de l'exercice apparaîtront ici...</p>
+        </div>
+    </div>
+
     <!-- Zone de requête SQL (déplacée au-dessus des onglets) -->
     <div class="query-container top-query">
-        <textarea id="query-input" placeholder="Entrez votre requête SQL ici...">SELECT table_name FROM information_schema.tables WHERE table_schema = 'sqlab_island' LIMIT 10;</textarea>
+        <textarea id="query-input"
+            placeholder="Entrez votre requête SQL ici...">SELECT table_name FROM information_schema.tables WHERE table_schema = 'sqlab_island' LIMIT 10;</textarea>
     </div>
 
     <!-- Système d'onglets -->
     <div class="tabs">
         <div class="tab active" data-tab="business-tables">Tables métier</div>
         <div class="tab" data-tab="schema">Schéma</div>
-        <div class="tab" data-tab="execution">Exécution <i id="execute-btn" class="fas fa-play-circle execute-icon"></i></div>
+        <div class="tab" data-tab="execution">Exécution <i id="execute-btn" class="fas fa-play-circle execute-icon"></i>
+        </div>
         <div class="tab" data-tab="control">Contrôle</div>
     </div>
 
