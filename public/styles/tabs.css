@@ -1,9 +1,11 @@
+/* Container for the tab buttons */
 .tabs {
     display: flex;
     border-bottom: 2px solid #0a4c5a;
     margin-bottom: 20px;
 }
 
+/* Individual tab button */
 .tab {
     background-color: #f3e8ff;
     border-color: #dec8f0;
@@ -21,17 +23,19 @@
     align-items: center;
 }
 
+/* Hover effect for tabs */
 .tab:hover {
     background-color: #e9dbff;
 }
 
+/* Active tab styling */
 .tab.active {
     background-color: #bfa2db;
     border-color: #bfa2db;
     color: white;
 }
 
-/* Style pour l'icône d'exécution */
+/* Style for the execution icon inside a tab */
 .execute-icon {
     margin-left: 8px;
     color: #ff7b8a;
@@ -40,16 +44,18 @@
     transition: all 0.3s;
 }
 
+/* Hover effect for execution icon */
 .execute-icon:hover {
     color: #ff4757;
     transform: scale(1.2);
 }
 
-/* Ajouter une animation lorsque l'icône est cliquée */
+/* Click animation for the execution icon */
 .execute-icon:active {
     transform: scale(0.9);
 }
 
+/* Container for the tab content */
 .tab-content {
     display: none;
     padding: 20px;
@@ -57,25 +63,30 @@
     border-radius: 0 0 5px 5px;
 }
 
+/* Display content of the active tab */
 .tab-content.active {
     display: block;
 }
 
-
+/* Dark theme for tabs */
 .dark-theme .tab {
     background-color: #2a2a2a;
     color: #ccc;
     border-color: #444;
 }
+
+/* Dark theme for the active tab */
 .dark-theme .tab.active {
     background-color: #101067;
     color: white;
 }
 
+/* Dark theme color for execution icon */
 .dark-theme .execute-icon {
     color: #ff9caa;
 }
 
+/* Dark theme hover effect for execution icon */
 .dark-theme .execute-icon:hover {
     color: #ff7b89;
 }

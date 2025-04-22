@@ -1,3 +1,4 @@
+/* Base styles for the page */
 body {
     background-color: #f3f0eb;
     color: #3a3a3a;
@@ -8,40 +9,46 @@ body {
     line-height: 1.6;
 }
 
+/* Header container with centered alignment */
 header {
     display: flex;
-    justify-content: center; /* Remplacer space-between par center */
+    justify-content: center; 
     align-items: center;
     margin-bottom: 20px;
     position: relative;
 }
 
+/* Main title styles */
 h1 {
     color: #8265a7;
     margin: 0;
     text-align: center;
 }
 
+/* Theme toggle button container */
 .theme-toggle {
     cursor: pointer;
     padding: 8px;
-    position: absolute; /* Positionne l'icône de thème absolument */
-    right: 0; /* Place l'icône à droite */
-    top: 50%; /* Centre verticalement */
-    transform: translateY(-50%); /* Ajustement fin du centrage vertical */
+    position: absolute; 
+    right: 0; 
+    top: 50%; 
+    transform: translateY(-50%); 
 }
 
+/* Icon inside the theme toggle */
 .theme-icon {
     font-size: 1.5rem;
     color: #666;
     transition: color 0.3s, transform 0.3s;
 }
 
+/* Hover effect for the theme icon */
 .theme-icon:hover {
     color: #8265a7;
     transform: rotate(45deg);
 }
 
+/* Database connection info block */
 .connection-info {
     background-color: #f8f9fa;
     padding: 10px;
@@ -50,24 +57,29 @@ h1 {
     font-size: 14px;
 }
 
+/* Highlighting key info inside connection-info */
 .connection-info span {
     font-weight: bold;
     color: #0066cc;
 }
 
+/* Dark theme styles */
 .dark-theme {
     background-color: #403f3f;
     color: #e0e0e0;
 }
 
+/* Dark theme title color */
 .dark-theme h1 {
     color: #cfc1ff;
 }
 
+/* Dark theme icon color */
 .dark-theme .theme-icon {
     color: #cfc1ff;
 }
 
+/* Dark theme hover effect for the icon */
 .dark-theme .theme-icon:hover {
     color: #ffffff;
 }
