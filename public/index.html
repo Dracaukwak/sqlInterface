@@ -4,20 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL Query Interface - sqlab_island</title>
+    <title>SQLab</title>
     <link rel="stylesheet" href="styles/main.css">
     <!-- Ajout d'une bibliothèque d'icônes (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <h1>SQL Query Interface</h1>
-    <button id="toggle-theme">Changer de thème</button>
-
-
-    <div class="connection-info">
-        Connected to: <span>sqlab_island</span> on <span>localhost:3307</span>
-    </div>
+    <header>
+        <h1>SQLab - <span id="database-name">Chargement...</span></h1>
+        <div class="theme-toggle">
+            <i id="toggle-theme" class="fas fa-moon theme-icon" title="Changer de thème"></i>
+        </div>
+    </header>
 
     <!-- Zone de requête SQL (déplacée au-dessus des onglets) -->
     <div class="query-container top-query">

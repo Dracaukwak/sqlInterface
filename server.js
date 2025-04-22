@@ -23,6 +23,60 @@ const pool = mariadb.createPool({
   connectionLimit: 5
 });
 
+// API endpoint pour obtenir les informations de la base de données
+app.get('/database-info', async (req, res) => {
+  let conn;
+  try {
+    conn = await pool.getConnection();
+
+    // Obtenir le nom de la base de données actuelle
+    const dbInfoQuery = "SELECT DATABASE() as name";
+    const dbInfo = await conn.query(dbInfoQuery);
+
+    // Obtenir l'hôte de la base de données
+    const hostInfoQuery = "SELECT @@hostname as host";
+    const hostInfo = await conn.query(hostInfoQuery);
+
+    // Formater le nom de l'aventure
+    const dbName = dbInfo[0].name;
+    const adventureName = formatAdventureName(dbName);
+
+    // Construire l'objet de réponse
+    const info = {
+      name: dbName,
+      host: hostInfo[0].host || 'localhost',
+      port: 3307,
+      adventure: adventureName
+    };
+
+    res.json(info);
+  } catch (err) {
+    console.error('Error fetching database info:', err);
+    res.status(500).json({
+      error: `Database error: ${err.message}`,
+      name: 'Non connecté',
+      host: 'localhost',
+      adventure: 'Unknown'
+    });
+  } finally {
+    if (conn) conn.release();
+  }
+});
+
+// Fonction d'aide pour formater le nom de l'aventure
+function formatAdventureName(dbName) {
+  if (!dbName) return 'Unknown';
+
+  // Si le nom commence par "sqlab_", extraire la partie après
+  if (dbName.toLowerCase().startsWith('sqlab_')) {
+    const adventureName = dbName.substring(6); // 'sqlab_'.length === 6
+    // Mettre la première lettre en majuscule
+    return adventureName.charAt(0).toUpperCase() + adventureName.slice(1);
+  }
+
+  return dbName;
+}
+
 // API endpoint to execute queries
 app.post('/execute-query', async (req, res) => {
   const { query } = req.body;
@@ -30,10 +84,10 @@ app.post('/execute-query', async (req, res) => {
   try {
     // Get connection from pool
     conn = await pool.getConnection();
-    
+
     // Execute the query
     const rows = await conn.query(query);
-    
+
     // Format the results
     const results = {
       columns: rows.length > 0 ? Object.keys(rows[0]) : [],
@@ -47,7 +101,7 @@ app.post('/execute-query', async (req, res) => {
         });
       })
     };
-    
+
     res.json(results);
   } catch (err) {
     console.error('Error executing query:', err);
@@ -65,7 +119,7 @@ app.get('/list-tables', async (req, res) => {
   let conn;
   try {
     conn = await pool.getConnection();
-    
+
     // Query to get all tables in the database
     const tables = await conn.query(`
       SELECT table_name 
@@ -73,7 +127,7 @@ app.get('/list-tables', async (req, res) => {
       WHERE table_schema = 'sqlab_island' 
       ORDER BY table_name
     `);
-    
+
     // Ensure we handle any BigInt values properly
     res.json({
       tables: tables.map(table => {
@@ -98,15 +152,15 @@ app.get('/list-tables', async (req, res) => {
 app.get('/table-data/:tableName', async (req, res) => {
   const { tableName } = req.params;
   const { offset = 0, limit = 10 } = req.query;
-  
+
   let conn;
   try {
     conn = await pool.getConnection();
-    
+
     // Get total count first
     const countQuery = `SELECT COUNT(*) as total FROM ${tableName}`;
     const countResult = await conn.query(countQuery);
-    
+
     // Fix for BigInt in total count
     let total;
     if (typeof countResult[0].total === 'bigint') {
@@ -114,11 +168,11 @@ app.get('/table-data/:tableName', async (req, res) => {
     } else {
       total = countResult[0].total;
     }
-    
+
     // Then get the data with pagination
     const dataQuery = `SELECT * FROM ${tableName} LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`;
     const rows = await conn.query(dataQuery);
-    
+
     // Format the results - with specific handling for BigInt values
     const results = {
       tableName,
@@ -140,7 +194,7 @@ app.get('/table-data/:tableName', async (req, res) => {
         });
       })
     };
-    
+
     res.json(results);
   } catch (err) {
     console.error(`Error fetching data from table ${tableName}:`, err);
@@ -155,16 +209,16 @@ app.get('/table-data/:tableName', async (req, res) => {
 // API endpoint to list TSV files in the data directory
 app.get('/list-tsv-files', (req, res) => {
   const dataDir = path.join(__dirname, 'public/data');
-  
+
   try {
     // Read all files in the data directory
     const files = fs.readdirSync(dataDir);
-    
+
     // Filter only .tsv files and remove the extension
     const tsvFiles = files
       .filter(file => file.endsWith('.tsv'))
       .map(file => file.replace('.tsv', ''));
-    
+
     res.json({ tables: tsvFiles });
   } catch (err) {
     console.error('Error listing TSV files:', err);

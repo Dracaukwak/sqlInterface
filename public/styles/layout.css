@@ -8,10 +8,33 @@ body {
     line-height: 1.6;
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 h1 {
     color: #8265a7;
-    margin-bottom: 20px;
-    text-align: center;
+    margin: 0;
+    text-align: left;
+}
+
+.theme-toggle {
+    cursor: pointer;
+    padding: 8px;
+}
+
+.theme-icon {
+    font-size: 1.5rem;
+    color: #666;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.theme-icon:hover {
+    color: #8265a7;
+    transform: rotate(45deg);
 }
 
 .connection-info {
@@ -34,4 +57,12 @@ h1 {
 
 .dark-theme h1 {
     color: #cfc1ff;
+}
+
+.dark-theme .theme-icon {
+    color: #cfc1ff;
+}
+
+.dark-theme .theme-icon:hover {
+    color: #ffffff;
 }
