@@ -10,20 +10,25 @@ body {
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Remplacer space-between par center */
     align-items: center;
     margin-bottom: 20px;
+    position: relative;
 }
 
 h1 {
     color: #8265a7;
     margin: 0;
-    text-align: left;
+    text-align: center;
 }
 
 .theme-toggle {
     cursor: pointer;
     padding: 8px;
+    position: absolute; /* Positionne l'icône de thème absolument */
+    right: 0; /* Place l'icône à droite */
+    top: 50%; /* Centre verticalement */
+    transform: translateY(-50%); /* Ajustement fin du centrage vertical */
 }
 
 .theme-icon {
