@@ -162,19 +162,8 @@ tr:hover {
     border: 1px solid #ddd;
     border-radius: 4px;
     position: relative;
-    transition: box-shadow 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
     overflow: hidden;
-}
-
-/* Fantôme plus lisible pendant le drag */
-.table-accordion.dragging {
-    opacity: 0.8;
-}
-
-/* Surlignage de la cible de swap */
-.swap-highlight {
-    outline: 2px dashed #4CAF50;
-    background-color: rgba(76, 175, 80, 0.1);
 }
 
 .table-accordion:hover {
@@ -250,6 +239,37 @@ tr:hover {
     background-color: #45a049;
 }
 
+/* Styles pour le drag and drop */
+.table-accordion {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: relative;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.2s ease;
+    cursor: grab;
+}
+
+/* Amélioration du style de l'élément pendant le drag */
+.table-accordion.dragging {
+    opacity: 0.7;
+    background-color: #f8f8f8;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border: 2px dashed #4CAF50;
+    transform: scale(1.01);
+    z-index: 1000;
+}
+
+/* Indicateurs de position de drop */
+.table-accordion.drag-over-top {
+    border-top: 3px solid #4CAF50;
+    margin-top: -2px;
+}
+
+.table-accordion.drag-over-bottom {
+    border-bottom: 3px solid #4CAF50;
+    margin-bottom: -2px;
+}
+
 /* Animation pour l'icône de toggle */
 .toggle-icon {
     transition: transform 0.3s;
@@ -260,13 +280,118 @@ tr:hover {
     transform: rotate(180deg);
 }
 
-/* Animation FLIP pour l'échange */
-.swap-animation {
-    transition: transform 0.3s ease;
+/* Style quand on active le drag */
+.table-accordion:active {
+    cursor: grabbing;
+    background-color: #f0f0f0;
 }
 
-/* Classe temporaire pour l’élément déplacé */
-.swap-draggable {
-    /* on ne met pas de transition ici, 
-       car on animera uniquement la cible inversement */
+/* Style d'un marqueur de drop */
+.drop-indicator {
+    height: 3px;
+    background-color: #4CAF50;
+    margin: 4px 0;
+    border-radius: 3px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+/* Animation pour le swap des éléments */
+.table-accordion.swap-target {
+    animation: swap-animation 0.3s ease;
+    border-left: 3px solid #4CAF50;
+}
+
+@keyframes swap-animation {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Animation pour l'élément draggé quand il passe au-dessus d'un autre */
+.table-accordion.dragging {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Indicateur de position pour le drop */
+.drop-placeholder {
+    height: 3px;
+    background-color: #4CAF50;
+    margin: 8px 0;
+    border-radius: 3px;
+    animation: pulse 1.5s infinite;
+}
+
+/* Animation pour le swap lors du drag and drop */
+.table-accordion.swap-animation {
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Style pour la destination du drop */
+.drop-target {
+    border: 2px dashed #4CAF50;
+    background-color: rgba(76, 175, 80, 0.05);
+    border-radius: 4px;
+    transform: translateY(2px);
+    transition: all 0.2s ease;
+}
+
+/* Styles pour les marqueurs de position */
+.drop-indicator-top,
+.drop-indicator-bottom {
+    height: 3px;
+    background-color: #4CAF50;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    transition: opacity 0.15s ease;
+}
+
+.drop-indicator-top {
+    top: 0;
+}
+
+.drop-indicator-bottom {
+    bottom: 0;
+}
+
+/* Animation de pulsation pour les indicateurs */
+@keyframes pulse-indicator {
+    0% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.7;
+    }
+}
+
+.drop-indicator-animation {
+    animation: pulse-indicator 1s infinite;
 }
