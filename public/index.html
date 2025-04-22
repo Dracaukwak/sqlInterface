@@ -2,15 +2,21 @@
 <html lang="en">
 
 <head>
+    <!-- Meta information and document title -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SQLab</title>
+
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="styles/main.css">
-    <!-- Ajout d'une bibliothèque d'icônes (Font Awesome) -->
+
+    <!-- Icon library (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+
+    <!-- Page header with title and theme toggle -->
     <header>
         <h1>SQLab - <span id="database-name">Chargement...</span></h1>
         <div class="theme-toggle">
@@ -18,29 +24,30 @@
         </div>
     </header>
 
-    <!-- Zone de contexte et d'énoncé -->
+    <!-- Context section: displays exercise description -->
     <div class="context-container">
         <div class="context-content">
             <p class="placeholder-text">Contexte et énoncé de l'exercice apparaîtront ici...</p>
         </div>
     </div>
 
-    <!-- Zone de requête SQL (déplacée au-dessus des onglets) -->
+    <!-- SQL query input area (placed above the tab system) -->
     <div class="query-container top-query">
         <textarea id="query-input"
             placeholder="Entrez votre requête SQL ici...">SELECT table_name FROM information_schema.tables WHERE table_schema = 'sqlab_island' LIMIT 10;</textarea>
     </div>
 
-    <!-- Système d'onglets -->
+    <!-- Navigation tabs -->
     <div class="tabs">
         <div class="tab active" data-tab="business-tables">Tables métier</div>
         <div class="tab" data-tab="schema">Schéma</div>
-        <div class="tab" data-tab="execution">Exécution <i id="execute-btn" class="fas fa-play-circle execute-icon"></i>
+        <div class="tab" data-tab="execution">
+            Exécution <i id="execute-btn" class="fas fa-play-circle execute-icon"></i>
         </div>
         <div class="tab" data-tab="control">Contrôle</div>
     </div>
 
-    <!-- Contenu des onglets -->
+    <!-- Tab content: Business Tables -->
     <div id="business-tables" class="tab-content active">
         <h2>Tables métier</h2>
         <p>Cliquez sur une table pour afficher son contenu. Vous pouvez réorganiser les tables en glissant-déposant.</p>
@@ -49,6 +56,7 @@
         </div>
     </div>
 
+    <!-- Tab content: Schema -->
     <div id="schema" class="tab-content">
         <h2>Schéma de la base de données</h2>
         <p>Cette section affichera le schéma de la base de données.</p>
@@ -57,9 +65,9 @@
         </div>
     </div>
 
+    <!-- Tab content: SQL Execution and Results -->
     <div id="execution" class="tab-content">
         <h2>Exécution des requêtes SQL</h2>
-
         <div class="results" id="results">
             <h3>Résultats</h3>
             <div class="results-container">
@@ -79,6 +87,7 @@
         </div>
     </div>
 
+    <!-- Tab content: Control (features under development) -->
     <div id="control" class="tab-content">
         <h2>Contrôle</h2>
         <p>Cette section permettra de contrôler différents aspects de l'application.</p>
@@ -87,6 +96,7 @@
         </div>
     </div>
 
+    <!-- Script imports -->
     <script src="tsv-loader.js"></script>
     <script type="module" src="main.js"></script>
 
