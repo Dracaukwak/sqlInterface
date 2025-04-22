@@ -1,15 +1,17 @@
-
 import { executeQuery } from '../models/queryModel.js';
-import { displayResults, showError, setStatus } from '../views/queryView.js';
+import { displayResults, showError } from '../views/queryView.js';
 
 // Gestion de l'exécution des requêtes
 export function initQueryExecution() {
     const queryInput = document.getElementById('query-input');
     const executeBtn = document.getElementById('execute-btn');
     const resultsTable = document.getElementById('results-table');
-    const statusDiv = document.getElementById('status');
 
-    executeBtn.addEventListener('click', () => executeQueryHandler());
+    executeBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Empêcher le clic sur l'onglet
+        executeQueryHandler();
+    });
+    
     queryInput.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'Enter') executeQueryHandler();
     });
@@ -17,19 +19,18 @@ export function initQueryExecution() {
     async function executeQueryHandler() {
         const query = queryInput.value.trim();
         if (!query) {
-            showError('Please enter a SQL query', statusDiv);
+            showError('Please enter a SQL query', resultsTable.parentElement);
             return;
         }
-
-        setStatus('Executing query...', statusDiv);
 
         try {
             const data = await executeQuery(query);
             displayResults(data, resultsTable);
-            setStatus(`Query executed successfully. ${data.rows.length} rows returned.`, statusDiv);
+            
+            // Activer automatiquement l'onglet d'exécution pour voir les résultats
             document.querySelector('.tab[data-tab="execution"]').click();
         } catch (error) {
-            showError(error.message, statusDiv);
+            showError(error.message, resultsTable.parentElement);
         }
     }
 }

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SQL Query Interface - sqlab_island</title>
     <link rel="stylesheet" href="styles/main.css">
-
+    <!-- Ajout d'une bibliothèque d'icônes (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -18,11 +19,16 @@
         Connected to: <span>sqlab_island</span> on <span>localhost:3307</span>
     </div>
 
+    <!-- Zone de requête SQL (déplacée au-dessus des onglets) -->
+    <div class="query-container top-query">
+        <textarea id="query-input" placeholder="Entrez votre requête SQL ici...">SELECT table_name FROM information_schema.tables WHERE table_schema = 'sqlab_island' LIMIT 10;</textarea>
+    </div>
+
     <!-- Système d'onglets -->
     <div class="tabs">
         <div class="tab active" data-tab="business-tables">Tables métier</div>
         <div class="tab" data-tab="schema">Schéma</div>
-        <div class="tab" data-tab="execution">Exécution</div>
+        <div class="tab" data-tab="execution">Exécution <i id="execute-btn" class="fas fa-play-circle execute-icon"></i></div>
         <div class="tab" data-tab="control">Contrôle</div>
     </div>
 
@@ -45,15 +51,6 @@
 
     <div id="execution" class="tab-content">
         <h2>Exécution des requêtes SQL</h2>
-
-        <div class="query-container">
-            <textarea id="query-input"
-                placeholder="Entrez votre requête SQL ici...">SELECT table_name FROM information_schema.tables WHERE table_schema = 'sqlab_island' LIMIT 10;</textarea>
-            <div>
-                <button id="execute-btn">Exécuter la requête</button>
-            </div>
-            <div class="status" id="status"></div>
-        </div>
 
         <div class="results" id="results">
             <h3>Résultats</h3>

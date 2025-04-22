@@ -1,4 +1,3 @@
- 
 import { escapeHtml } from '../utils/helpers.js';
 
 export function displayResults(data, tableElement) {
@@ -9,8 +8,4 @@ export function displayResults(data, tableElement) {
 
 export function showError(message, element) {
     element.innerHTML = `<div class="error">${escapeHtml(message)}</div>`;
-}
-
-export function setStatus(message, element) {
-    element.textContent = message;
 }

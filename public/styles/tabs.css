@@ -17,6 +17,8 @@
     font-weight: bold;
     color: #333;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
 }
 
 .tab:hover {
@@ -27,6 +29,25 @@
     background-color: #bfa2db;
     border-color: #bfa2db;
     color: white;
+}
+
+/* Style pour l'icône d'exécution */
+.execute-icon {
+    margin-left: 8px;
+    color: #ff7b8a;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.execute-icon:hover {
+    color: #ff4757;
+    transform: scale(1.2);
+}
+
+/* Ajouter une animation lorsque l'icône est cliquée */
+.execute-icon:active {
+    transform: scale(0.9);
 }
 
 .tab-content {
@@ -49,4 +70,12 @@
 .dark-theme .tab.active {
     background-color: #101067;
     color: white;
+}
+
+.dark-theme .execute-icon {
+    color: #ff9caa;
+}
+
+.dark-theme .execute-icon:hover {
+    color: #ff7b89;
 }
