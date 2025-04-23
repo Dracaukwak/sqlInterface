@@ -16,70 +16,70 @@
 
 <body>
 
-    <!-- Page header with title and theme toggle -->
+    <!-- Header with dynamic database name and theme toggle -->
     <header>
-        <h1>SQLab - <span id="database-name">Chargement...</span></h1>
+        <h1>SQLab - <span id="database-name">Loading...</span></h1>
         <div class="theme-toggle">
-            <i id="toggle-theme" class="fas fa-moon theme-icon" title="Changer de thème"></i>
+            <i id="toggle-theme" class="fas fa-moon theme-icon" title="Toggle theme"></i>
         </div>
     </header>
 
-    <!-- Context section: displays exercise description -->
+    <!-- Context area for instructions and exercise description -->
     <div class="context-container">
         <div class="context-content">
-            <p class="placeholder-text">Contexte et énoncé de l'exercice apparaîtront ici...</p>
+            <p class="placeholder-text">The context and exercise statement will appear here...</p>
         </div>
     </div>
 
-    <!-- SQL query input area (placed above the tab system) -->
+    <!-- SQL query input zone (positioned above the tab navigation) -->
     <div class="query-container top-query">
         <textarea id="query-input"
-            placeholder="Entrez votre requête SQL ici...">SELECT table_name FROM information_schema.tables WHERE table_schema = 'sqlab_island' LIMIT 10;</textarea>
+            placeholder="Enter your SQL query here...">SELECT table_name FROM information_schema.tables WHERE table_schema = 'sqlab_island' LIMIT 10;</textarea>
     </div>
 
-    <!-- Navigation tabs -->
+    <!-- Navigation tabs for switching between interface sections -->
     <div class="tabs">
-        <div class="tab active" data-tab="business-tables">Tables métier</div>
-        <div class="tab" data-tab="schema">Schéma</div>
+        <div class="tab active" data-tab="business-tables">Business Tables</div>
+        <div class="tab" data-tab="schema">Schema</div>
         <div class="tab" data-tab="execution">
-            Exécution <i id="execute-btn" class="fas fa-play-circle execute-icon"></i>
+            Execute <i id="execute-btn" class="fas fa-play-circle execute-icon"></i>
         </div>
-        <div class="tab" data-tab="control">Contrôle</div>
+        <div class="tab" data-tab="control">Control</div>
     </div>
 
-    <!-- Tab content: Business Tables -->
+    <!-- Business Tables tab content -->
     <div id="business-tables" class="tab-content active">
-        <h2>Tables métier</h2>
-        <p>Cliquez sur une table pour afficher son contenu. Vous pouvez réorganiser les tables en glissant-déposant.</p>
+        <h2>Business Tables</h2>
+        <p>Click a table to display its content. You can rearrange the tables via drag and drop.</p>
         <div id="business-tables-container">
-            <div class="loading">Chargement des tables...</div>
+            <div class="loading">Loading tables...</div>
         </div>
     </div>
 
-    <!-- Tab content: Schema -->
+    <!-- Schema tab content -->
     <div id="schema" class="tab-content">
-        <h2>Schéma de la base de données</h2>
-        <p>Cette section affichera le schéma de la base de données.</p>
+        <h2>Database Schema</h2>
+        <p>This section will display the database schema.</p>
         <div id="schema-container">
-            <div class="info">Fonctionnalité en cours de développement...</div>
+            <div class="info">Feature under development...</div>
         </div>
     </div>
 
-    <!-- Tab content: SQL Execution and Results -->
+    <!-- SQL execution tab with results -->
     <div id="execution" class="tab-content">
-        <h2>Exécution des requêtes SQL</h2>
+        <h2>SQL Query Execution</h2>
         <div class="results" id="results">
-            <h3>Résultats</h3>
+            <h3>Results</h3>
             <div class="results-container">
                 <table id="results-table">
                     <thead>
                         <tr>
-                            <th>Pas de résultats</th>
+                            <th>No results</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Exécutez une requête pour voir les résultats</td>
+                            <td>Run a query to see the results</td>
                         </tr>
                     </tbody>
                 </table>
@@ -87,16 +87,16 @@
         </div>
     </div>
 
-    <!-- Tab content: Control (features under development) -->
+    <!-- Control tab (future features) -->
     <div id="control" class="tab-content">
-        <h2>Contrôle</h2>
-        <p>Cette section permettra de contrôler différents aspects de l'application.</p>
+        <h2>Control</h2>
+        <p>This section will allow control over various aspects of the app.</p>
         <div id="control-container">
-            <div class="info">Fonctionnalité en cours de développement...</div>
+            <div class="info">Feature under development...</div>
         </div>
     </div>
 
-    <!-- Script imports -->
+    <!-- JavaScript modules -->
     <script src="tsv-loader.js"></script>
     <script type="module" src="main.js"></script>
 
