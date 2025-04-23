@@ -1,17 +1,16 @@
-/* Import base layout styles (typography, structure, theme) */
+/**
+ * Main CSS file for SQLab Interface
+ * Imports all modular CSS files in the correct order
+ */
+
+/* Import CSS variables first to make them available to all other files */
+@import url('variables.css');
+
+/* Import base styles (resets, typography, common elements) */
+@import url('base.css');
+
+/* Import layout (structure, containers, responsive design) */
 @import url('layout.css');
 
-/* Import styles for the tab system (tabs, tab content, theme) */
-@import url('tabs.css');
-
-/* Import styles for the SQL query input area */
-@import url('query.css');
-
-/* Import styles for displaying query results in a table */
-@import url('results.css');
-
-/* Import styles for business tables and drag-and-drop */
-@import url('tables.css');
-
-/* Import styles for the context and question description area */
-@import url('context.css');
+/* Import components (UI elements like tabs, tables, forms) */
+@import url('components.css');

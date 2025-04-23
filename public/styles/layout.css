@@ -1,85 +1,141 @@
-/* Base styles for the page */
-body {
-    background-color: #f3f0eb;
-    color: #3a3a3a;
-    font-family: Arial, sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    line-height: 1.6;
-}
+/**
+ * Layout styles for SQLab Interface
+ * Defines page structure, headers, and containers
+ */
 
-/* Header container with centered alignment */
+/* Header with logo and theme toggle */
 header {
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    margin-bottom: 20px;
-    position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md) 0;
+  position: relative;
+  background: var(--gradient-header);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
 }
 
-/* Main title styles */
 h1 {
-    color: #8265a7;
-    margin: 0;
-    text-align: center;
+  color: var(--color-white);
+  margin: 0;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* Theme toggle button container */
+/* Theme toggle button */
 .theme-toggle {
-    cursor: pointer;
-    padding: 8px;
-    position: absolute; 
-    right: 0; 
-    top: 50%; 
-    transform: translateY(-50%); 
+  cursor: pointer;
+  padding: var(--spacing-sm);
+  position: absolute;
+  right: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color var(--transition-fast);
 }
 
-/* Icon inside the theme toggle */
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
 .theme-icon {
-    font-size: 1.5rem;
-    color: #666;
-    transition: color 0.3s, transform 0.3s;
+  font-size: 1.2rem;
+  color: var(--color-white);
+  transition: transform var(--transition-medium);
 }
 
-/* Hover effect for the theme icon */
 .theme-icon:hover {
-    color: #8265a7;
-    transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
-/* Database connection info block */
-.connection-info {
-    background-color: #f8f9fa;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    font-size: 14px;
+/* Context container for instructions */
+.context-container {
+  background-color: var(--color-white);
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Highlighting key info inside connection-info */
-.connection-info span {
-    font-weight: bold;
-    color: #0066cc;
+.context-content {
+  text-align: center;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Dark theme styles */
-.dark-theme {
-    background-color: #403f3f;
-    color: #e0e0e0;
+.placeholder-text {
+  color: #777;
+  font-style: italic;
+  margin: 0;
 }
 
-/* Dark theme title color */
-.dark-theme h1 {
-    color: #cfc1ff;
+/* Results container */
+.results {
+  margin-top: var(--spacing-lg);
 }
 
-/* Dark theme icon color */
-.dark-theme .theme-icon {
-    color: #cfc1ff;
+.results-container {
+  overflow-x: auto;
+  max-height: 500px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-white);
 }
 
-/* Dark theme hover effect for the icon */
-.dark-theme .theme-icon:hover {
-    color: #ffffff;
+/* Business tables container */
+#business-tables-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Dark theme overrides */
+.dark-theme header {
+  background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
+}
+
+.dark-theme .context-container {
+  background-color: var(--dark-element);
+  border-color: #444;
+}
+
+.dark-theme .placeholder-text {
+  color: #aaa;
+}
+
+.dark-theme .results-container {
+  background-color: var(--dark-element);
+  border-color: #444;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body {
+    padding: var(--spacing-md);
+  }
+  
+  .tabs {
+    flex-wrap: wrap;
+  }
+  
+  .tab {
+    flex: 1 1 40%;
+    text-align: center;
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .top-query textarea {
+    height: 100px;
+  }
 }
