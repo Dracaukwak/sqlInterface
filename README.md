@@ -1,4 +1,4 @@
-<img src="./assets/logo/SQLabLogo.png" alt="SQLab Interface Banner" width="400"/>
+![SQLab Interface Logo](./assets/logo/SQLabLogo.png)
 
 # SQLab Interface
 
