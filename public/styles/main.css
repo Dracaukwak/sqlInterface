@@ -1,6 +1,17 @@
+/* Import base layout styles (typography, structure, theme) */
 @import url('layout.css');
+
+/* Import styles for the tab system (tabs, tab content, theme) */
 @import url('tabs.css');
+
+/* Import styles for the SQL query input area */
 @import url('query.css');
+
+/* Import styles for displaying query results in a table */
 @import url('results.css');
+
+/* Import styles for business tables and drag-and-drop */
 @import url('tables.css');
+
+/* Import styles for the context and question description area */
 @import url('context.css');

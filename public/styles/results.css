@@ -1,19 +1,23 @@
+/* Wrapper for the result section */
 .results {
     margin-top: 30px;
 }
 
+/* Scrollable container for the result table */
 .results-container {
     overflow-x: auto;
     max-height: 500px;
     overflow-y: auto;
 }
 
+/* Base table styles */
 table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
 }
 
+/* Cell spacing and borders */
 th,
 td {
     padding: 8px 12px;
@@ -21,22 +25,26 @@ td {
     border: 1px solid #ddd;
 }
 
+/* Table header styling */
 th {
     background-color: #f0f4ff;
     color: #4a5e91;
-    position: sticky;
+    position: sticky; /* Keeps header visible when scrolling */
     top: 0;
     z-index: 1;
 }
 
+/* Zebra striping for even rows */
 tr:nth-child(even) {
     background-color: #fafaff;
 }
 
+/* Hover effect on rows */
 tr:hover {
     background-color: #f1f1f1;
 }
 
+/* Error message block */
 .error {
     color: #D8000C;
     background-color: #FFBABA;
@@ -45,14 +53,18 @@ tr:hover {
     margin-top: 20px;
 }
 
+/* Dark theme adjustments for headers */
 .dark-theme th {
     background-color: #444;
     color: #eee;
 }
+
+/* Dark theme for zebra rows */
 .dark-theme tr:nth-child(even) {
     background-color: #2c2c2c;
 }
 
+/* Dark theme hover effect */
 .dark-theme tr:hover {
     background-color: #3a3a3a;
 }
