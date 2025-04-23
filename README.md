@@ -52,7 +52,7 @@ SQLab Interface provides a modern, browser-based GUI for SQLab adventures - educ
 
 4. Start the server:
    ```
-   node server.js
+   node server\server.js
    ```
 
 5. Access the interface in your browser:
