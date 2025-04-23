@@ -5,8 +5,8 @@ import { displayResults, showError } from '../views/queryView.js';
 export function initQueryExecution() {
     const queryInput = document.getElementById('query-input');
     const executeBtn = document.getElementById('execute-btn');
-    const resultsTable = document.getElementById('results-table');
-
+    const resultsContainer = document.getElementById('results'); // Utiliser le conteneur stable
+    
     executeBtn.addEventListener('click', (e) => {
         e.stopPropagation(); // Empêcher le clic sur l'onglet
         executeQueryHandler();
@@ -19,18 +19,28 @@ export function initQueryExecution() {
     async function executeQueryHandler() {
         const query = queryInput.value.trim();
         if (!query) {
-            showError('Please enter a SQL query', resultsTable.parentElement);
+            showError('Please enter a SQL query', resultsContainer);
             return;
         }
 
         try {
             const data = await executeQuery(query);
+            
+            // Toujours régénérer la structure pour avoir une référence fraîche
+            resultsContainer.innerHTML = `
+                <h3>Résultats</h3>
+                <div class="results-container">
+                    <table id="results-table"></table>
+                </div>
+            `;
+            
+            const resultsTable = document.getElementById('results-table');
             displayResults(data, resultsTable);
             
             // Activer automatiquement l'onglet d'exécution pour voir les résultats
             document.querySelector('.tab[data-tab="execution"]').click();
         } catch (error) {
-            showError(error.message, resultsTable.parentElement);
+            showError(error.message, resultsContainer);
         }
     }
 }

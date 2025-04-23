@@ -2,10 +2,14 @@ import { escapeHtml } from '../utils/helpers.js';
 
 export function displayResults(data, tableElement) {
     let headers = data.columns.map(col => `<th>${escapeHtml(col)}</th>`).join('');
-    let rows = data.rows.map(row => `<tr>${row.map(cell => `<td>${escapeHtml(cell || 'NULL')}</td>`).join('')}</tr>`).join('');
+    let rows = data.rows.map(row => `<tr>${row.map(cell => `<td>${escapeHtml(cell !== null ? cell : 'NULL')}</td>`).join('')}</tr>`).join('');
     tableElement.innerHTML = `<thead><tr>${headers}</tr></thead><tbody>${rows}</tbody>`;
 }
 
-export function showError(message, element) {
-    element.innerHTML = `<div class="error">${escapeHtml(message)}</div>`;
+export function showError(message, containerElement) {
+    // Réinitialiser le conteneur avec le message d'erreur
+    containerElement.innerHTML = `
+        <h3>Résultats</h3>
+        <div class="error">${escapeHtml(message)}</div>
+    `;
 }
