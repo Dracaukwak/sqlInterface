@@ -76,6 +76,7 @@ SQLab Interface provides a modern, browser-based GUI for SQLab adventures - educ
 ## Project Structure
 
 ```
+/
 ├── public/             # Client-side code and assets
 │   ├── controllers/    # Client-side controllers
 │   ├── data/           # TSV data files
@@ -86,8 +87,15 @@ SQLab Interface provides a modern, browser-based GUI for SQLab adventures - educ
 │   ├── index.html      # Main application page
 │   ├── main.js         # Main client-side JavaScript
 │   └── tsv-loader.js   # Utility for loading TSV files
+├── server/             # Server-side code
+│   ├── controllers/    # Express controllers
+│   ├── middlewares/    # Custom middlewares
+│   ├── routes/         # Express routes
+│   ├── services/       # Business logic and DB services
+│   ├── utils/          # Server utilities
+│   └── server.js       # Main Express server 
 ├── README.md           # Project documentation
-└── server.js           # Main Express server
+└── package.json        # Project dependencies and scripts
 ```
 
 
