@@ -36,7 +36,7 @@ export function initQueryExecution() {
 
             // Reset results container to ensure clean output each time
             resultsContainer.innerHTML = `
-                <h3>Résultats</h3>
+                <h3>Results</h3>
                 <div class="results-container">
                     <table id="results-table"></table>
                 </div>
