@@ -1,24 +1,25 @@
-// Modèle pour récupérer les informations sur la base de données
+// Model for retrieving information about the connected database
 
 /**
- * Récupère les informations de la base de données connectée
- * @returns {Promise<Object>} - Promesse résolue avec les informations de la base
+ * Fetches information about the connected database
+ * @returns {Promise<Object>} - Resolves with database details
  */
 export async function getDatabaseInfo() {
     try {
-        // Exécute une requête pour obtenir le nom de la base de données actuelle
+        // Send a request to retrieve the current database name
         const response = await fetch('/database-info');
-        
+
         if (!response.ok) {
-            throw new Error('Impossible de récupérer les informations de la base de données');
+            throw new Error('Failed to fetch database information');
         }
-        
+
         return await response.json();
     } catch (error) {
-        console.error('Erreur lors de la récupération des infos de la base de données:', error);
-        // En cas d'erreur, retourner un objet par défaut
-        return { 
-            name: 'Non connecté',
+        console.error('Error while retrieving database info:', error);
+
+        // Return fallback data in case of failure
+        return {
+            name: 'Not connected',
             host: 'localhost',
             adventure: 'Unknown'
         };
@@ -26,20 +27,19 @@ export async function getDatabaseInfo() {
 }
 
 /**
- * Formate le nom de la base de données pour l'affichage
- * Transforme "sqlab_island" en "Island", "sqlab_corbeau" en "Corbeau", etc.
- * @param {string} dbName - Nom brut de la base de données
- * @returns {string} - Nom formaté pour l'affichage
+ * Formats the raw database name for display
+ * Example: "sqlab_island" → "Island", "sqlab_corbeau" → "Corbeau"
+ * @param {string} dbName - Raw database name
+ * @returns {string} - Formatted name for display
  */
 export function formatDatabaseName(dbName) {
     if (!dbName) return 'Unknown';
-    
-    // Si le nom commence par "sqlab_", extraire la partie après
+
+    // If name starts with "sqlab_", remove the prefix and capitalize the rest
     if (dbName.toLowerCase().startsWith('sqlab_')) {
-        const adventureName = dbName.substring(6); // 'sqlab_'.length === 6
-        // Mettre la première lettre en majuscule
+        const adventureName = dbName.substring(6); // Length of "sqlab_"
         return adventureName.charAt(0).toUpperCase() + adventureName.slice(1);
     }
-    
+
     return dbName;
 }
