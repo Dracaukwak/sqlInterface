@@ -4,37 +4,38 @@ import { initBusinessTables } from './controllers/tableController.js';
 import { getDatabaseInfo, formatDatabaseName } from './models/dbModel.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialisation des composants
+    // Initialize core components: tabs, query handling, and business tables
     initTabs();
     initQueryExecution();
     initBusinessTables();
 
-    // Chargement automatique des tables métier au démarrage
+    // Automatically load business tables on page load
     window.loadBusinessTables();
     document.querySelector('.tab[data-tab="business-tables"]').click();
 
-    // Chargement du nom de la base de données
+    // Load and display the database name in the UI
     loadDatabaseName();
 
-    // Gestion du thème
+    // Theme toggle handling
     const themeToggle = document.getElementById('toggle-theme');
     const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
-    
-    // Appliquer le thème enregistré
+
+    // Apply stored theme preference
     if (isDarkTheme) {
         document.body.classList.add('dark-theme');
         themeToggle.classList.remove('fa-moon');
         themeToggle.classList.add('fa-sun');
     }
-    
+
+    // Toggle dark/light theme and save preference
     themeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-theme');
         const isDark = document.body.classList.contains('dark-theme');
-        
-        // Enregistrer la préférence de l'utilisateur
+
+        // Save user preference
         localStorage.setItem('darkTheme', isDark);
-        
-        // Changer l'icône en fonction du thème
+
+        // Update icon based on theme
         if (isDark) {
             themeToggle.classList.remove('fa-moon');
             themeToggle.classList.add('fa-sun');
@@ -45,25 +46,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Fonction pour charger et afficher le nom de la base de données
+/**
+ * Loads and displays the formatted database name in the header and page title
+ */
 async function loadDatabaseName() {
     try {
         const dbInfoElement = document.getElementById('database-name');
-        
-        // Récupérer les informations de la base de données
+
+        // Fetch database info from the backend
         const dbInfo = await getDatabaseInfo();
-        
-        // Formater le nom pour l'affichage (ex: sqlab_island -> Island)
+
+        // Format the name (e.g. sqlab_island -> Island)
         const formattedName = formatDatabaseName(dbInfo.name);
-        
-        // Mettre à jour le titre de la page
+
+        // Update page title and displayed name
         document.title = `SQLab - ${formattedName}`;
-        
-        // Mettre à jour l'élément dans le HTML
         dbInfoElement.textContent = formattedName;
     } catch (error) {
-        console.error('Erreur lors du chargement du nom de la base de données:', error);
-        // En cas d'erreur, afficher un texte par défaut
+        console.error('Error while loading database name:', error);
+
+        // Fallback text in case of error
         document.getElementById('database-name').textContent = 'Database';
     }
 }
