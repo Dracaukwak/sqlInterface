@@ -1,24 +1,26 @@
-// Gestion des onglets
+/**
+ * Initializes the tab navigation system
+ */
 export function initTabs() {
     const tabs = document.querySelectorAll('.tab');
     const tabContents = document.querySelectorAll('.tab-content');
 
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // Retirer la classe active de tous les onglets
+            // Remove "active" class from all tabs
             tabs.forEach(t => t.classList.remove('active'));
 
-             // Ajouter la classe active à l'onglet cliqué
+            // Add "active" class to the clicked tab
             tab.classList.add('active');
 
-            // Cacher tous les contenus d'onglet
+            // Hide all tab content sections
             tabContents.forEach(content => content.classList.remove('active'));
 
-             // Afficher le contenu de l'onglet correspondant
+            // Show the content corresponding to the selected tab
             const tabId = tab.getAttribute('data-tab');
             document.getElementById(tabId).classList.add('active');
 
-            // Si l'onglet Tables Métier est activé, charger les tables (pour s'assurer qu'elles sont bien là)
+            // If "Business Tables" tab is activated, reload the tables
             if (tabId === 'business-tables') {
                 window.loadBusinessTables();
             }
