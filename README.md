@@ -43,7 +43,7 @@ SQLab Interface provides a modern, browser-based GUI for SQLab adventures - educ
      port: 3307,
      database: 'sqlab_island',  // Change to your SQLab database
      user: 'root',              // Update with your username
-     password: 'student',       // Update with your password
+     password: 'pass',       // Update with your password
      connectionLimit: 5
    });
    ```
@@ -76,42 +76,18 @@ SQLab Interface provides a modern, browser-based GUI for SQLab adventures - educ
 ## Project Structure
 
 ```
-├── controllers/        # Controls application logic
-├── models/             # Handles data and database operations
-├── public/             # Static assets and client-side code
+├── public/             # Client-side code and assets
+│   ├── controllers/    # Client-side controllers
 │   ├── data/           # TSV data files
-│   └── styles/         # CSS stylesheets
-├── views/              # Handles UI rendering
-├── utils/              # Utility functions
-├── server.js           # Main Express server
-└── index.html          # Main application page
+│   ├── models/         # Client-side data handling
+│   ├── styles/         # CSS stylesheets
+│   ├── utils/          # Utility functions
+│   ├── views/          # UI rendering components
+│   ├── index.html      # Main application page
+│   ├── main.js         # Main client-side JavaScript
+│   └── tsv-loader.js   # Utility for loading TSV files
+├── README.md           # Project documentation
+└── server.js           # Main Express server
 ```
 
-## Compatible SQLab Adventures
 
-This interface works with all SQLab adventures, including:
-
-- SQLab Island (English)
-- SQLab Sessform (French)
-- SQLab Corbeau (French)
-- SQLab Club (English)
-
-## Future Enhancements
-
-- Integration with the SQLab decryption mechanism for puzzle progression
-- Schema visualization for database tables
-- Query history and saving functionality
-- Support for collaborative play
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- Based on the SQLab project by [original author]
-- Inspired by SQL educational tools like SQL Island by Johannes Schildgen
