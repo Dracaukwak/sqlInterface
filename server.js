@@ -76,7 +76,6 @@ function formatAdventureName(dbName) {
 
   return dbName;
 }
-
 // API endpoint to execute queries
 app.post('/execute-query', async (req, res) => {
   const { query } = req.body;
@@ -99,7 +98,8 @@ app.post('/execute-query', async (req, res) => {
           }
           return value;
         });
-      })
+      }),
+      totalRows: rows.length // Ajouter le nombre total de lignes
     };
 
     res.json(results);

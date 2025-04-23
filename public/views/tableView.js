@@ -47,13 +47,11 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
     const tableContent = document.getElementById(`content-${tableName}`);
     const total = data.total || data.rows.length;
     const limit = data.limit || 10;
+    const displayedRows = data.rows.length;
 
     const tableActions = document.createElement('div');
     tableActions.className = 'table-actions';
     tableActions.innerHTML = `
-        <div class="info">
-            Showing rows ${currentOffset + 1} - ${Math.min(currentOffset + limit, total)} of ${total}
-        </div>
         <div class="pagination">
             <button class="prev-page" ${currentOffset === 0 ? 'disabled' : ''}>Previous</button>
             <button class="next-page" ${currentOffset + limit >= total ? 'disabled' : ''}>Next</button>
@@ -62,15 +60,19 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
 
     const table = document.createElement('table');
 
-    let headerHtml = '<tr>';
+    // Ajouter une colonne pour les numéros de ligne (sans en-tête)
+    let headerHtml = '<tr><th class="row-number-header"></th>';
     data.columns.forEach(column => {
         headerHtml += `<th>${escapeHtml(column)}</th>`;
     });
     headerHtml += '</tr>';
 
     let bodyHtml = '';
-    data.rows.forEach(row => {
+    data.rows.forEach((row, index) => {
         bodyHtml += '<tr>';
+        // Ajouter le numéro de ligne
+        bodyHtml += `<td class="row-number">${currentOffset + index + 1}</td>`;
+        // Ajouter les cellules de données
         row.forEach(cell => {
             bodyHtml += `<td>${escapeHtml(cell !== null ? cell : 'NULL')}</td>`;
         });
@@ -79,9 +81,15 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
 
     table.innerHTML = `<thead>${headerHtml}</thead><tbody>${bodyHtml}</tbody>`;
 
+    // Créer le compteur de lignes
+    const rowCounter = document.createElement('div');
+    rowCounter.className = 'row-counter';
+    rowCounter.textContent = `Affichage de ${displayedRows} ligne${displayedRows > 1 ? 's' : ''} sur ${total} au total`;
+
     tableContent.innerHTML = '';
     tableContent.appendChild(tableActions);
     tableContent.appendChild(table);
+    tableContent.appendChild(rowCounter);
 
     const prevButton = tableActions.querySelector('.prev-page');
     const nextButton = tableActions.querySelector('.next-page');

@@ -53,6 +53,31 @@ tr:hover {
     margin-top: 20px;
 }
 
+/* Styles pour les numéros de ligne */
+.row-number-header {
+    width: 40px;
+    background-color: #e8e8e8;
+    border-right: 2px solid #ccc;
+}
+
+.row-number {
+    text-align: center;
+    font-weight: bold;
+    background-color: #e8e8e8;
+    color: #666;
+    border-right: 2px solid #ccc;
+}
+
+/* Style pour le compteur de lignes */
+.row-counter {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+    text-align: right;
+    padding-right: 10px;
+}
+
 /* Dark theme adjustments for headers */
 .dark-theme th {
     background-color: #444;
@@ -67,4 +92,21 @@ tr:hover {
 /* Dark theme hover effect */
 .dark-theme tr:hover {
     background-color: #3a3a3a;
+}
+
+/* Dark theme - row number styles */
+.dark-theme .row-number-header {
+    background-color: #383838;
+    border-right: 2px solid #555;
+}
+
+.dark-theme .row-number {
+    background-color: #383838;
+    color: #bbb;
+    border-right: 2px solid #555;
+}
+
+/* Dark theme - row counter */
+.dark-theme .row-counter {
+    color: #aaa;
 }
