@@ -1,3 +1,5 @@
+![SQLab Interface Logo](./assets/logo/SQLabLogo.png)
+
 # SQLab Interface
 
 A web-based interface for SQLab adventures, allowing users to explore and interact with SQL-based puzzle games in an intuitive environment.
