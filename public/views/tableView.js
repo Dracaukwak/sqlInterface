@@ -1,6 +1,9 @@
 import { escapeHtml } from '../utils/helpers.js';
 
-// Fonction pour rendre les tables métier
+/**
+ * Renders a list of business tables as collapsible accordions
+ * @param {string[]} tables - List of table names
+ */
 export function renderBusinessTables(tables) {
     const tablesContainer = document.getElementById('business-tables-container');
     tablesContainer.innerHTML = '';
@@ -11,7 +14,7 @@ export function renderBusinessTables(tables) {
         tableAccordion.dataset.table = tableName;
         tableAccordion.setAttribute('draggable', 'true');
 
-        // Créer l'en-tête de la table
+        // Create the header of the accordion
         const tableHeader = document.createElement('div');
         tableHeader.className = 'table-header';
         tableHeader.innerHTML = `
@@ -19,12 +22,13 @@ export function renderBusinessTables(tables) {
             <div class="toggle-icon">▼</div>
         `;
 
-        // Créer le contenu de la table
+        // Create the collapsible content area
         const tableContent = document.createElement('div');
         tableContent.className = 'table-content';
         tableContent.id = `content-${tableName}`;
         tableContent.innerHTML = '<div class="loading">Loading table data...</div>';
 
+        // Handle accordion open/close and lazy loading
         tableHeader.addEventListener('click', function () {
             if (window.dragging) return;
             tableContent.classList.toggle('active');
@@ -42,13 +46,20 @@ export function renderBusinessTables(tables) {
     });
 }
 
-// Fonction pour rendre les données d'une table avec pagination
+/**
+ * Renders a table's data inside its content area, with pagination and row numbers
+ * @param {string} tableName - The name of the table
+ * @param {Object} data - Data and metadata for the table
+ * @param {number} currentOffset - Offset for pagination
+ * @param {Function} loadTableData - Callback to reload table data
+ */
 export function renderTableData(tableName, data, currentOffset, loadTableData) {
     const tableContent = document.getElementById(`content-${tableName}`);
     const total = data.total || data.rows.length;
     const limit = data.limit || 10;
     const displayedRows = data.rows.length;
 
+    // Pagination control bar
     const tableActions = document.createElement('div');
     tableActions.className = 'table-actions';
     tableActions.innerHTML = `
@@ -60,19 +71,18 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
 
     const table = document.createElement('table');
 
-    // Ajouter une colonne pour les numéros de ligne (sans en-tête)
+    // Table headers with row number column
     let headerHtml = '<tr><th class="row-number-header"></th>';
     data.columns.forEach(column => {
         headerHtml += `<th>${escapeHtml(column)}</th>`;
     });
     headerHtml += '</tr>';
 
+    // Table rows
     let bodyHtml = '';
     data.rows.forEach((row, index) => {
         bodyHtml += '<tr>';
-        // Ajouter le numéro de ligne
         bodyHtml += `<td class="row-number">${currentOffset + index + 1}</td>`;
-        // Ajouter les cellules de données
         row.forEach(cell => {
             bodyHtml += `<td>${escapeHtml(cell !== null ? cell : 'NULL')}</td>`;
         });
@@ -81,16 +91,18 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
 
     table.innerHTML = `<thead>${headerHtml}</thead><tbody>${bodyHtml}</tbody>`;
 
-    // Créer le compteur de lignes
+    // Row count summary
     const rowCounter = document.createElement('div');
     rowCounter.className = 'row-counter';
-    rowCounter.textContent = `Affichage de ${displayedRows} ligne${displayedRows > 1 ? 's' : ''} sur ${total} au total`;
+    rowCounter.textContent = `Showing ${displayedRows} row${displayedRows > 1 ? 's' : ''} of ${total} total`;
 
+    // Render all elements in the content area
     tableContent.innerHTML = '';
     tableContent.appendChild(tableActions);
     tableContent.appendChild(table);
     tableContent.appendChild(rowCounter);
 
+    // Pagination button handlers
     const prevButton = tableActions.querySelector('.prev-page');
     const nextButton = tableActions.querySelector('.next-page');
 
@@ -103,7 +115,9 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
     });
 }
 
-// Fonction pour initialiser le drag and drop
+/**
+ * Initializes drag-and-drop functionality for rearranging table accordions
+ */
 export function initDragAndDrop() {
     const container = document.getElementById('business-tables-container');
     window.dragging = false;
@@ -142,6 +156,12 @@ export function initDragAndDrop() {
         }
     });
 
+    /**
+     * Determines the element below the cursor for inserting the dragged item
+     * @param {HTMLElement} container - The container where elements are dragged
+     * @param {number} y - The vertical cursor position
+     * @returns {HTMLElement|null} - The closest element to insert after
+     */
     function getDragAfterElement(container, y) {
         const draggableElements = [...container.querySelectorAll('.table-accordion:not(.dragging)')];
 
