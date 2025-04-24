@@ -296,7 +296,10 @@ tr:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
-  padding-right: 10px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  margin-left: var(--spacing-sm);
+  
+  
 }
 
 .table-name {
@@ -306,6 +309,8 @@ tr:hover {
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: var(--border-radius-md);
   border: 1px solid rgba(8, 76, 97, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: all var(--transition-fast);
 }
 
 .column-names {
@@ -544,11 +549,7 @@ tr:hover {
   color: #ff7b7b;
 }
 
-.dark-theme .table-name {
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(76, 180, 231, 0.2);
-  color: var(--dark-text);
-}
+
 
 /* Language selector dark theme */
 .dark-theme .language-selector {
