@@ -9,14 +9,19 @@ export function initBusinessTables() {
     /**
      * Loads all business tables and displays them in the UI
      */
-    window.loadBusinessTables = async function() {
+    window.loadBusinessTables = async function () {
         const tablesContainer = document.getElementById('business-tables-container');
         tablesContainer.innerHTML = `<div class="loading">${t('businessTables.loading')}</div>`;
 
         try {
             // Fetch list of tables and render them
             const data = await getTables();
-            renderBusinessTables(data.tables);
+
+            // Filter out system tables that start with "sqlab_"
+            const filteredTables = data.tables.filter(tableName => !tableName.startsWith('sqlab_'));
+
+            // Render only the filtered tables
+            renderBusinessTables(filteredTables);
             initDragAndDrop(); // Enable drag and drop interaction
         } catch (error) {
             tablesContainer.innerHTML = `<div class="error">${error.message}</div>`;
@@ -27,7 +32,7 @@ export function initBusinessTables() {
      * Loads and displays a specific table with pagination
      * Exposed globally to be reused during pagination or reopen
      */
-    window.loadTableData = async function(tableName, offset = 0, limit = 10) {
+    window.loadTableData = async function (tableName, offset = 0, limit = 10) {
         try {
             const data = await getTableData(tableName, offset, limit);
             renderTableData(tableName, data, offset, window.loadTableData);
