@@ -162,8 +162,6 @@
   pointer-events: none;
 }
 
-
-
 /* Ocean waves element */
 .ocean-waves {
   position: absolute;
@@ -277,10 +275,59 @@ tr:hover {
   border-bottom: 1px solid #ddd;
   transition: background-color var(--transition-fast);
   user-select: none;
+  gap: 10px;
 }
 
 .table-header:hover {
   background-color: #d0e8eb;
+}
+
+.table-info {
+  flex: 0 0 auto;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+.table-columns {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  padding-right: 10px;
+}
+
+.table-name {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(8, 76, 97, 0.2);
+}
+
+.column-names {
+  font-style: italic;
+  color: #555;
+}
+
+.loading-columns {
+  font-style: italic;
+  color: var(--color-secondary);
+  font-size: 0.85em;
+}
+
+.error-columns {
+  color: #D8000C;
+  font-size: 0.85em;
+}
+
+.toggle-icon {
+  flex: 0 0 auto;
+  color: var(--color-primary);
+  transition: transform var(--transition-medium);
 }
 
 .table-content {
@@ -289,6 +336,7 @@ tr:hover {
   max-height: 400px;
   overflow-y: auto;
   transition: max-height var(--transition-medium);
+  min-height: min-content;
 }
 
 .table-content.active {
@@ -322,124 +370,6 @@ tr:hover {
 .pagination button:hover:not([disabled]) {
   background-color: var(--color-secondary);
   color: var(--color-white);
-}
-
-.toggle-icon {
-  color: var(--color-primary);
-  transition: transform var(--transition-medium);
-}
-
-/* ===== Dark Theme Overrides ===== */
-.dark-theme .tab {
-  background-color: var(--dark-element);
-  color: var(--dark-light);
-  border-color: #444;
-}
-
-.dark-theme .tab.active {
-  background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
-  color: var(--dark-text);
-}
-
-.dark-theme .execute-icon {
-  color: #ff9caa;
-}
-
-.dark-theme .execute-icon:hover {
-  color: #ff7b89;
-}
-
-.dark-theme .tab-content {
-  background-color: var(--dark-bg);
-  border-color: #444;
-}
-
-/* Dark theme overrides for the query area */
-.dark-theme .top-query {
-  background: linear-gradient(to bottom, #06384a 0%, #085570 100%);
-  border-color: rgba(76, 180, 231, 0.3);
-  position: relative;
-}
-
-.dark-theme .top-query textarea {
-  color: #B0E0E6;
-  position: relative;
-  z-index: 10;
-}
-
-.dark-theme .shark-fin {
-  background-color: #4CB4E7;
-  box-shadow: 0 0 8px rgba(76, 180, 231, 0.8);
-}
-
-.dark-theme .ocean-waves {
-  background: repeating-linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.15),
-    rgba(255, 255, 255, 0.15) 10px,
-    rgba(255, 255, 255, 0.25) 10px,
-    rgba(255, 255, 255, 0.25) 20px
-  );
-}
-
-.dark-theme th {
-  background-color: var(--dark-primary);
-  color: var(--dark-text);
-}
-
-.dark-theme td {
-  border-color: #555;
-}
-
-.dark-theme tr:nth-child(even) {
-  background-color: #2c2c2c;
-}
-
-.dark-theme tr:hover {
-  background-color: #3a3a3a;
-}
-
-.dark-theme .row-number-header, .dark-theme .row-number {
-  background-color: #383838;
-  border-right: 2px solid #555;
-}
-
-.dark-theme .row-number {
-  color: #bbb;
-}
-
-.dark-theme .table-accordion {
-  border-color: #444;
-  background-color: var(--dark-element);
-}
-
-.dark-theme .table-header {
-  background-color: var(--dark-primary);
-  color: var(--dark-text);
-  border-bottom: 1px solid #444;
-}
-
-.dark-theme .table-content.active {
-  background-color: var(--dark-element);
-}
-
-.dark-theme .table-actions {
-  background-color: #2f2f2f;
-  border-bottom: 1px solid #444;
-}
-
-.dark-theme .pagination button {
-  background-color: var(--dark-primary);
-  color: var(--dark-text);
-  border-color: var(--dark-secondary);
-}
-
-.dark-theme .pagination button:hover:not([disabled]) {
-  background-color: var(--dark-secondary);
-}
-
-.dark-theme .pagination button:hover:not([disabled]) {
-  background-color: var(--dark-secondary);
 }
 
 /* ===== Language Selector ===== */
@@ -485,7 +415,142 @@ tr:hover {
   color: var(--color-white);
 }
 
-/* Dark theme overrides for language selector */
+/* ===== Dark Theme Overrides ===== */
+/* Tab-related dark theme */
+.dark-theme .tab {
+  background-color: var(--dark-element);
+  color: var(--dark-light);
+  border-color: #444;
+}
+
+.dark-theme .tab.active {
+  background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
+  color: var(--dark-text);
+}
+
+.dark-theme .execute-icon {
+  color: #ff9caa;
+}
+
+.dark-theme .execute-icon:hover {
+  color: #ff7b89;
+}
+
+.dark-theme .tab-content {
+  background-color: var(--dark-bg);
+  border-color: #444;
+}
+
+/* Query-related dark theme */
+.dark-theme .top-query {
+  background: linear-gradient(to bottom, #06384a 0%, #085570 100%);
+  border-color: rgba(76, 180, 231, 0.3);
+  position: relative;
+}
+
+.dark-theme .top-query textarea {
+  color: #B0E0E6;
+  position: relative;
+  z-index: 10;
+}
+
+.dark-theme .shark-fin {
+  background-color: #4CB4E7;
+  box-shadow: 0 0 8px rgba(76, 180, 231, 0.8);
+}
+
+.dark-theme .ocean-waves {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.15) 10px,
+    rgba(255, 255, 255, 0.25) 10px,
+    rgba(255, 255, 255, 0.25) 20px
+  );
+}
+
+/* Table-related dark theme */
+.dark-theme th {
+  background-color: var(--dark-primary);
+  color: var(--dark-text);
+}
+
+.dark-theme td {
+  border-color: #555;
+}
+
+.dark-theme tr:nth-child(even) {
+  background-color: #2c2c2c;
+}
+
+.dark-theme tr:hover {
+  background-color: #3a3a3a;
+}
+
+.dark-theme .row-number-header, .dark-theme .row-number {
+  background-color: #383838;
+  border-right: 2px solid #555;
+}
+
+.dark-theme .row-number {
+  color: #bbb;
+}
+
+/* Table accordion dark theme */
+.dark-theme .table-accordion {
+  border-color: #444;
+  background-color: var(--dark-element);
+}
+
+.dark-theme .table-header {
+  background-color: var(--dark-primary);
+  color: var(--dark-text);
+  border-bottom: 1px solid #444;
+}
+
+.dark-theme .table-content.active {
+  background-color: var(--dark-element);
+}
+
+.dark-theme .table-actions {
+  background-color: #2f2f2f;
+  border-bottom: 1px solid #444;
+}
+
+.dark-theme .pagination button {
+  background-color: var(--dark-primary);
+  color: var(--dark-text);
+  border-color: var(--dark-secondary);
+}
+
+.dark-theme .pagination button:hover:not([disabled]) {
+  background-color: var(--dark-secondary);
+}
+
+/* Table columns dark theme */
+.dark-theme .table-columns {
+  color: #aaa;
+}
+
+.dark-theme .column-names {
+  color: #bbb;
+}
+
+.dark-theme .loading-columns {
+  color: var(--dark-light);
+}
+
+.dark-theme .error-columns {
+  color: #ff7b7b;
+}
+
+.dark-theme .table-name {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(76, 180, 231, 0.2);
+  color: var(--dark-text);
+}
+
+/* Language selector dark theme */
 .dark-theme .language-selector {
   background-color: rgba(0, 0, 0, 0.3);
 }
@@ -499,7 +564,7 @@ tr:hover {
   color: var(--dark-text);
 }
 
-/* Notes tab for dark theme */
+/* Notes tab dark theme */
 .dark-theme #notes-textarea {
   background-color: var(--dark-element);
   color: var(--dark-text);

@@ -2,24 +2,29 @@ import { escapeHtml } from '../utils/helpers.js';
 import { t } from '../controllers/localizationController.js';
 
 /**
- * Renders a list of business tables as collapsible accordions
+ * Renders a list of business tables as collapsible accordions with column names
  * @param {string[]} tables - List of table names
  */
 export function renderBusinessTables(tables) {
     const tablesContainer = document.getElementById('business-tables-container');
     tablesContainer.innerHTML = '';
 
+    // For each table, create an accordion and load column names
     tables.forEach(tableName => {
         const tableAccordion = document.createElement('div');
         tableAccordion.className = 'table-accordion';
         tableAccordion.dataset.table = tableName;
         tableAccordion.setAttribute('draggable', 'true');
 
-        // Create the header of the accordion
+        // Create the header with loading state for columns
         const tableHeader = document.createElement('div');
         tableHeader.className = 'table-header';
         tableHeader.innerHTML = `
             <div class="table-name">${escapeHtml(tableName)}</div>
+            <div class="table-columns-separator">:</div>
+            <div class="table-columns" id="columns-${tableName}">
+                <span class="loading-columns">${t('businessTables.loadingColumns') || 'Loading columns...'}</span>
+            </div>
             <div class="toggle-icon">▼</div>
         `;
 
@@ -44,7 +49,41 @@ export function renderBusinessTables(tables) {
         tableAccordion.appendChild(tableHeader);
         tableAccordion.appendChild(tableContent);
         tablesContainer.appendChild(tableAccordion);
+
+        // Load column metadata for this table (without loading actual data)
+        loadTableColumns(tableName);
     });
+}
+
+/**
+ * Loads and displays column names for a table in its header
+ * @param {string} tableName - The name of the table
+ */
+async function loadTableColumns(tableName) {
+    try {
+        // Load just one row to get column names without fetching all data
+        const response = await fetch(`/table-data/${tableName}?offset=0&limit=1`);
+        
+        if (!response.ok) {
+            throw new Error(t('error.tableData'));
+        }
+        
+        const data = await response.json();
+        const columnsElement = document.getElementById(`columns-${tableName}`);
+        
+        if (data.columns && data.columns.length > 0) {
+            // Format column names as a clean, compact list with styling
+            columnsElement.innerHTML = data.columns.map(column => 
+                `<span class="column-name">${escapeHtml(column)}</span>`
+            ).join(', ');
+        } else {
+            columnsElement.innerHTML = '<span class="no-columns">(No columns)</span>';
+        }
+    } catch (error) {
+        console.error(`Error loading columns for ${tableName}:`, error);
+        const columnsElement = document.getElementById(`columns-${tableName}`);
+        columnsElement.innerHTML = '<span class="error-columns">Failed to load columns</span>';
+    }
 }
 
 /**
@@ -59,6 +98,14 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
     const total = data.total || data.rows.length;
     const limit = data.limit || 10;
     const displayedRows = data.rows.length;
+
+    // Also update the column names in the header when data is loaded
+    const columnsElement = document.getElementById(`columns-${tableName}`);
+    if (columnsElement && data.columns && data.columns.length > 0) {
+        columnsElement.innerHTML = data.columns.map(column => 
+            `<span class="column-name">${escapeHtml(column)}</span>`
+        ).join(', ');
+    }
 
     // Pagination control bar
     const tableActions = document.createElement('div');
