@@ -12,6 +12,7 @@
   --color-light-gray: #f3f0eb;     /* Light gray - neutral background */
   --color-dark: #333333;           /* Dark gray - text */
   --color-white: #FFFFFF;          /* White - content backgrounds */
+  --color-light-blue: #A5D8DD; /* Light blue for headers and backgrounds */
   
   /* Gradients - Inspired by ocean theme */
   --gradient-header: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
