@@ -27,7 +27,7 @@ export async function getAdventureTitle() {
             return t('database.unknown');
         }
         
-        // Title is in the first cell of the first result
+        // Return the title directly from the database
         return result.rows[0][0];
     } catch (error) {
         console.error('Error fetching adventure title:', error);

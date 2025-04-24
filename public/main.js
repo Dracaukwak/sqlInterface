@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadAdventureTitle();
     });
 });
-
 /**
  * Loads and displays the adventure title from the sqlab_info table
  */
@@ -81,8 +80,8 @@ async function loadAdventureTitle() {
         // Get adventure title directly from sqlab_info table
         const adventureTitle = await getAdventureTitle();
         
-        // Update page title and displayed name
-        document.title = `${window.i18n.t('app.title')} - ${adventureTitle}`;
+        // Update page title and displayed name with just the adventure title
+        document.title = adventureTitle;
         titleElement.textContent = adventureTitle;
     } catch (error) {
         console.error('Error loading adventure title:', error);
