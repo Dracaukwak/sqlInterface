@@ -16,8 +16,8 @@
   "tabs": {
     "businessTables": "Tables",
     "schema": "Schéma",
-    "execution": "Run",
-    "control": "Check"
+    "execution": "Exécuter",
+    "control": "Vérifier"
   },
   "businessTables": {
     "title": "Tables",
@@ -29,12 +29,12 @@
     "developing": "Fonctionnalité en cours de développement..."
   },
   "execution": {
-    "title": "Run",
+    "title": "Exécuter",
     "noResults": "Aucun résultat",
     "runPrompt": "Exécutez une requête pour voir les résultats"
   },
   "control": {
-    "title": "Check",
+    "title": "Vérifier",
     "description": "Cette section permettra de contrôler divers aspects de l'application.",
     "developing": "Fonctionnalité en cours de développement..."
   },
