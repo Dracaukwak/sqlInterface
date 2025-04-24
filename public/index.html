@@ -47,18 +47,16 @@
 
     <!-- Navigation tabs for switching between interface sections -->
     <div class="tabs">
-        <div class="tab active" data-tab="business-tables" data-i18n="tabs.businessTables">Business Tables</div>
+        <div class="tab active" data-tab="business-tables" data-i18n="tabs.businessTables">Tables</div>
         <div class="tab" data-tab="schema" data-i18n="tabs.schema">Schema</div>
         <div class="tab" data-tab="execution">
-            <span data-i18n="tabs.execution">Execute</span> <i id="execute-btn" class="fas fa-play-circle execute-icon"></i>
+            <span data-i18n="tabs.execution">Run</span> <i id="execute-btn" class="fas fa-play-circle execute-icon"></i>
         </div>
-        <div class="tab" data-tab="control" data-i18n="tabs.control">Control</div>
+        <div class="tab" data-tab="control" data-i18n="tabs.control">Check</div>
     </div>
 
     <!-- Business Tables tab content -->
     <div id="business-tables" class="tab-content active">
-        <h2 data-i18n="businessTables.title">Business Tables</h2>
-        <p data-i18n="businessTables.description">Click a table to display its content. You can rearrange the tables via drag and drop.</p>
         <div id="business-tables-container">
             <div class="loading" data-i18n="businessTables.loading">Loading tables...</div>
         </div>
@@ -75,9 +73,7 @@
 
     <!-- SQL execution tab with results -->
     <div id="execution" class="tab-content">
-        <h2 data-i18n="execution.title">SQL Query Execution</h2>
         <div class="results" id="results">
-            <h3 data-i18n="execution.results">Results</h3>
             <div class="results-container">
                 <table id="results-table">
                     <thead>
@@ -97,7 +93,7 @@
 
     <!-- Control tab (future features) -->
     <div id="control" class="tab-content">
-        <h2 data-i18n="control.title">Control</h2>
+        <h2 data-i18n="control.title">Check</h2>
         <p data-i18n="control.description">This section will allow control over various aspects of the app.</p>
         <div id="control-container">
             <div class="info" data-i18n="control.developing">Feature under development...</div>

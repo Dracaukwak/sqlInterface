@@ -48,7 +48,6 @@ export function displayResults(data, tableElement) {
 export function showError(message, containerElement) {
     // Replace container content with error block
     containerElement.innerHTML = `
-        <h3>${t('execution.results')}</h3>
         <div class="error">${escapeHtml(message)}</div>
     `;
 }

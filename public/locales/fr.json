@@ -14,14 +14,13 @@
     "emptyError": "Veuillez entrer une requête SQL"
   },
   "tabs": {
-    "businessTables": "Tables Métier",
+    "businessTables": "Tables",
     "schema": "Schéma",
-    "execution": "Exécuter",
-    "control": "Contrôle"
+    "execution": "Run",
+    "control": "Check"
   },
   "businessTables": {
-    "title": "Tables Métier",
-    "description": "Cliquez sur une table pour afficher son contenu. Vous pouvez réorganiser les tables par glisser-déposer.",
+    "title": "Tables",
     "loading": "Chargement des tables..."
   },
   "schema": {
@@ -30,13 +29,12 @@
     "developing": "Fonctionnalité en cours de développement..."
   },
   "execution": {
-    "title": "Exécution de Requête SQL",
-    "results": "Résultats",
+    "title": "Run",
     "noResults": "Aucun résultat",
     "runPrompt": "Exécutez une requête pour voir les résultats"
   },
   "control": {
-    "title": "Contrôle",
+    "title": "Check",
     "description": "Cette section permettra de contrôler divers aspects de l'application.",
     "developing": "Fonctionnalité en cours de développement..."
   },

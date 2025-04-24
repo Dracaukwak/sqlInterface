@@ -14,14 +14,13 @@
     "emptyError": "Please enter a SQL query"
   },
   "tabs": {
-    "businessTables": "Business Tables",
+    "businessTables": "Tables",
     "schema": "Schema",
-    "execution": "Execute",
-    "control": "Control"
+    "execution": "Run",
+    "control": "Check"
   },
   "businessTables": {
-    "title": "Business Tables",
-    "description": "Click a table to display its content. You can rearrange the tables via drag and drop.",
+    "title": "Tables",
     "loading": "Loading tables..."
   },
   "schema": {
@@ -30,13 +29,12 @@
     "developing": "Feature under development..."
   },
   "execution": {
-    "title": "SQL Query Execution",
-    "results": "Results",
+    "title": "Run",
     "noResults": "No results",
     "runPrompt": "Run a query to see the results"
   },
   "control": {
-    "title": "Control",
+    "title": "Check",
     "description": "This section will allow control over various aspects of the app.",
     "developing": "Feature under development..."
   },
