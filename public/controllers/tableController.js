@@ -1,5 +1,6 @@
 import { getTables, getTableData } from '../models/tableModel.js';
 import { renderBusinessTables, renderTableData, initDragAndDrop } from '../views/tableView.js';
+import { t } from '../controllers/localizationController.js';
 
 /**
  * Initializes the "Business Tables" tab functionality
@@ -10,7 +11,7 @@ export function initBusinessTables() {
      */
     window.loadBusinessTables = async function() {
         const tablesContainer = document.getElementById('business-tables-container');
-        tablesContainer.innerHTML = '<div class="loading">Chargement des tables...</div>';
+        tablesContainer.innerHTML = `<div class="loading">${t('businessTables.loading')}</div>`;
 
         try {
             // Fetch list of tables and render them

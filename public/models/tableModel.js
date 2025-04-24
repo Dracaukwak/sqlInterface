@@ -1,4 +1,9 @@
 /**
+ * Model for interacting with table data via the API
+ */
+import { t } from '../controllers/localizationController.js';
+
+/**
  * Fetches the list of available tables from the backend
  * @returns {Promise<Object>} - Resolves with an object containing table names
  */
@@ -6,7 +11,7 @@ export async function getTables() {
     const response = await fetch('/list-tables');
 
     if (!response.ok) {
-        throw new Error("Failed to load table list");
+        throw new Error(t('error.tableList'));
     }
 
     return response.json();
@@ -23,7 +28,7 @@ export async function getTableData(tableName, offset, limit) {
     const response = await fetch(`/table-data/${tableName}?offset=${offset}&limit=${limit}`);
 
     if (!response.ok) {
-        throw new Error("Failed to load table data");
+        throw new Error(t('error.tableData'));
     }
 
     return response.json();

@@ -1,45 +1,36 @@
 // Model for retrieving information about the connected database
+import { t } from '../controllers/localizationController.js';
 
 /**
- * Fetches information about the connected database
- * @returns {Promise<Object>} - Resolves with database details
+ * Gets the adventure title from the sqlab_info table
+ * @returns {Promise<string>} Adventure title
  */
-export async function getDatabaseInfo() {
+export async function getAdventureTitle() {
     try {
-        // Send a request to retrieve the current database name
-        const response = await fetch('/database-info');
+        // Execute SQL query to get the title
+        const response = await fetch('/execute-query', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                query: "SELECT value FROM sqlab_info WHERE name = 'title' LIMIT 1" 
+            })
+        });
 
         if (!response.ok) {
-            throw new Error('Failed to fetch database information');
+            throw new Error(t('database.fetchError', { status: response.status }));
         }
 
-        return await response.json();
+        const result = await response.json();
+        
+        // If no result found
+        if (!result.rows || result.rows.length === 0) {
+            return t('database.unknown');
+        }
+        
+        // Title is in the first cell of the first result
+        return result.rows[0][0];
     } catch (error) {
-        console.error('Error while retrieving database info:', error);
-
-        // Return fallback data in case of failure
-        return {
-            name: 'Not connected',
-            host: 'localhost',
-            adventure: 'Unknown'
-        };
+        console.error('Error fetching adventure title:', error);
+        return t('database.unknown');
     }
-}
-
-/**
- * Formats the raw database name for display
- * Example: "sqlab_island" → "Island", "sqlab_corbeau" → "Corbeau"
- * @param {string} dbName - Raw database name
- * @returns {string} - Formatted name for display
- */
-export function formatDatabaseName(dbName) {
-    if (!dbName) return 'Unknown';
-
-    // If name starts with "sqlab_", remove the prefix and capitalize the rest
-    if (dbName.toLowerCase().startsWith('sqlab_')) {
-        const adventureName = dbName.substring(6); // Length of "sqlab_"
-        return adventureName.charAt(0).toUpperCase() + adventureName.slice(1);
-    }
-
-    return dbName;
 }

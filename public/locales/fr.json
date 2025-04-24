@@ -1,0 +1,60 @@
+{
+  "app": {
+    "title": "SQLab",
+    "loading": "Chargement..."
+  },
+  "header": {
+    "toggleTheme": "Changer de thème"
+  },
+  "context": {
+    "placeholder": "Le contexte et l'énoncé de l'exercice apparaîtront ici..."
+  },
+  "query": {
+    "placeholder": "Entrez votre requête SQL ici...",
+    "emptyError": "Veuillez entrer une requête SQL"
+  },
+  "tabs": {
+    "businessTables": "Tables Métier",
+    "schema": "Schéma",
+    "execution": "Exécuter",
+    "control": "Contrôle"
+  },
+  "businessTables": {
+    "title": "Tables Métier",
+    "description": "Cliquez sur une table pour afficher son contenu. Vous pouvez réorganiser les tables par glisser-déposer.",
+    "loading": "Chargement des tables..."
+  },
+  "schema": {
+    "title": "Schéma de la Base de Données",
+    "description": "Cette section affichera le schéma de la base de données.",
+    "developing": "Fonctionnalité en cours de développement..."
+  },
+  "execution": {
+    "title": "Exécution de Requête SQL",
+    "results": "Résultats",
+    "noResults": "Aucun résultat",
+    "runPrompt": "Exécutez une requête pour voir les résultats"
+  },
+  "control": {
+    "title": "Contrôle",
+    "description": "Cette section permettra de contrôler divers aspects de l'application.",
+    "developing": "Fonctionnalité en cours de développement..."
+  },
+  "table": {
+    "pagination": {
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "rowCounter": "Affichage de {displayedRows} ligne{plural} sur {total} au total",
+    "nullValue": "NULL"
+  },
+  "database": {
+    "fetchError": "Impossible de récupérer les informations de la base de données : {status}",
+    "notConnected": "Non connecté",
+    "unknown": "Inconnu"
+  },
+  "error": {
+    "tableList": "Impossible de charger la liste des tables",
+    "tableData": "Impossible de charger les données de la table"
+  }
+}

@@ -1,4 +1,5 @@
 import { escapeHtml } from '../utils/helpers.js';
+import { t } from '../controllers/localizationController.js';
 
 /**
  * Displays query results in a table element with row numbers and a summary
@@ -14,7 +15,7 @@ export function displayResults(data, tableElement) {
     let rows = data.rows.map((row, index) => 
         `<tr>
             <td class="row-number">${index + 1}</td>
-            ${row.map(cell => `<td>${escapeHtml(cell !== null ? cell : 'NULL')}</td>`).join('')}
+            ${row.map(cell => `<td>${escapeHtml(cell !== null ? cell : t('table.nullValue'))}</td>`).join('')}
         </tr>`
     ).join('');
 
@@ -26,7 +27,14 @@ export function displayResults(data, tableElement) {
     const totalRows = data.totalRows || displayedRows;
     const rowCounter = document.createElement('div');
     rowCounter.className = 'row-counter';
-    rowCounter.textContent = `Showing ${displayedRows} row${displayedRows > 1 ? 's' : ''} of ${totalRows} total`;
+    
+    // Use translation with pluralization parameter
+    const plural = displayedRows > 1 ? 's' : '';
+    rowCounter.textContent = t('table.rowCounter', {
+        displayedRows: displayedRows,
+        total: totalRows,
+        plural: plural
+    });
 
     // Insert the counter just after the table
     tableElement.parentNode.insertBefore(rowCounter, tableElement.nextSibling);
@@ -40,7 +48,7 @@ export function displayResults(data, tableElement) {
 export function showError(message, containerElement) {
     // Replace container content with error block
     containerElement.innerHTML = `
-        <h3>Results</h3>
+        <h3>${t('execution.results')}</h3>
         <div class="error">${escapeHtml(message)}</div>
     `;
 }

@@ -1,5 +1,6 @@
 import { executeQuery } from '../models/queryModel.js';
 import { displayResults, showError } from '../views/queryView.js';
+import { t } from '../controllers/localizationController.js';
 
 /**
  * Initializes the SQL query execution logic
@@ -27,7 +28,7 @@ export function initQueryExecution() {
     async function executeQueryHandler() {
         const query = queryInput.value.trim();
         if (!query) {
-            showError('Please enter a SQL query', resultsContainer);
+            showError(t('query.emptyError'), resultsContainer);
             return;
         }
 
@@ -36,7 +37,7 @@ export function initQueryExecution() {
 
             // Reset results container to ensure clean output each time
             resultsContainer.innerHTML = `
-                <h3>Results</h3>
+                <h3>${t('execution.results')}</h3>
                 <div class="results-container">
                     <table id="results-table"></table>
                 </div>

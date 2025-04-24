@@ -1,4 +1,5 @@
 import { escapeHtml } from '../utils/helpers.js';
+import { t } from '../controllers/localizationController.js';
 
 /**
  * Renders a list of business tables as collapsible accordions
@@ -26,7 +27,7 @@ export function renderBusinessTables(tables) {
         const tableContent = document.createElement('div');
         tableContent.className = 'table-content';
         tableContent.id = `content-${tableName}`;
-        tableContent.innerHTML = '<div class="loading">Loading table data...</div>';
+        tableContent.innerHTML = `<div class="loading">${t('businessTables.loading')}</div>`;
 
         // Handle accordion open/close and lazy loading
         tableHeader.addEventListener('click', function () {
@@ -64,8 +65,8 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
     tableActions.className = 'table-actions';
     tableActions.innerHTML = `
         <div class="pagination">
-            <button class="prev-page" ${currentOffset === 0 ? 'disabled' : ''}>Previous</button>
-            <button class="next-page" ${currentOffset + limit >= total ? 'disabled' : ''}>Next</button>
+            <button class="prev-page" ${currentOffset === 0 ? 'disabled' : ''}>${t('table.pagination.previous')}</button>
+            <button class="next-page" ${currentOffset + limit >= total ? 'disabled' : ''}>${t('table.pagination.next')}</button>
         </div>
     `;
 
@@ -84,7 +85,7 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
         bodyHtml += '<tr>';
         bodyHtml += `<td class="row-number">${currentOffset + index + 1}</td>`;
         row.forEach(cell => {
-            bodyHtml += `<td>${escapeHtml(cell !== null ? cell : 'NULL')}</td>`;
+            bodyHtml += `<td>${escapeHtml(cell !== null ? cell : t('table.nullValue'))}</td>`;
         });
         bodyHtml += '</tr>';
     });
@@ -94,7 +95,14 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
     // Row count summary
     const rowCounter = document.createElement('div');
     rowCounter.className = 'row-counter';
-    rowCounter.textContent = `Showing ${displayedRows} row${displayedRows > 1 ? 's' : ''} of ${total} total`;
+    
+    // Use the translation with pluralization
+    const plural = displayedRows > 1 ? 's' : '';
+    rowCounter.textContent = t('table.rowCounter', {
+        displayedRows: displayedRows,
+        total: total,
+        plural: plural
+    });
 
     // Render all elements in the content area
     tableContent.innerHTML = '';

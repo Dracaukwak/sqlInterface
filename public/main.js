@@ -1,9 +1,26 @@
 import { initTabs } from './controllers/tabController.js';
 import { initQueryExecution } from './controllers/queryController.js';
 import { initBusinessTables } from './controllers/tableController.js';
-import { getDatabaseInfo, formatDatabaseName } from './models/dbModel.js';
+import { getAdventureTitle } from './models/dbModel.js';
+import { initLocalization } from './controllers/localizationController.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize localization service immediately
+window.i18n.init().catch(err => console.error('Failed to initialize localization:', err));
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Make sure localization is initialized first
+    try {
+        // If initialization hasn't completed yet, await it
+        if (!window.i18n.initialized) {
+            await window.i18n.initPromise;
+        }
+        
+        // Initialize the UI components that handle localization
+        initLocalization();
+    } catch (error) {
+        console.error('Error initializing localization:', error);
+    }
+    
     // Initialize core components: tabs, query handling, and business tables
     initTabs();
     initQueryExecution();
@@ -13,8 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.loadBusinessTables();
     document.querySelector('.tab[data-tab="business-tables"]').click();
 
-    // Load and display the database name in the UI
-    loadDatabaseName();
+    // Load and display the adventure title in the UI
+    loadAdventureTitle();
 
     // Theme toggle handling
     const themeToggle = document.getElementById('toggle-theme');
@@ -44,28 +61,33 @@ document.addEventListener('DOMContentLoaded', () => {
             themeToggle.classList.add('fa-moon');
         }
     });
+    
+    // Update title when language changes
+    window.addEventListener('localeChanged', () => {
+        loadAdventureTitle();
+    });
 });
 
 /**
- * Loads and displays the formatted database name in the header and page title
+ * Loads and displays the adventure title from the sqlab_info table
  */
-async function loadDatabaseName() {
+async function loadAdventureTitle() {
     try {
-        const dbInfoElement = document.getElementById('database-name');
-
-        // Fetch database info from the backend
-        const dbInfo = await getDatabaseInfo();
-
-        // Format the name (e.g. sqlab_island -> Island)
-        const formattedName = formatDatabaseName(dbInfo.name);
-
+        const titleElement = document.getElementById('database-name');
+        
+        // Show loading indicator
+        titleElement.textContent = window.i18n.t('app.loading');
+        
+        // Get adventure title directly from sqlab_info table
+        const adventureTitle = await getAdventureTitle();
+        
         // Update page title and displayed name
-        document.title = `SQLab - ${formattedName}`;
-        dbInfoElement.textContent = formattedName;
+        document.title = `${window.i18n.t('app.title')} - ${adventureTitle}`;
+        titleElement.textContent = adventureTitle;
     } catch (error) {
-        console.error('Error while loading database name:', error);
-
+        console.error('Error loading adventure title:', error);
+        
         // Fallback text in case of error
-        document.getElementById('database-name').textContent = 'Database';
+        document.getElementById('database-name').textContent = window.i18n.t('database.unknown');
     }
 }

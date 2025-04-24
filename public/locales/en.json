@@ -1,0 +1,60 @@
+{
+  "app": {
+    "title": "SQLab",
+    "loading": "Loading..."
+  },
+  "header": {
+    "toggleTheme": "Toggle theme"
+  },
+  "context": {
+    "placeholder": "The context and exercise statement will appear here..."
+  },
+  "query": {
+    "placeholder": "Enter your SQL query here...",
+    "emptyError": "Please enter a SQL query"
+  },
+  "tabs": {
+    "businessTables": "Business Tables",
+    "schema": "Schema",
+    "execution": "Execute",
+    "control": "Control"
+  },
+  "businessTables": {
+    "title": "Business Tables",
+    "description": "Click a table to display its content. You can rearrange the tables via drag and drop.",
+    "loading": "Loading tables..."
+  },
+  "schema": {
+    "title": "Database Schema",
+    "description": "This section will display the database schema.",
+    "developing": "Feature under development..."
+  },
+  "execution": {
+    "title": "SQL Query Execution",
+    "results": "Results",
+    "noResults": "No results",
+    "runPrompt": "Run a query to see the results"
+  },
+  "control": {
+    "title": "Control",
+    "description": "This section will allow control over various aspects of the app.",
+    "developing": "Feature under development..."
+  },
+  "table": {
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "rowCounter": "Showing {displayedRows} row{plural} of {total} total",
+    "nullValue": "NULL"
+  },
+  "database": {
+    "fetchError": "Failed to fetch database information: {status}",
+    "notConnected": "Not connected",
+    "unknown": "Unknown"
+  },
+  "error": {
+    "tableList": "Failed to load table list",
+    "tableData": "Failed to load table data"
+  }
+}
