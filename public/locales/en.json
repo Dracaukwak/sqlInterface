@@ -17,7 +17,11 @@
     "businessTables": "Tables",
     "schema": "Schema",
     "execution": "Run",
-    "control": "Check"
+    "control": "Check",
+    "notes": "Notes"
+  },
+  "notes": {
+    "placeholder": "Write your notes here..."
   },
   "businessTables": {
     "title": "Tables",

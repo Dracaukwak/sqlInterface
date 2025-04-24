@@ -17,7 +17,11 @@
     "businessTables": "Tables",
     "schema": "Schéma",
     "execution": "Exécuter",
-    "control": "Vérifier"
+    "control": "Vérifier",
+    "notes": "Notes"
+  },
+  "notes": {
+    "placeholder": "Écrivez vos notes ici..."
   },
   "businessTables": {
     "title": "Tables",
