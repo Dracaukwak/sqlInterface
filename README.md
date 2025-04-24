@@ -15,6 +15,7 @@ SQLab Interface provides a modern, browser-based GUI for SQLab adventures - educ
 - **Dark/Light Mode**: Toggle between dark and light themes for comfortable viewing
 - **Responsive Design**: Clean, intuitive layout that works across various screen sizes
 - **Drag and Drop Interface**: Rearrange tables for customized workspace organization
+- **Multiple Languages**: Currently supports English and French
 
 ## Getting Started
 
