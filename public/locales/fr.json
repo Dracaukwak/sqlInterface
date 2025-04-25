@@ -28,9 +28,8 @@
     "loading": "Chargement des tables..."
   },
   "schema": {
-    "title": "Schéma de la Base de Données",
-    "description": "Cette section affichera le schéma de la base de données.",
-    "developing": "Fonctionnalité en cours de développement..."
+    "loading": "Chargement du schéma...",
+    "notAvailable": "Schéma non disponible pour cette base de données."
   },
   "execution": {
     "title": "Exécuter",

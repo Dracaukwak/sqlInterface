@@ -28,9 +28,10 @@
     "loading": "Loading tables..."
   },
   "schema": {
-    "title": "Database Schema",
-    "description": "This section will display the database schema.",
-    "developing": "Feature under development..."
+    "schema": {
+      "loading": "Loading schema...",
+      "notAvailable": "Schema is not available for this database."
+    }
   },
   "execution": {
     "title": "Run",
