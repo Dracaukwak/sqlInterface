@@ -16,24 +16,26 @@
 
 <body>
 
-   <!-- Header with dynamic database name and theme toggle -->
-<header>
-    <h1><span id="database-name" data-i18n="app.loading">Loading...</span></h1>
-    <div class="language-selector">
-        <select id="language-selector">
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-        </select>
-    </div>
-    <div class="theme-toggle">
-        <i id="toggle-theme" class="fas fa-moon theme-icon" data-i18n-title="header.toggleTheme" title="Toggle theme"></i>
-    </div>
-</header>
+    <!-- Header with dynamic database name and theme toggle -->
+    <header>
+        <h1><span id="database-name" data-i18n="app.loading">Loading...</span></h1>
+        <div class="language-selector">
+            <select id="language-selector">
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+            </select>
+        </div>
+        <div class="theme-toggle">
+            <i id="toggle-theme" class="fas fa-moon theme-icon" data-i18n-title="header.toggleTheme"
+                title="Toggle theme"></i>
+        </div>
+    </header>
 
     <!-- Context area for instructions and exercise description -->
     <div class="context-container">
         <div class="context-content">
-            <p class="placeholder-text" data-i18n="context.placeholder">The context and exercise statement will appear here...</p>
+            <p class="placeholder-text" data-i18n="context.placeholder">The context and exercise statement will appear
+                here...</p>
         </div>
     </div>
 
@@ -52,7 +54,10 @@
         <div class="tab" data-tab="execution">
             <span data-i18n="tabs.execution">Run</span> <i id="execute-btn" class="fas fa-play-circle execute-icon"></i>
         </div>
-        <div class="tab" data-tab="control" data-i18n="tabs.control">Check</div>
+        <!-- Temporary button with no effect for now -->
+        <div class="tab" data-tab="control">
+            <span data-i18n="tabs.control">Check</span> <i id="check-btn" class="fas fa-check-circle execute-icon"></i>
+        </div>
         <div class="tab" data-tab="notes" data-i18n="tabs.notes">Notes</div>
     </div>
 
@@ -66,7 +71,7 @@
     <!-- Schema tab content -->
     <div id="schema" class="tab-content">
         <div id="schema-container">
-            
+
         </div>
     </div>
 
@@ -101,7 +106,8 @@
 
     <!-- Notes tab content -->
     <div id="notes" class="tab-content">
-        <textarea id="notes-textarea" data-i18n-placeholder="notes.placeholder" placeholder="Write your notes here..."></textarea>
+        <textarea id="notes-textarea" data-i18n-placeholder="notes.placeholder"
+            placeholder="Write your notes here..."></textarea>
     </div>
 
     <!-- JavaScript modules -->
