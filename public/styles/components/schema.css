@@ -1,0 +1,60 @@
+/**
+ * Schema component styles
+ * For database schema display
+ */
+
+/* ===== Schema Display ===== */
+#schema-container {
+    padding: var(--spacing-md);
+    overflow: auto;
+    max-height: 70vh;
+  }
+  
+  #schema-container svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    box-shadow: var(--shadow-sm);
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-md);
+  }
+  
+  /* Style for tables in the schema */
+  #schema-container .table-entity {
+    fill: var(--color-light-blue);
+    stroke: var(--color-primary);
+    stroke-width: 2;
+  }
+  
+  /* Style for relationship lines */
+  #schema-container .relationship-line {
+    stroke: var(--color-primary);
+    stroke-width: 2;
+  }
+  
+  /* Style for labels in the schema */
+  #schema-container .label {
+    font-family: var(--font-primary);
+    fill: var(--color-dark);
+  }
+  
+  /* Dark theme overrides for schema */
+  .dark-theme #schema-container svg {
+    background-color: var(--dark-element);
+    border: 1px solid #444;
+  }
+  
+  .dark-theme #schema-container .table-entity {
+    fill: var(--dark-primary);
+    stroke: var(--dark-light);
+  }
+  
+  .dark-theme #schema-container .relationship-line {
+    stroke: var(--dark-light);
+  }
+  
+  .dark-theme #schema-container .label {
+    fill: var(--dark-text);
+  }

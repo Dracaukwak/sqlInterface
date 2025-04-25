@@ -12,5 +12,14 @@
 /* Import layout (structure, containers, responsive design) */
 @import url('layout.css');
 
-/* Import components (UI elements like tabs, tables, forms) */
-@import url('components.css');
+/* Import component styles */
+@import url('components/tabs.css');
+@import url('components/forms.css');
+@import url('components/tables.css');
+@import url('components/dropdown.css');
+@import url('components/query.css');
+@import url('components/accordion.css');
+@import url('components/schema.css');
+
+/* Import dark mode overrides last */
+@import url('components/darkmode.css');
