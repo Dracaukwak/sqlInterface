@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!window.i18n.initialized) {
             await window.i18n.initPromise;
         }
-        
+
         // Initialize the UI components that handle localization
         initLocalization();
     } catch (error) {
         console.error('Error initializing localization:', error);
     }
-    
+
     // Initialize core components: tabs, query handling, and business tables
     initTabs();
     initQueryExecution();
@@ -65,11 +65,36 @@ document.addEventListener('DOMContentLoaded', async () => {
             themeToggle.classList.add('fa-moon');
         }
     });
-    
+
     // Update title when language changes
     window.addEventListener('localeChanged', () => {
         loadAdventureTitle();
     });
+
+    // Hamburger menu handling
+    const menuToggle = document.getElementById('menu-toggle');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+
+    if (menuToggle && dropdownMenu) {
+        // Toggle dropdown menu visibility on hamburger icon click
+        menuToggle.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent immediate closing
+            dropdownMenu.classList.toggle('active');
+
+            // Optional icon rotation for visual feedback
+            menuToggle.style.transform = dropdownMenu.classList.contains('active')
+                ? 'rotate(90deg)'
+                : 'rotate(0)';
+        });
+
+        // Close the menu when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.hamburger-menu') && dropdownMenu.classList.contains('active')) {
+                dropdownMenu.classList.remove('active');
+                menuToggle.style.transform = 'rotate(0)';
+            }
+        });
+    }
 });
 
 /**
@@ -78,19 +103,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function loadAdventureTitle() {
     try {
         const titleElement = document.getElementById('database-name');
-        
+
         // Show loading indicator
         titleElement.textContent = window.i18n.t('app.loading');
-        
+
         // Get adventure title directly from sqlab_info table
         const adventureTitle = await getAdventureTitle();
-        
+
         // Update page title and displayed name
         document.title = `${adventureTitle}`;
         titleElement.textContent = adventureTitle;
     } catch (error) {
         console.error('Error loading adventure title:', error);
-        
+
         // Fallback text in case of error
         document.getElementById('database-name').textContent = window.i18n.t('database.unknown');
     }

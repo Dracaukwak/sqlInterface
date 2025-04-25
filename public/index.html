@@ -16,19 +16,31 @@
 
 <body>
 
-    <!-- Header with dynamic database name and theme toggle -->
+    <!-- Header with dynamic database name and left-positioned hamburger menu -->
     <header>
+        <!-- Hamburger menu that contains language selector and theme toggle -->
+        <div class="hamburger-menu">
+            <i id="menu-toggle" class="fas fa-bars"></i>
+            <div class="dropdown-menu">
+                <!-- Language selector moved inside dropdown -->
+                <div class="menu-item language-container">
+                    <span class="menu-label" data-i18n="header.language">Language</span>
+                    <select id="language-selector">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                    </select>
+                </div>
+                <!-- Theme toggle moved inside dropdown -->
+                <div class="menu-item theme-container">
+                    <span class="menu-label" data-i18n="header.theme">Theme</span>
+                    <i id="toggle-theme" class="fas fa-moon theme-icon" data-i18n-title="header.toggleTheme"
+                        title="Toggle theme"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Title -->
         <h1><span id="database-name" data-i18n="app.loading">Loading...</span></h1>
-        <div class="language-selector">
-            <select id="language-selector">
-                <option value="en">English</option>
-                <option value="fr">Français</option>
-            </select>
-        </div>
-        <div class="theme-toggle">
-            <i id="toggle-theme" class="fas fa-moon theme-icon" data-i18n-title="header.toggleTheme"
-                title="Toggle theme"></i>
-        </div>
     </header>
 
     <!-- Context area for instructions and exercise description -->

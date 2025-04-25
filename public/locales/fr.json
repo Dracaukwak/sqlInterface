@@ -4,7 +4,9 @@
     "loading": "Chargement..."
   },
   "header": {
-    "toggleTheme": "Changer de thème"
+    "toggleTheme": "Changer de thème",
+    "language": "Langue",
+    "theme": "Thème"
   },
   "context": {
     "placeholder": "Le contexte et l'énoncé de l'exercice apparaîtront ici..."

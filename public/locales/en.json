@@ -4,7 +4,9 @@
     "loading": "Loading..."
   },
   "header": {
-    "toggleTheme": "Toggle theme"
+    "toggleTheme": "Toggle theme",
+    "language": "Language",
+    "theme": "Theme"
   },
   "context": {
     "placeholder": "The context and exercise statement will appear here..."
@@ -28,10 +30,8 @@
     "loading": "Loading tables..."
   },
   "schema": {
-    "schema": {
-      "loading": "Loading schema...",
-      "notAvailable": "Schema is not available for this database."
-    }
+    "loading": "Loading schema...",
+    "notAvailable": "Schema is not available for this database."
   },
   "execution": {
     "title": "Run",

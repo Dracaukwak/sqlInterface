@@ -3,6 +3,71 @@
  * Defines reusable UI components such as tabs, tables, and query input
  */
 
+
+/* === Hamburger menu styles === */
+.hamburger-menu {
+  position: absolute;
+  left: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 1000;
+}
+
+#menu-toggle {
+  font-size: 1.5rem;
+  color: var(--color-white);
+  transition: transform var(--transition-medium);
+}
+
+.dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-md);
+  min-width: 180px;
+  display: none;
+  padding: var(--spacing-sm) 0;
+  margin-top: var(--spacing-sm);
+}
+
+.dropdown-menu.active {
+  display: block;
+}
+
+.menu-item {
+  padding: var(--spacing-sm) var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color var(--transition-fast);
+}
+
+.menu-item:hover {
+  background-color: var(--color-light-blue);
+}
+
+.menu-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-dark);
+  margin-right: var(--spacing-md);
+  
+}
+
+/* Make theme toggle work within the dropdown */
+.menu-item .theme-icon {
+  color: var(--color-primary);
+}
+
+/* Responsive adaptations */
+@media (max-width: 768px) {
+  .hamburger-menu {
+    left: var(--spacing-sm);
+  }
+}
+
 /* ===== Tabs Navigation ===== */
 .tabs {
   display: flex;
@@ -169,13 +234,11 @@
   left: 0;
   right: 0;
   height: 10px;
-  background: repeating-linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0.1) 10px,
-    rgba(255, 255, 255, 0.2) 10px,
-    rgba(255, 255, 255, 0.2) 20px
-  );
+  background: repeating-linear-gradient(45deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.1) 10px,
+      rgba(255, 255, 255, 0.2) 10px,
+      rgba(255, 255, 255, 0.2) 20px);
   border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
   animation: waveMotion 10s infinite linear;
   z-index: 15;
@@ -183,14 +246,26 @@
 
 /* Animation for the shark fin */
 @keyframes sharkFin {
-  0%, 100% { right: 20px; }
-  50% { right: calc(100% - 50px); }
+
+  0%,
+  100% {
+    right: 20px;
+  }
+
+  50% {
+    right: calc(100% - 50px);
+  }
 }
 
 /* Animation for the waves */
 @keyframes waveMotion {
-  0% { background-position: 0 0; }
-  100% { background-position: 50px 0; }
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 50px 0;
+  }
 }
 
 /* ===== Tables ===== */
@@ -201,7 +276,8 @@ table {
   box-shadow: var(--shadow-sm);
 }
 
-th, td {
+th,
+td {
   padding: var(--spacing-sm) var(--spacing-md);
   text-align: left;
   border: 1px solid #ddd;
@@ -298,8 +374,8 @@ tr:hover {
   text-align: left;
   padding: var(--spacing-xs) var(--spacing-sm);
   margin-left: var(--spacing-sm);
-  
-  
+
+
 }
 
 .table-name {
@@ -400,7 +476,7 @@ tr:hover {
 #language-selector {
   background-color: transparent;
   border: none;
-  color: var(--color-white);
+  color: var(--color-dark); 
   font-size: var(--font-size-sm);
   cursor: pointer;
   padding: var(--spacing-xs) var(--spacing-sm);
@@ -408,16 +484,17 @@ tr:hover {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 0.5rem center;
   background-size: 1em;
   padding-right: 1.5rem;
+  font-weight: var(--font-weight-bold);
 }
 
 #language-selector option {
-  background-color: var(--color-primary);
-  color: var(--color-white);
+  background-color: var(--color-white);
+  color: var(--color-dark);
 }
 
 /* ===== Dark Theme Overrides ===== */
@@ -465,13 +542,11 @@ tr:hover {
 }
 
 .dark-theme .ocean-waves {
-  background: repeating-linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.15),
-    rgba(255, 255, 255, 0.15) 10px,
-    rgba(255, 255, 255, 0.25) 10px,
-    rgba(255, 255, 255, 0.25) 20px
-  );
+  background: repeating-linear-gradient(45deg,
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0.15) 10px,
+      rgba(255, 255, 255, 0.25) 10px,
+      rgba(255, 255, 255, 0.25) 20px);
 }
 
 /* Table-related dark theme */
@@ -492,7 +567,8 @@ tr:hover {
   background-color: #3a3a3a;
 }
 
-.dark-theme .row-number-header, .dark-theme .row-number {
+.dark-theme .row-number-header,
+.dark-theme .row-number {
   background-color: #383838;
   border-right: 2px solid #555;
 }
@@ -559,9 +635,13 @@ tr:hover {
 .dark-theme .language-selector:hover {
   background-color: rgba(0, 0, 0, 0.5);
 }
+.dark-theme #language-selector {
+  color: var(--dark-text);
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f0f0f0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+}
 
 .dark-theme #language-selector option {
-  background-color: var(--dark-primary);
+  background-color: var(--dark-element);
   color: var(--dark-text);
 }
 
@@ -575,4 +655,22 @@ tr:hover {
 .dark-theme #notes-textarea:focus {
   border-color: var(--dark-light);
   box-shadow: 0 0 5px rgba(106, 157, 160, 0.3);
+}
+
+/* Dark theme hamburger menu */
+.dark-theme .dropdown-menu {
+  background-color: var(--dark-element);
+  border: 1px solid #444;
+}
+
+.dark-theme .menu-label {
+  color: var(--dark-text);
+}
+
+.dark-theme .menu-item:hover {
+  background-color: var(--dark-primary);
+}
+
+.dark-theme .menu-item .theme-icon {
+  color: var(--dark-text);
 }
