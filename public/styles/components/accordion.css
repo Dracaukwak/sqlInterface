@@ -83,12 +83,6 @@
     font-size: 0.85em;
   }
   
-  .toggle-icon {
-    flex: 0 0 auto;
-    color: var(--color-primary);
-    transition: transform var(--transition-medium);
-  }
-  
   .table-content {
     display: none;
     padding: 0;
