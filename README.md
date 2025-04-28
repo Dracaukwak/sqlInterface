@@ -56,6 +56,22 @@ SQLab Interface provides a modern, browser-based GUI for SQLab adventures - educ
    http://localhost:3000
    ```
 
+## Database Configuration
+
+To configure your database connection:
+
+1. Open the `config.js` file in the `server` directory
+2. Update the following settings to match your environment:
+   ```javascript
+   const dbConfig = {
+     host: 'localhost',     // Your database host
+     port: 3306,            // Your database port 
+     database: 'sqlab_island', // Your database name
+     user: 'root',          // Your database username
+     password: 'pass',   // Your database password
+     connectionLimit: 5     // Maximum number of connections
+   };
+
 ## Usage
 
 1. **Executing Queries**:
@@ -99,5 +115,5 @@ SQLab Interface provides a modern, browser-based GUI for SQLab adventures - educ
 ## Troubleshooting
 
 - **Database Connection Error**: Verify that your MariaDB/MySQL server is running and credentials are correct
-- **Port Error**: If port 3000 is already in use, modify the `port` variable in `server/server.js`
+- **Port Error**: If port 3000 is already in use, modify the `port` variable in `server/config.js`
 - **File Access Issues**: Make sure to run the server from the project's root directory
