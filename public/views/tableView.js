@@ -138,23 +138,10 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
 
     table.innerHTML = `<thead>${headerHtml}</thead><tbody>${bodyHtml}</tbody>`;
 
-    // Row count summary
-    const rowCounter = document.createElement('div');
-    rowCounter.className = 'row-counter';
-
-    // Use the translation with pluralization
-    const plural = displayedRows > 1 ? 's' : '';
-    rowCounter.textContent = t('table.rowCounter', {
-        displayedRows: displayedRows,
-        total: total,
-        plural: plural
-    });
-
     // Render all elements in the content area
     tableContent.innerHTML = '';
     tableContent.appendChild(tableActions);
     tableContent.appendChild(table);
-    tableContent.appendChild(rowCounter);
 
     // Pagination button handlers
     const prevButton = tableActions.querySelector('.prev-page');

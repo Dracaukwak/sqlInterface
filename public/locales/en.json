@@ -48,7 +48,6 @@
       "previous": "Previous",
       "next": "Next"
     },
-    "rowCounter": "Showing {displayedRows} row{plural} of {total} total",
     "nullValue": "NULL"
   },
   "database": {

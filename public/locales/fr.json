@@ -48,7 +48,6 @@
       "previous": "Précédent",
       "next": "Suivant"
     },
-    "rowCounter": "Affichage de {displayedRows} ligne{plural} sur {total} au total",
     "nullValue": "NULL"
   },
   "database": {
