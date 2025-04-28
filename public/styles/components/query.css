@@ -9,7 +9,7 @@
     position: relative;
   }
   
-  /* Ocean-themed text area with shark fin and waves */
+  /* Text area */
   .top-query {
     background: linear-gradient(to bottom, #084C61 0%, #107896 100%);
     border-radius: var(--border-radius-md);
@@ -43,56 +43,3 @@
     color: #ffffff;
   }
   
-  /* Shark fin element */
-  .shark-fin {
-    position: absolute;
-    right: 20px;
-    bottom: -10px;
-    width: 30px;
-    height: 25px;
-    background-color: #1e2a3a;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    z-index: 20;
-    transform: rotate(180deg);
-    animation: sharkFin 8s infinite ease-in-out;
-    pointer-events: none;
-  }
-  
-  /* Ocean waves element */
-  .ocean-waves {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 10px;
-    background: repeating-linear-gradient(45deg,
-        rgba(255, 255, 255, 0.1),
-        rgba(255, 255, 255, 0.1) 10px,
-        rgba(255, 255, 255, 0.2) 10px,
-        rgba(255, 255, 255, 0.2) 20px);
-    border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
-    animation: waveMotion 10s infinite linear;
-    z-index: 15;
-  }
-  
-  /* Animation for the shark fin */
-  @keyframes sharkFin {
-    0%, 100% {
-      right: 20px;
-    }
-  
-    50% {
-      right: calc(100% - 50px);
-    }
-  }
-  
-  /* Animation for the waves */
-  @keyframes waveMotion {
-    0% {
-      background-position: 0 0;
-    }
-  
-    100% {
-      background-position: 50px 0;
-    }
-  }
