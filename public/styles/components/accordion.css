@@ -92,9 +92,6 @@
   .table-content {
     display: none;
     padding: 0;
-    max-height: 400px;
-    overflow-y: auto;
-    transition: max-height var(--transition-medium);
     min-height: min-content;
   }
   
