@@ -24,15 +24,30 @@
   }
   
   /* Tab-related dark theme */
+  .dark-theme .tabs {
+    border-bottom-color: #30363d; 
+  }
+  
   .dark-theme .tab {
-    background-color: var(--dark-element);
-    color: var(--dark-light);
-    border-color: #444;
+    color: #8b949e; 
+    border: 1px solid transparent;
+  }
+  
+  .dark-theme .tab:hover {
+    color: #c9d1d9; 
   }
   
   .dark-theme .tab.active {
-    background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
-    color: var(--dark-text);
+    color: #c9d1d9; 
+    background-color: transparent;
+    border-color: #30363d; 
+    border-bottom: 1px solid var(--dark-bg); 
+    font-weight: 600;
+  }
+  
+  .dark-theme .tab-content {
+    border-color: #30363d;
+    background-color: transparent;
   }
   
   .dark-theme .execute-icon {
@@ -43,10 +58,6 @@
     color: #ff7b89;
   }
   
-  .dark-theme .tab-content {
-    background-color: var(--dark-bg);
-    border-color: #444;
-  }
   
   /* Query-related dark theme */
   .dark-theme .top-query {
