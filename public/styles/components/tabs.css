@@ -76,11 +76,6 @@
   
   .tab-content {
     display: none;
-    padding: var(--spacing-lg);
-    border: 1px solid #ddd;
-    border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
-    background-color: var(--color-white);
-    box-shadow: var(--shadow-sm);
   }
   
   .tab-content.active {
