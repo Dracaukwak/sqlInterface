@@ -9,7 +9,7 @@
     position: relative;
   }
   
-  /* Ocean-themed text area with shark fin and waves */
+  /* Text area */
   .top-query {
     background: linear-gradient(to bottom, #084C61 0%, #107896 100%);
     border-radius: var(--border-radius-md);

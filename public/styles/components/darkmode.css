@@ -61,19 +61,6 @@
     z-index: 10;
   }
   
-  .dark-theme .shark-fin {
-    background-color: #4CB4E7;
-    box-shadow: 0 0 8px rgba(76, 180, 231, 0.8);
-  }
-  
-  .dark-theme .ocean-waves {
-    background: repeating-linear-gradient(45deg,
-        rgba(255, 255, 255, 0.15),
-        rgba(255, 255, 255, 0.15) 10px,
-        rgba(255, 255, 255, 0.25) 10px,
-        rgba(255, 255, 255, 0.25) 20px);
-  }
-  
   /* Table-related dark theme */
   .dark-theme th {
     background-color: var(--dark-primary);

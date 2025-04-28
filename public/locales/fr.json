@@ -23,7 +23,7 @@
     "notes": "Notes"
   },
   "notes": {
-    "placeholder": "Écrivez vos notes ici..."
+    "placeholder": "Ce que vous écrivez ici est enregistré localement et persistera entre les sessions."
   },
   "businessTables": {
     "title": "Tables",

@@ -24,7 +24,6 @@ export function renderBusinessTables(tables) {
             <div class="table-columns" id="columns-${tableName}">
                 <span class="loading-columns">${t('businessTables.loadingColumns') || 'Loading columns...'}</span>
             </div>
-            <div class="toggle-icon">▼</div>
         `;
 
         // Create the collapsible content area
@@ -37,9 +36,6 @@ export function renderBusinessTables(tables) {
         tableHeader.addEventListener('click', function () {
             if (window.dragging) return;
             tableContent.classList.toggle('active');
-            const toggleIcon = tableHeader.querySelector('.toggle-icon');
-            toggleIcon.textContent = tableContent.classList.contains('active') ? '▲' : '▼';
-
             if (tableContent.classList.contains('active') && tableContent.querySelector('.loading')) {
                 window.loadTableData(tableName, 0, 10);
             }

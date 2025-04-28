@@ -97,7 +97,6 @@ h1 {
 #business-tables-container {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
 }
 
 /* Dark theme overrides */
