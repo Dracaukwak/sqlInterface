@@ -19,10 +19,20 @@ async function executeQuery(req, res, next) {
     // Execute the query
     const rows = await databaseService.executeQuery(query);
     
+    // Filter out hash columns from results
+    const filteredColumns = rows.length > 0 
+      ? Object.keys(rows[0]).filter(col => !col.toLowerCase().endsWith('hash'))
+      : [];
+    
+    // Create filtered rows without hash data
+    const filteredRows = rows.map(row => {
+      return filteredColumns.map(col => row[col]);
+    });
+    
     // Format the results
     const results = {
-      columns: rows.length > 0 ? Object.keys(rows[0]) : [],
-      rows: rows.map(row => Object.values(row)),
+      columns: filteredColumns,
+      rows: filteredRows,
       totalRows: rows.length
     };
     

@@ -63,17 +63,18 @@ async function loadTableColumns(tableName) {
     try {
         // Load just one row to get column names without fetching all data
         const response = await fetch(`/table-data/${tableName}?offset=0&limit=1`);
-        
+
         if (!response.ok) {
             throw new Error(t('error.tableData'));
         }
-        
+
         const data = await response.json();
         const columnsElement = document.getElementById(`columns-${tableName}`);
-        
+
         if (data.columns && data.columns.length > 0) {
-            // Format column names as a clean, compact list with styling
-            columnsElement.innerHTML = data.columns.map(column => 
+            // Filter out hash columns and format the remaining ones
+            const filteredColumns = data.columns.filter(col => !col.toLowerCase().endsWith('hash'));
+            columnsElement.innerHTML = filteredColumns.map(column =>
                 `<span class="column-name">${escapeHtml(column)}</span>`
             ).join(', ');
         } else {
@@ -85,7 +86,6 @@ async function loadTableColumns(tableName) {
         columnsElement.innerHTML = '<span class="error-columns">Failed to load columns</span>';
     }
 }
-
 /**
  * Renders a table's data inside its content area, with pagination and row numbers
  * @param {string} tableName - The name of the table
@@ -102,7 +102,7 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
     // Also update the column names in the header when data is loaded
     const columnsElement = document.getElementById(`columns-${tableName}`);
     if (columnsElement && data.columns && data.columns.length > 0) {
-        columnsElement.innerHTML = data.columns.map(column => 
+        columnsElement.innerHTML = data.columns.map(column =>
             `<span class="column-name">${escapeHtml(column)}</span>`
         ).join(', ');
     }
@@ -142,7 +142,7 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
     // Row count summary
     const rowCounter = document.createElement('div');
     rowCounter.className = 'row-counter';
-    
+
     // Use the translation with pluralization
     const plural = displayedRows > 1 ? 's' : '';
     rowCounter.textContent = t('table.rowCounter', {

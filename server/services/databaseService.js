@@ -97,13 +97,23 @@ async function getTableData(tableName, offset = 0, limit = 10) {
     [parseInt(limit), parseInt(offset)]
   );
   
+  // Filter out hash columns
+  const filteredColumns = rows.length > 0 
+    ? Object.keys(rows[0]).filter(col => !col.toLowerCase().endsWith('hash'))
+    : [];
+  
+  // Create filtered rows without hash data
+  const filteredRows = rows.map(row => {
+    return filteredColumns.map(col => row[col]);
+  });
+  
   return {
     tableName,
     total,
     offset: parseInt(offset),
     limit: parseInt(limit),
-    columns: rows.length > 0 ? Object.keys(rows[0]) : [],
-    rows: rows.map(row => Object.values(row))
+    columns: filteredColumns,
+    rows: filteredRows
   };
 }
 

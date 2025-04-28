@@ -5,9 +5,9 @@
 const dbConfig = {
     host: 'localhost',
     port: 3307,
-    database: 'sessform',
-    user: 'root',
-    password: 'student',
+    database: 'sqlab_database',
+    user: 'username',
+    password: 'password',
     connectionLimit: 5
   };
   
