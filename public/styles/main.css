@@ -19,7 +19,6 @@
 @import url('components/dropdown.css');
 @import url('components/query.css');
 @import url('components/accordion.css');
-@import url('components/schema.css');
 
 /* Import dark mode overrides last */
 @import url('components/darkmode.css');
