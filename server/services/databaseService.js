@@ -3,7 +3,7 @@ const mariadb = require('mariadb');
 // Create database connection pool
 const pool = mariadb.createPool({
   host: 'localhost',
-  port: 3307,
+  port: 3306,
   database: 'sqlab_island',
   user: 'root',
   password: 'student',
@@ -53,7 +53,7 @@ async function getDatabaseInfo() {
     return {
       name: dbName,
       host: hostInfo[0].host || 'localhost',
-      port: 3307,
+      port: 3306,
       adventure: formatAdventureName(dbName)
     };
   } catch (err) {
@@ -70,13 +70,19 @@ async function getDatabaseInfo() {
  * Gets the list of tables from the current database
  * @returns {Promise<Array>} List of table names
  */
-async function listTables(database = 'sqlab_island') {
-  return await executeQuery(`
-    SELECT table_name 
+async function listTables() {
+  // Get current database name
+  const dbInfo = await executeQuery("SELECT DATABASE() as name");
+  const currentDatabase = dbInfo[0].name;
+  
+  
+  const result = await executeQuery(`
+    SELECT table_name AS table_name 
     FROM information_schema.tables 
     WHERE table_schema = ? 
     ORDER BY table_name
-  `, [database]);
+  `, [currentDatabase]);
+  return result;
 }
 
 /**
