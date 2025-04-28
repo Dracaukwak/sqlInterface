@@ -21,7 +21,6 @@ export function renderBusinessTables(tables) {
         tableHeader.className = 'table-header';
         tableHeader.innerHTML = `
             <div class="table-name">${escapeHtml(tableName)}</div>
-            <div class="table-columns-separator">:</div>
             <div class="table-columns" id="columns-${tableName}">
                 <span class="loading-columns">${t('businessTables.loadingColumns') || 'Loading columns...'}</span>
             </div>
