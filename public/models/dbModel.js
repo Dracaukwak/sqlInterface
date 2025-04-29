@@ -7,12 +7,14 @@ import { t } from '../controllers/localizationController.js';
  */
 export async function getAdventureTitle() {
     try {
-        // Execute SQL query to get the title
+        // Direct query for the title without pagination to avoid issues
         const response = await fetch('/execute-query', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                query: "SELECT value FROM sqlab_info WHERE name = 'title' LIMIT 1" 
+                query: "SELECT value FROM sqlab_info WHERE name = 'title' LIMIT 1",
+                // Set special flag to bypass pagination for this system query
+                skipPagination: true 
             })
         });
 
@@ -41,12 +43,13 @@ export async function getAdventureTitle() {
  */
 export async function getRelationalSchema() {
     try {
-        // Execute SQL query to get the relational schema
+        // Similar special query for schema without pagination
         const response = await fetch('/execute-query', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                query: "SELECT value FROM sqlab_info WHERE name = 'relational_schema' LIMIT 1" 
+                query: "SELECT value FROM sqlab_info WHERE name = 'relational_schema' LIMIT 1",
+                skipPagination: true
             })
         });
 

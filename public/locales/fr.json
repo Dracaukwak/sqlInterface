@@ -46,7 +46,8 @@
   "table": {
     "pagination": {
       "previous": "Précédent",
-      "next": "Suivant"
+      "next": "Suivant",
+      "of" :"sur"
     },
     "nullValue": "NULL"
   },

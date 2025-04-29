@@ -107,8 +107,13 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
     tableActions.className = 'table-actions';
     tableActions.innerHTML = `
         <div class="pagination">
-            <button class="prev-page" ${currentOffset === 0 ? 'disabled' : ''}>${t('table.pagination.previous')}</button>
-            <button class="next-page" ${currentOffset + limit >= total ? 'disabled' : ''}>${t('table.pagination.next')}</button>
+            <button class="prev-page" ${currentOffset === 0 ? 'disabled' : ''} data-i18n="table.pagination.previous">Previous</button>
+            <button class="next-page" ${currentOffset + limit >= total ? 'disabled' : ''} data-i18n="table.pagination.next">Next</button>
+            <span class="pagination-info">
+                ${currentOffset + 1}-${Math.min(currentOffset + limit, total)} 
+                <span data-i18n="table.pagination.of">of</span> 
+                ${total}
+            </span>
         </div>
     `;
 
@@ -151,7 +156,6 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
         loadTableData(tableName, currentOffset + limit, limit);
     });
 }
-
 /**
  * Initializes drag-and-drop functionality for rearranging table accordions
  */
