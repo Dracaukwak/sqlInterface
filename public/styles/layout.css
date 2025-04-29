@@ -86,7 +86,7 @@ h1 {
 
 .results-container {
   overflow-x: auto;
-  max-height: 500px;
+  max-height:  var(--results-max-height, 500px);
   overflow-y: auto;
   border: 1px solid #ddd;
   border-radius: var(--border-radius-sm);

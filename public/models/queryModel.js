@@ -2,6 +2,7 @@
  * Model for executing SQL queries via the API with pagination support
  */
 import { t } from '../controllers/localizationController.js';
+import { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT } from '../utils/constants.js';
 
 /**
  * Sends a SQL query to the backend for execution with pagination
@@ -10,7 +11,7 @@ import { t } from '../controllers/localizationController.js';
  * @param {number} limit - Number of rows to retrieve
  * @returns {Promise<Object>} - Resolves with the query results and pagination metadata
  */
-export async function executeQuery(query, offset = 0, limit = 10) {
+export async function executeQuery(query, offset = DEFAULT_PAGE_OFFSET, limit = DEFAULT_PAGE_LIMIT) {
     const response = await fetch('/execute-query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

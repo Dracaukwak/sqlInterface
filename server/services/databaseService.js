@@ -1,5 +1,6 @@
 const mariadb = require('mariadb');
 const { dbConfig } = require('../config');
+const { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT } = require('../../public/utils/constants');
 
 // Create database connection pool
 const pool = mariadb.createPool(dbConfig);
@@ -86,7 +87,7 @@ async function listTables() {
  * @param {number} limit - Number of rows to retrieve
  * @returns {Promise<Object>} Table data and metadata
  */
-async function getTableData(tableName, offset = 0, limit = 10) {
+async function getTableData(tableName, offset = DEFAULT_PAGE_OFFSET, limit = DEFAULT_PAGE_LIMIT) {
   // Get total row count
   const countResult = await executeQuery(`SELECT COUNT(*) as total FROM ${tableName}`);
   const total = countResult[0].total;

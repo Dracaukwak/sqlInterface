@@ -55,4 +55,15 @@
   --dark-primary: #0a5e78;
   --dark-secondary: #3d7275;
   --dark-light: #6a9da0;
+
+  /* Dimensions */
+  --results-max-height: 500px;
+  --query-textarea-height: 120px;
+  --notes-textarea-height: 400px;
+  --notes-textarea-min-height: 200px;
+  --row-number-width: 40px;
+  
+  /* Pagination */
+  --default-page-limit: 10;
+  --default-page-offset: 0;
 }

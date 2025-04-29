@@ -2,6 +2,7 @@ import { executeQuery } from '../models/queryModel.js';
 import { displayResults } from '../views/queryView.js';
 import { showError } from '../utils/paginationUtils.js';
 import { t } from '../controllers/localizationController.js';
+import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_OFFSET } from '../utils/constants.js';
 
 /**
  * Initializes the SQL query execution logic with pagination support
@@ -14,15 +15,15 @@ export function initQueryExecution() {
     
     // Variables to store current query and pagination state
     let currentQuery = '';
-    let currentOffset = 0;
-    let currentLimit = 10;
+    let currentOffset = DEFAULT_PAGE_OFFSET;
+    let currentLimit = DEFAULT_PAGE_LIMIT;
 
     // Execute query on button click
     executeBtn.addEventListener('click', (e) => {
         e.stopPropagation(); // Prevent tab click from interfering
         
         // Reset offset when executing a new query
-        currentOffset = 0;
+        currentOffset = DEFAULT_PAGE_OFFSET;
         executeQueryHandler();
     });
 
@@ -30,7 +31,7 @@ export function initQueryExecution() {
     queryInput.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.key === 'Enter') {
             // Reset offset when executing a new query
-            currentOffset = 0;
+            currentOffset = DEFAULT_PAGE_OFFSET;
             executeQueryHandler();
         }
     });

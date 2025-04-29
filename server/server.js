@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const { DEFAULT_SERVER_PORT } = require('../public/utils/constants');
 
 // Import routes
 const apiRoutes = require('./routes/apiRoutes');
@@ -11,7 +12,7 @@ const staticRoutes = require('./routes/staticRoutes');
 const bigIntHandler = require('./middlewares/bigIntHandler');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || DEFAULT_SERVER_PORT;
 
 // Configure global middlewares
 app.use(bodyParser.json());

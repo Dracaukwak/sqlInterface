@@ -27,7 +27,7 @@
     border: none;
     padding: var(--spacing-md);
     width: 100%;
-    height: 120px;
+    height: var(--query-textarea-height, 120px);
     min-height: 80px;
     font-family: var(--font-code);
     resize: vertical;

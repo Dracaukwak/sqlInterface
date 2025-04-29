@@ -6,14 +6,14 @@
 /* ===== Notes Textarea ===== */
 #notes-textarea {
     width: 100%;
-    height: 400px;
+    height: var(--notes-textarea-height, 400px);
     padding: var(--spacing-md);
     border: 1px solid #ddd;
     border-radius: var(--border-radius-sm);
     font-family: var(--font-primary);
     font-size: var(--font-size-md);
     resize: vertical;
-    min-height: 200px;
+    min-height: var(--notes-textarea-min-height, 200px);
     background-color: var(--color-white);
   }
   

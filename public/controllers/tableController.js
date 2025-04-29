@@ -2,6 +2,7 @@ import { getTables, getTableData } from '../models/tableModel.js';
 import { renderBusinessTables, renderTableData, initDragAndDrop } from '../views/tableView.js';
 import { t } from '../controllers/localizationController.js';
 import { showError } from '../utils/paginationUtils.js';
+import { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT, DRAG_END_DELAY } from '../utils/constants.js';
 
 /**
  * Initializes the "Business Tables" tab functionality
@@ -33,7 +34,7 @@ export function initBusinessTables() {
      * Loads and displays a specific table with pagination
      * Exposed globally to be reused during pagination or reopen
      */
-    window.loadTableData = async function (tableName, offset = 0, limit = 10) {
+    window.loadTableData = async function (tableName, offset = DEFAULT_PAGE_OFFSET, limit = DEFAULT_PAGE_LIMIT) {
         try {
             const data = await getTableData(tableName, offset, limit);
             renderTableData(tableName, data, offset, window.loadTableData);

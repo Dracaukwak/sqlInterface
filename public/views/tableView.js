@@ -1,6 +1,7 @@
 import { escapeHtml } from '../utils/helpers.js';
 import { t } from '../controllers/localizationController.js';
 import { renderPaginatedTable } from '../utils/paginationUtils.js';
+import { DEFAULT_PAGE_LIMIT, DRAG_END_DELAY } from '../utils/constants.js';
 
 /**
  * Renders a list of business tables as collapsible accordions with column names
@@ -38,7 +39,7 @@ export function renderBusinessTables(tables) {
             if (window.dragging) return;
             tableContent.classList.toggle('active');
             if (tableContent.classList.contains('active') && tableContent.querySelector('.loading')) {
-                window.loadTableData(tableName, 0, 10);
+                window.loadTableData(tableName, 0, DEFAULT_PAGE_LIMIT);
             }
         });
 
@@ -92,7 +93,7 @@ async function loadTableColumns(tableName) {
  */
 export function renderTableData(tableName, data, currentOffset, loadTableData) {
     const tableContent = document.getElementById(`content-${tableName}`);
-    const limit = data.limit || 10;
+    const limit = data.limit || DEFAULT_PAGE_LIMIT;
 
     // Also update the column names in the header when data is loaded
     const columnsElement = document.getElementById(`columns-${tableName}`);
@@ -132,7 +133,7 @@ export function initDragAndDrop() {
 
         item.addEventListener('dragend', function () {
             this.classList.remove('dragging');
-            setTimeout(() => { window.dragging = false; }, 50);
+            setTimeout(() => { window.dragging = false; }, DRAG_END_DELAY);
         });
     });
 
