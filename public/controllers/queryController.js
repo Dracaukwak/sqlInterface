@@ -1,5 +1,6 @@
 import { executeQuery } from '../models/queryModel.js';
-import { displayResults, showError } from '../views/queryView.js';
+import { displayResults } from '../views/queryView.js';
+import { showError } from '../utils/paginationUtils.js';
 import { t } from '../controllers/localizationController.js';
 
 /**

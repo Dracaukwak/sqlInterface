@@ -1,5 +1,6 @@
 import { escapeHtml } from '../utils/helpers.js';
 import { t } from '../controllers/localizationController.js';
+import { renderPaginatedTable } from '../utils/paginationUtils.js';
 
 /**
  * Renders a list of business tables as collapsible accordions with column names
@@ -81,6 +82,7 @@ async function loadTableColumns(tableName) {
         columnsElement.innerHTML = '<span class="error-columns">Failed to load columns</span>';
     }
 }
+
 /**
  * Renders a table's data inside its content area, with pagination and row numbers
  * @param {string} tableName - The name of the table
@@ -90,9 +92,7 @@ async function loadTableColumns(tableName) {
  */
 export function renderTableData(tableName, data, currentOffset, loadTableData) {
     const tableContent = document.getElementById(`content-${tableName}`);
-    const total = data.total || data.rows.length;
     const limit = data.limit || 10;
-    const displayedRows = data.rows.length;
 
     // Also update the column names in the header when data is loaded
     const columnsElement = document.getElementById(`columns-${tableName}`);
@@ -102,60 +102,20 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
         ).join(', ');
     }
 
-    // Pagination control bar
-    const tableActions = document.createElement('div');
-    tableActions.className = 'table-actions';
-    tableActions.innerHTML = `
-        <div class="pagination">
-            <button class="prev-page" ${currentOffset === 0 ? 'disabled' : ''} data-i18n="table.pagination.previous">Previous</button>
-            <button class="next-page" ${currentOffset + limit >= total ? 'disabled' : ''} data-i18n="table.pagination.next">Next</button>
-            <span class="pagination-info">
-                ${currentOffset + 1}-${Math.min(currentOffset + limit, total)} 
-                <span data-i18n="table.pagination.of">of</span> 
-                ${total}
-            </span>
-        </div>
-    `;
-
+    // Create table element
     const table = document.createElement('table');
-
-    // Table headers with row number column
-    let headerHtml = '<tr><th class="row-number-header"></th>';
-    data.columns.forEach(column => {
-        headerHtml += `<th>${escapeHtml(column)}</th>`;
-    });
-    headerHtml += '</tr>';
-
-    // Table rows
-    let bodyHtml = '';
-    data.rows.forEach((row, index) => {
-        bodyHtml += '<tr>';
-        bodyHtml += `<td class="row-number">${currentOffset + index + 1}</td>`;
-        row.forEach(cell => {
-            bodyHtml += `<td>${escapeHtml(cell !== null ? cell : t('table.nullValue'))}</td>`;
-        });
-        bodyHtml += '</tr>';
-    });
-
-    table.innerHTML = `<thead>${headerHtml}</thead><tbody>${bodyHtml}</tbody>`;
-
-    // Render all elements in the content area
     tableContent.innerHTML = '';
-    tableContent.appendChild(tableActions);
     tableContent.appendChild(table);
 
-    // Pagination button handlers
-    const prevButton = tableActions.querySelector('.prev-page');
-    const nextButton = tableActions.querySelector('.next-page');
-
-    prevButton.addEventListener('click', () => {
-        loadTableData(tableName, Math.max(0, currentOffset - limit), limit);
-    });
-
-    nextButton.addEventListener('click', () => {
-        loadTableData(tableName, currentOffset + limit, limit);
-    });
+    // Use the shared pagination utility to render the table
+    renderPaginatedTable(
+        data, 
+        table, 
+        tableContent, 
+        (newOffset, newLimit) => loadTableData(tableName, newOffset, newLimit)
+    );
 }
+
 /**
  * Initializes drag-and-drop functionality for rearranging table accordions
  */

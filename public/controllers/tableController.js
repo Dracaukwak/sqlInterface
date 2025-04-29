@@ -1,6 +1,7 @@
 import { getTables, getTableData } from '../models/tableModel.js';
 import { renderBusinessTables, renderTableData, initDragAndDrop } from '../views/tableView.js';
 import { t } from '../controllers/localizationController.js';
+import { showError } from '../utils/paginationUtils.js';
 
 /**
  * Initializes the "Business Tables" tab functionality
@@ -24,7 +25,7 @@ export function initBusinessTables() {
             renderBusinessTables(filteredTables);
             initDragAndDrop(); // Enable drag and drop interaction
         } catch (error) {
-            tablesContainer.innerHTML = `<div class="error">${error.message}</div>`;
+            showError(error.message, tablesContainer);
         }
     };
 
@@ -38,7 +39,7 @@ export function initBusinessTables() {
             renderTableData(tableName, data, offset, window.loadTableData);
         } catch (error) {
             const content = document.getElementById(`content-${tableName}`);
-            content.innerHTML = `<div class="error">${error.message}</div>`;
+            showError(error.message, content);
         }
     };
 }
