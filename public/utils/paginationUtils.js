@@ -4,6 +4,7 @@
  */
 import { escapeHtml } from '../utils/helpers.js';
 import { t } from '../controllers/localizationController.js';
+import { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT } from '../utils/constants.js';
 
 /**
  * Renders pagination controls for any table
@@ -21,7 +22,7 @@ export function renderPaginationControls(containerElement, currentOffset, limit,
     
     paginationControls.innerHTML = `
         <div class="pagination">
-            <button class="prev-page" ${currentOffset === 0 ? 'disabled' : ''} data-i18n="table.pagination.previous">Previous</button>
+            <button class="prev-page" ${currentOffset === DEFAULT_PAGE_OFFSET ? 'disabled' : ''} data-i18n="table.pagination.previous">Previous</button>
             <button class="next-page" ${currentOffset + limit >= total ? 'disabled' : ''} data-i18n="table.pagination.next">Next</button>
             <span class="pagination-info">
                 ${currentOffset+1}-${Math.min(currentOffset+limit, total)} 
@@ -45,7 +46,7 @@ export function renderPaginationControls(containerElement, currentOffset, limit,
     const nextButton = paginationControls.querySelector('.next-page');
     
     prevButton.addEventListener('click', () => {
-        onPageChange(Math.max(0, currentOffset - limit), limit);
+        onPageChange(Math.max(DEFAULT_PAGE_OFFSET, currentOffset - limit), limit);
     });
     
     nextButton.addEventListener('click', () => {
@@ -77,7 +78,7 @@ export function renderTableHeaders(columns) {
  * @param {number} offset - Current offset for pagination (for row numbering)
  * @returns {string} - HTML string for all table rows
  */
-export function renderTableRows(rows, offset = 0) {
+export function renderTableRows(rows, offset = DEFAULT_PAGE_OFFSET) {
     return rows.map((row, index) => {
         let rowHtml = '<tr>';
         // Add row number cell
@@ -105,8 +106,8 @@ export function renderPaginatedTable(data, tableElement, containerElement, onPag
     if (data.total !== undefined) {
         renderPaginationControls(
             containerElement, 
-            data.offset || 0, 
-            data.limit || 10, 
+            data.offset || DEFAULT_PAGE_OFFSET, 
+            data.limit || DEFAULT_PAGE_LIMIT, 
             data.total, 
             onPageChange
         );
@@ -114,7 +115,7 @@ export function renderPaginatedTable(data, tableElement, containerElement, onPag
     
     // 2. Render table content
     const headers = renderTableHeaders(data.columns);
-    const rows = renderTableRows(data.rows, data.offset || 0);
+    const rows = renderTableRows(data.rows, data.offset || DEFAULT_PAGE_OFFSET);
     
     // 3. Update the table with new content
     tableElement.innerHTML = `<thead>${headers}</thead><tbody>${rows}</tbody>`;
