@@ -107,12 +107,13 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
     tableContent.innerHTML = '';
     tableContent.appendChild(table);
 
-    // Use the shared pagination utility to render the table
+    // Use the shared pagination utility to render the table with click-to-copy
     renderPaginatedTable(
         data,
         table,
         tableContent,
-        (newOffset, newLimit) => loadTableData(tableName, newOffset, newLimit)
+        (newOffset, newLimit) => loadTableData(tableName, newOffset, newLimit),
+        true // Enable click-to-copy functionality
     );
 }
 

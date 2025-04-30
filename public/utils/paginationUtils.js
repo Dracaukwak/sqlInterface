@@ -1,6 +1,5 @@
 /**
- * Shared pagination utilities for SQLab Interface
- * Centralizes pagination logic to be reused across different components
+ * Modified paginationUtils.js
  */
 import { escapeHtml } from '../utils/helpers.js';
 import { t } from '../controllers/localizationController.js';
@@ -73,12 +72,13 @@ export function renderTableHeaders(columns) {
 }
 
 /**
- * Renders table rows with automatic row numbering
+ * Renders table rows with automatic row numbering and click-to-copy functionality
  * @param {Array} rows - Array of row data
  * @param {number} offset - Current offset for pagination (for row numbering)
+ * @param {boolean} enableClickToCopy - Whether to enable click-to-copy functionality
  * @returns {string} - HTML string for all table rows
  */
-export function renderTableRows(rows, offset = DEFAULT_PAGE_OFFSET) {
+export function renderTableRows(rows, offset = DEFAULT_PAGE_OFFSET, enableClickToCopy = false) {
     return rows.map((row, index) => {
         let rowHtml = '<tr>';
         // Add row number cell
@@ -86,7 +86,12 @@ export function renderTableRows(rows, offset = DEFAULT_PAGE_OFFSET) {
         
         // Add data cells
         row.forEach(cell => {
-            rowHtml += `<td>${escapeHtml(cell !== null ? cell : t('table.nullValue'))}</td>`;
+            const cellContent = escapeHtml(cell !== null ? cell : t('table.nullValue'));
+            if (enableClickToCopy) {
+                rowHtml += `<td class="copyable" title="${t('table.clickToCopy') || 'Click to copy cell content'}">${cellContent}</td>`;
+            } else {
+                rowHtml += `<td>${cellContent}</td>`;
+            }
         });
         
         rowHtml += '</tr>';
@@ -100,8 +105,9 @@ export function renderTableRows(rows, offset = DEFAULT_PAGE_OFFSET) {
  * @param {HTMLElement} tableElement - Table element to populate
  * @param {HTMLElement} containerElement - Container element for the table
  * @param {Function} onPageChange - Callback for pagination changes
+ * @param {boolean} enableClickToCopy - Whether to enable click-to-copy functionality
  */
-export function renderPaginatedTable(data, tableElement, containerElement, onPageChange) {
+export function renderPaginatedTable(data, tableElement, containerElement, onPageChange, enableClickToCopy = false) {
     // 1. Add pagination controls if total count is available
     if (data.total !== undefined) {
         renderPaginationControls(
@@ -115,10 +121,94 @@ export function renderPaginatedTable(data, tableElement, containerElement, onPag
     
     // 2. Render table content
     const headers = renderTableHeaders(data.columns);
-    const rows = renderTableRows(data.rows, data.offset || DEFAULT_PAGE_OFFSET);
+    const rows = renderTableRows(data.rows, data.offset || DEFAULT_PAGE_OFFSET, enableClickToCopy);
     
     // 3. Update the table with new content
     tableElement.innerHTML = `<thead>${headers}</thead><tbody>${rows}</tbody>`;
+    
+    // 4. Add click-to-copy event listeners if enabled
+    if (enableClickToCopy) {
+        addCopyEventListeners(tableElement);
+    }
+}
+
+/**
+ * Adds click-to-copy event listeners to copyable cells in a table
+ * @param {HTMLElement} tableElement - The table element containing copyable cells
+ */
+function addCopyEventListeners(tableElement) {
+    tableElement.querySelectorAll('td.copyable').forEach(cell => {
+        cell.addEventListener('click', async function(e) {
+            // Get the text content of the cell
+            const textToCopy = this.textContent.trim();
+            
+            try {
+                // Try to use the clipboard API
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(textToCopy);
+                } else {
+                    // Fallback for older browsers
+                    const success = fallbackCopyTextToClipboard(textToCopy);
+                    if (!success) throw new Error('Fallback copying failed');
+                }
+                
+                // Visual feedback that copying was successful - using classes instead of inline styles
+                this.classList.add('copy-success');
+                
+                setTimeout(() => {
+                    this.classList.remove('copy-success');
+                }, 300);
+                
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                
+                // Visual feedback that copying failed - using classes instead of inline styles
+                this.classList.add('copy-error');
+                
+                setTimeout(() => {
+                    this.classList.remove('copy-error');
+                }, 300);
+            }
+            
+            // Prevent default action and propagation
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        
+        // Prevent text selection on double click
+        cell.addEventListener('dblclick', function(e) {
+            e.preventDefault();
+        });
+    });
+}
+
+/**
+ * Fallback method for browsers that don't support the Clipboard API
+ * @param {string} text - Text to copy to clipboard
+ * @returns {boolean} - Whether the operation was successful
+ */
+function fallbackCopyTextToClipboard(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    
+    // Make the textarea out of viewport
+    textArea.style.position = 'fixed';
+    textArea.style.top = '-9999px';
+    textArea.style.left = '-9999px';
+    
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    let successful = false;
+    try {
+        successful = document.execCommand('copy');
+    } catch (err) {
+        console.error('Fallback: Copying text failed', err);
+    }
+    
+    document.body.removeChild(textArea);
+    return successful;
 }
 
 /**
