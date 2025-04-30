@@ -6,43 +6,35 @@
 /* ===== Tabs Navigation ===== */
 .tabs {
     display: flex;
-    border-bottom: 1px solid #e1e4e8;
+    position: relative; /* Added for pseudo-element positioning */
     margin-bottom: var(--spacing-md);
-    
-  }
-  
+}
+
   .tab {
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
     cursor: pointer;
     color: #586069;
-    font-weight: 500;
+    font-weight: 400;
     font-size: var(--font-size-md);
     position: relative;
     display: flex;
     align-items: center;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     border-bottom: none;
-    border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
-    background-color: transparent;
-  }
-
-  
-  .tab:hover {
-    color: var(--color-primary);
+    border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+    background-color: #dcdcdc;
+    margin: 0 var(--spacing-sm);
   }
   
   .tab.active {
     color: var(--color-primary);
-    background-color: transparent; 
-    border-color: #e1e4e8; 
-    border-width: 1px;
+    border-color: #ccc;
+    border-width: 2px;
+    border-bottom: none; /* Remove bottom border */
     font-weight: 600;
-    margin-bottom: -1px;
-    z-index: 1;
-    border-bottom: 1px solid var(--color-light-gray); 
+    z-index: 2; /* Above the tabs::after border */
+    background-color: transparent;
   }
-  
-  
   .execute-icon {
     margin-left: var(--spacing-sm);
     color: var(--color-accent);
@@ -67,3 +59,27 @@
   .tab-content.active {
     display: block;
   }
+
+/* Add pseudo-element for the tab border */
+.tabs::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #ccc;
+  z-index: 1;
+}
+
+/* Add pseudo-element to create the "gap" effect in the border */
+.tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0px; /* Position at the bottom of the tab */
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-light-gray);
+  z-index: 2; /* Must be above the tabs::after border */
+}
