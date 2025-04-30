@@ -16,7 +16,6 @@ export function renderBusinessTables(tables) {
         const tableAccordion = document.createElement('div');
         tableAccordion.className = 'table-accordion';
         tableAccordion.dataset.table = tableName;
-        tableAccordion.setAttribute('draggable', 'true');
 
         // Create the header with loading state for columns
         const tableHeader = document.createElement('div');
@@ -28,12 +27,6 @@ export function renderBusinessTables(tables) {
             </div>
         `;
 
-        // Create the collapsible content area
-        const tableContent = document.createElement('div');
-        tableContent.className = 'table-content';
-        tableContent.id = `content-${tableName}`;
-        tableContent.innerHTML = `<div class="loading">${t('businessTables.loading')}</div>`;
-
         // Handle accordion open/close and lazy loading
         tableHeader.addEventListener('click', function () {
             if (window.dragging) return;
@@ -42,6 +35,12 @@ export function renderBusinessTables(tables) {
                 window.loadTableData(tableName, 0, DEFAULT_PAGE_LIMIT);
             }
         });
+
+        // Create the collapsible content area
+        const tableContent = document.createElement('div');
+        tableContent.className = 'table-content';
+        tableContent.id = `content-${tableName}`;
+        tableContent.innerHTML = `<div class="loading">${t('businessTables.loading')}</div>`;
 
         tableAccordion.appendChild(tableHeader);
         tableAccordion.appendChild(tableContent);
@@ -110,9 +109,9 @@ export function renderTableData(tableName, data, currentOffset, loadTableData) {
 
     // Use the shared pagination utility to render the table
     renderPaginatedTable(
-        data, 
-        table, 
-        tableContent, 
+        data,
+        table,
+        tableContent,
         (newOffset, newLimit) => loadTableData(tableName, newOffset, newLimit)
     );
 }
@@ -124,15 +123,19 @@ export function initDragAndDrop() {
     const container = document.getElementById('business-tables-container');
     window.dragging = false;
 
-    document.querySelectorAll('.table-accordion').forEach(item => {
-        item.addEventListener('dragstart', function (e) {
+    // Add draggable attribute and listeners to headers only
+    document.querySelectorAll('.table-header').forEach(header => {
+        const parentAccordion = header.closest('.table-accordion');
+
+        header.setAttribute('draggable', 'true');
+        header.addEventListener('dragstart', function (e) {
             window.dragging = true;
-            this.classList.add('dragging');
-            e.dataTransfer.setData('text/plain', this.dataset.table);
+            parentAccordion.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', parentAccordion.dataset.table);
         });
 
-        item.addEventListener('dragend', function () {
-            this.classList.remove('dragging');
+        header.addEventListener('dragend', function () {
+            parentAccordion.classList.remove('dragging');
             setTimeout(() => { window.dragging = false; }, DRAG_END_DELAY);
         });
     });
