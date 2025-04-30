@@ -22,7 +22,6 @@
     border: 2px solid transparent;
     border-bottom: none;
     border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
-    background-color: #dcdcdc;
     margin: 0 var(--spacing-sm);
   }
   
