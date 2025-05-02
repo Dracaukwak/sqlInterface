@@ -1,6 +1,3 @@
-/**
- * Modified paginationUtils.js
- */
 import { escapeHtml } from '../utils/helpers.js';
 import { t } from '../controllers/localizationController.js';
 import { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT } from '../utils/constants.js';
