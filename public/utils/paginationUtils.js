@@ -6,7 +6,7 @@ import { t } from '../controllers/localizationController.js';
 import { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT } from '../utils/constants.js';
 
 /**
- * Renders pagination controls for any table
+ * Renders pagination controls as numbered buttons in a scrollable container
  * @param {HTMLElement} containerElement - Container where pagination controls will be added
  * @param {number} currentOffset - Current offset for pagination
  * @param {number} limit - Number of rows per page
@@ -19,17 +19,45 @@ export function renderPaginationControls(containerElement, currentOffset, limit,
     const paginationControls = document.createElement('div');
     paginationControls.className = 'table-actions';
     
-    paginationControls.innerHTML = `
-        <div class="pagination">
-            <button class="prev-page" ${currentOffset === DEFAULT_PAGE_OFFSET ? 'disabled' : ''} data-i18n="table.pagination.previous">Previous</button>
-            <button class="next-page" ${currentOffset + limit >= total ? 'disabled' : ''} data-i18n="table.pagination.next">Next</button>
-            <span class="pagination-info">
-                ${currentOffset+1}-${Math.min(currentOffset+limit, total)} 
-                <span data-i18n="table.pagination.of">of</span> 
-                ${total}
-            </span>
-        </div>
-    `;
+    // Calculate total pages and current page
+    const totalPages = Math.ceil(total / limit);
+    const currentPage = Math.floor(currentOffset / limit) + 1;
+    
+    // Create the pagination container
+    const pagination = document.createElement('div');
+    pagination.className = 'pagination-scroll';
+    
+    const paginationInner = document.createElement('div');
+    paginationInner.className = 'pagination-buttons';
+    
+    // Generate page buttons
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.className = 'page-button';
+        if (i === currentPage) {
+            pageButton.classList.add('active');
+        }
+        
+        // For last page that might not have full limit, calculate actual row count
+        const pageOffset = (i - 1) * limit;
+        const rowEnd = Math.min(pageOffset + limit, total);
+        
+        // Display the range of rows in button
+        pageButton.textContent = rowEnd;
+        pageButton.setAttribute('data-page', i);
+        pageButton.setAttribute('title', `${t('table.pagination.rows')} ${pageOffset + 1}-${rowEnd}`);
+        
+        pageButton.addEventListener('click', () => {
+            if (i !== currentPage) {
+                onPageChange((i - 1) * limit, limit);
+            }
+        });
+        
+        paginationInner.appendChild(pageButton);
+    }
+    
+    pagination.appendChild(paginationInner);
+    paginationControls.appendChild(pagination);
     
     // Remove any existing pagination controls
     const existingControls = containerElement.querySelector('.table-actions');
@@ -40,17 +68,18 @@ export function renderPaginationControls(containerElement, currentOffset, limit,
     // Add the new controls
     containerElement.insertBefore(paginationControls, containerElement.firstChild);
     
-    // Add event handlers for pagination buttons
-    const prevButton = paginationControls.querySelector('.prev-page');
-    const nextButton = paginationControls.querySelector('.next-page');
+    // After rendering, scroll pagination to make current page button visible
+    if (paginationInner.querySelector('.page-button.active')) {
+        const activeButton = paginationInner.querySelector('.page-button.active');
+        const containerWidth = pagination.offsetWidth;
+        const buttonLeft = activeButton.offsetLeft;
+        const buttonWidth = activeButton.offsetWidth;
+        
+        // Center the active button if possible
+        pagination.scrollLeft = buttonLeft - (containerWidth / 2) + (buttonWidth / 2);
+    }
+
     
-    prevButton.addEventListener('click', () => {
-        onPageChange(Math.max(DEFAULT_PAGE_OFFSET, currentOffset - limit), limit);
-    });
-    
-    nextButton.addEventListener('click', () => {
-        onPageChange(currentOffset + limit, limit);
-    });
     
     return paginationControls;
 }

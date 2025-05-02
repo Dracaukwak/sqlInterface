@@ -95,21 +95,58 @@ td.copy-error {
   border-bottom: 1px solid #ddd;
 }
 
-.pagination {
-  display: flex;
-  align-items: center;
+/* New pagination scrollable container */
+.pagination-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  max-width: 100%;
+  padding: var(--spacing-xs) 0;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
-.pagination button {
-  margin: 0 var(--spacing-xs);
+/* Hide scrollbar for Chrome, Safari and Opera */
+.pagination-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+
+.pagination-buttons {
+  display: inline-flex;
+  flex-direction: row;
+  gap: var(--spacing-xs);
+  padding: 0 var(--spacing-sm);
+}
+
+.page-button {
+  min-width: 50px;
+  height: 36px;
   padding: var(--spacing-xs) var(--spacing-sm);
-  font-size: var(--font-size-sm);
+  border-radius: var(--border-radius-sm);
   background-color: var(--color-light-blue);
   color: var(--color-primary);
   border: 1px solid var(--color-secondary);
+  cursor: pointer;
+  font-weight: var(--font-weight-normal);
+  transition: all var(--transition-fast);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.pagination button:hover:not([disabled]) {
+.page-button:hover {
+  background-color: #dceff1;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.page-button.active {
   background-color: var(--color-secondary);
   color: var(--color-white);
+  font-weight: var(--font-weight-bold);
+  border-color: var(--color-primary);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
 }
