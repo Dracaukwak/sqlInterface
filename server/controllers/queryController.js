@@ -1,4 +1,4 @@
-const databaseService = require('../services/databaseService');
+import databaseService from '../services/databaseService.js';
 
 /**
  * Executes a SQL query with pagination and returns the results
@@ -113,6 +113,6 @@ async function executeQuery(req, res, next) {
   }
 }
 
-module.exports = {
+export default {
   executeQuery
 };

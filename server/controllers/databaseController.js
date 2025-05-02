@@ -1,4 +1,4 @@
-const databaseService = require('../services/databaseService');
+import * as databaseService from '../services/databaseService.js';
 
 /**
  * Retrieves and returns database information
@@ -15,6 +15,6 @@ async function getDatabaseInfo(req, res, next) {
   }
 }
 
-module.exports = {
+export default {
   getDatabaseInfo
 };
