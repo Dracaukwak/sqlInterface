@@ -45,9 +45,7 @@
   },
   "table": {
     "pagination": {
-      "previous": "Précédent",
-      "next": "Suivant",
-      "of" :"sur"
+     "rows": "Lignes"
     },
     "nullValue": "NULL",
     "clickToCopy": "Cliquez pour copier le contenu de la cellule"
