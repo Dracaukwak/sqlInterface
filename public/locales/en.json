@@ -49,7 +49,8 @@
       "next": "Next",
       "of":"of"
     },
-    "nullValue": "NULL"
+    "nullValue": "NULL",
+    "clickToCopy": "Click to copy cell content"
   },
   "database": {
     "fetchError": "Failed to fetch database information: {status}",

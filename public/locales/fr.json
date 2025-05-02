@@ -49,7 +49,8 @@
       "next": "Suivant",
       "of" :"sur"
     },
-    "nullValue": "NULL"
+    "nullValue": "NULL",
+    "clickToCopy": "Cliquez pour copier le contenu de la cellule"
   },
   "database": {
     "fetchError": "Impossible de récupérer les informations de la base de données : {status}",
