@@ -1,127 +1,67 @@
-/**
- * SQL utilities for parsing and manipulating SQL queries
- */
+// sqlUtils.js
 
-// Try to use the NodeSQLParser if available
-let parser;
-try {
-  const Parser = window.NodeSQLParser?.Parser;
-  if (Parser) {
-    parser = new Parser();
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) {
+    // Node.js (for tests)
+    module.exports = factory(require('node-sql-parser'));
+  } else {
+    // Browser (UMD)
+    root.addColumnToSelects   = factory(root.NodeSQLParser).addColumnToSelects;
+    root.extractTableAliases = factory(root.NodeSQLParser).extractTableAliases;
   }
-} catch (e) {
-  console.warn('SQL Parser not available, using fallback methods');
-}
+})(typeof self !== 'undefined' ? self : this, function (NodeSQLParser) {
+  const Parser = NodeSQLParser.Parser;
+  const parser = new Parser();
 
-/**
- * Splits SQL text into separate statements
- * @param {string} sqlText - SQL text to split
- * @returns {string[]} - Array of SQL statements
- */
-function splitStatements(sqlText) {
-  if (!sqlText || typeof sqlText !== 'string') {
-    return [];
+  function splitStatements(sqlText) {
+    return sqlText
+      .split(';')
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
   }
-  return sqlText
-    .split(';')
-    .map(s => s.trim())
-    .filter(s => s.length > 0);
-}
 
-/**
- * Adds a column to SELECT statements in SQL query
- * @param {string} sqlText - SQL query text
- * @param {string} colName - Column to add (formula)
- * @returns {string} - Modified SQL query with column added
- */
-export function addColumnToSelects(sqlText, colName = 'added_column') {
-  if (!sqlText || typeof sqlText !== 'string') {
-    return sqlText;
-  }
+  function addColumnToSelects(sqlText, colName = 'added_column') {
+    const stmts = splitStatements(sqlText);
+    const out = [];
   
-  const stmts = splitStatements(sqlText);
-  const out = [];
-
-  stmts.forEach(stmt => {
-    // Try using the parser if available
-    if (parser) {
+    stmts.forEach(stmt => {
+      let ast;
       try {
-        let ast = parser.astify(stmt, { parseOptions: { includeLocations: true } });
-        if (Array.isArray(ast)) ast = ast[0];
-        
-        if (ast.type !== 'select' || !Array.isArray(ast.columns) || ast.columns.length === 0) {
-          out.push(stmt + ';');
-          return;
-        }
-        
-        const lastCol = ast.columns[ast.columns.length - 1];
-        const loc = lastCol?.loc ?? lastCol.expr?.loc;
-        
-        if (loc && loc.end && loc.end.offset !== undefined) {
-          const insertOffset = loc.end.offset;
-          const before = stmt.slice(0, insertOffset);
-          const after = stmt.slice(insertOffset);
-          const insertText = ', ' + colName;
-          
-          out.push(before + insertText + after + ';');
-          return;
-        }
+        ast = parser.astify(stmt, { parseOptions: { includeLocations: true } });
       } catch (e) {
-        console.warn('Error parsing SQL with parser, using fallback method', e);
-        // Fall through to fallback method
+        // Return the original if parsing fails
+        out.push(stmt + ';');
+        return;
       }
-    }
-    
-    // Fallback method - add after the last comma or after SELECT
-    let result = stmt;
-    
-    // Check if the query already has a column list
-    const selectMatch = /\bSELECT\s+(.+?)\s+FROM\b/i.exec(stmt);
-    
-    if (selectMatch) {
-      const columnList = selectMatch[1];
-      const fromPos = selectMatch.index + 'SELECT '.length + columnList.length;
       
-      // Don't add if formula is already there
-      if (!columnList.includes(colName)) {
-        // If there's a * as the only selection, replace with *, formula
-        if (columnList.trim() === '*') {
-          result = stmt.substring(0, selectMatch.index + 'SELECT '.length) + 
-                  '*, ' + colName + 
-                  stmt.substring(fromPos);
-        } else {
-          // Otherwise insert formula after column list
-          result = stmt.substring(0, fromPos) + 
-                  ', ' + colName + 
-                  stmt.substring(fromPos);
-        }
+      if (Array.isArray(ast)) ast = ast[0];
+      if (ast.type !== 'select' || !Array.isArray(ast.columns) || ast.columns.length === 0) {
+        out.push(stmt + ';');
+        return;
       }
-    }
-    
-    out.push(result + ';');
-  });
+      
+      const lastCol = ast.columns[ast.columns.length - 1];
+      const loc = lastCol?.loc ?? lastCol.expr?.loc;
+      const insertOffset = loc.end.offset;
 
-  return out.join('\n');
-}
-
-/**
- * Extracts table aliases from SQL query
- * @param {string} sqlText - SQL query text
- * @returns {string[]} - Array of table aliases
- */
-export function extractTableAliases(sqlText) {
-  if (!parser || !sqlText) {
-    return [];
-  }
+      // const insertOffset = lastCol.loc?.end?.offset ?? lastCol.expr?.loc?.end?.offset;
+      
+      const before = stmt.slice(0, insertOffset);
+      const after = stmt.slice(insertOffset);
+      const insertText = ', ' + colName;
   
-  try {
+      out.push(before + insertText + after + ';');
+    });
+  
+    return out.join('\n');
+  }
+
+  function extractTableAliases(sqlText) {
     const stmts = splitStatements(sqlText);
     const tables = [];
-    
     stmts.forEach(stmt => {
       let ast = parser.astify(stmt);
       if (Array.isArray(ast)) ast = ast[0];
-      
       if (ast.type === 'select' && Array.isArray(ast.from)) {
         ast.from.forEach(src => {
           if (src.table) {
@@ -130,16 +70,11 @@ export function extractTableAliases(sqlText) {
         });
       }
     });
-    
     return tables;
-  } catch (e) {
-    console.warn('Error extracting table aliases', e);
-    return [];
   }
-}
 
-// For backward compatibility with non-module usage
-window.sqlUtils = {
-  addColumnToSelects,
-  extractTableAliases
-};
+  return {
+    addColumnToSelects,
+    extractTableAliases
+  };
+});

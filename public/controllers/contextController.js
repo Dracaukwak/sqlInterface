@@ -4,7 +4,7 @@
  */
 import { executeQuery } from '../models/queryModel.js';
 import { t } from './localizationController.js';
-import { addColumnToSelects } from '../utils/sqlUtils.js';
+
 
 // Current episode state
 let currentEpisode = null;
