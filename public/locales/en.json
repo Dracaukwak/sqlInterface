@@ -9,7 +9,8 @@
     "theme": "Theme"
   },
   "context": {
-    "placeholder": "The context and exercise statement will appear here..."
+    "loading": "Loading episode...",
+    "loadError": "Failed to load episode content"
   },
   "query": {
     "placeholder": "Enter your SQL query here...",
@@ -40,7 +41,6 @@
   },
   "control": {
     "title": "Check",
-    "description": "This section will allow control over various aspects of the app.",
     "developing": "Feature under development..."
   },
   "table": {

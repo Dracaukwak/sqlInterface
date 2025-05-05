@@ -9,7 +9,8 @@
     "theme": "Thème"
   },
   "context": {
-    "placeholder": "Le contexte et l'énoncé de l'exercice apparaîtront ici..."
+    "loading": "Chargement de l'épisode...",
+    "loadError": "Impossible de charger le contenu de l'épisode"
   },
   "query": {
     "placeholder": "Entrez votre requête SQL ici...",
@@ -40,12 +41,11 @@
   },
   "control": {
     "title": "Vérifier",
-    "description": "Cette section permettra de contrôler divers aspects de l'application.",
     "developing": "Fonctionnalité en cours de développement..."
   },
   "table": {
     "pagination": {
-     "rows": "Lignes"
+      "rows": "Lignes"
     },
     "nullValue": "NULL",
     "clickToCopy": "Cliquez pour copier le contenu de la cellule"

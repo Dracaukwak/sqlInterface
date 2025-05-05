@@ -5,6 +5,7 @@ import { initNotes } from './controllers/notesController.js';
 import { getAdventureTitle } from './models/dbModel.js';
 import { initLocalization } from './controllers/localizationController.js';
 import { initSchema } from './controllers/schemaController.js';
+import { initContext } from './controllers/contextController.js';
 
 // Initialize localization service immediately
 window.i18n.init().catch(err => console.error('Failed to initialize localization:', err));
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initBusinessTables();
     initSchema();
     initNotes();
+    initContext();
 
     // Automatically load business tables on page load
     window.loadBusinessTables();

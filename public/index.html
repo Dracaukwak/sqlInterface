@@ -46,15 +46,14 @@
     <!-- Context area for instructions and exercise description -->
     <div class="context-container">
         <div class="context-content">
-            <p class="placeholder-text" data-i18n="context.placeholder">The context and exercise statement will appear
-                here...</p>
+            
         </div>
     </div>
 
     <!-- SQL query input zone (positioned above the tab navigation) -->
     <div class="query-container top-query">
         <textarea id="query-input" data-i18n-placeholder="query.placeholder"
-            placeholder="Enter your SQL query here...">SELECT table_name FROM information_schema.tables WHERE table_schema = 'sqlab_island' LIMIT 10;</textarea>
+            placeholder="Enter your SQL query here..."></textarea>
     </div>
 
     <!-- Navigation tabs for switching between interface sections -->
@@ -64,7 +63,7 @@
         <div class="tab" data-tab="execution">
             <span data-i18n="tabs.execution">Run</span> <i id="execute-btn" class="fas fa-play-circle execute-icon"></i>
         </div>
-        <!-- Temporary button with no effect for now -->
+        <!-- Check tab with verification functionality -->
         <div class="tab" data-tab="control">
             <span data-i18n="tabs.control">Check</span> <i id="check-btn" class="fas fa-check-circle execute-icon"></i>
         </div>
@@ -105,11 +104,13 @@
         </div>
     </div>
 
-    <!-- Control tab (future features) -->
+    <!-- Control tab (check solution) -->
     <div id="control" class="tab-content">
-        <p data-i18n="control.description">This section will allow control over various aspects of the app.</p>
         <div id="control-container">
-            <div class="info" data-i18n="control.developing">Feature under development...</div>
+            <!-- Feedback will be displayed here -->
+        </div>
+        <div class="check-actions">
+            <button id="check-solution-btn" data-i18n="control.checkSolution">Check solution</button>
         </div>
     </div>
 
@@ -120,6 +121,8 @@
     </div>
 
     <!-- JavaScript modules -->
+    <script src="node-sql-parser.js"></script>
+    <script src="utils/sqlUtils.js" type="module"></script>
     <script src="tsv-loader.js"></script>
     <!-- Localization service should be loaded before main -->
     <script src="utils/localizationService.js"></script>

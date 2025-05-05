@@ -3,6 +3,7 @@ import { displayResults } from '../views/queryView.js';
 import { showError } from '../utils/paginationUtils.js';
 import { t } from '../controllers/localizationController.js';
 import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_OFFSET } from '../utils/constants.js';
+import { addColumnToSelects } from '../utils/sqlUtils.js';
 
 /**
  * Initializes the SQL query execution logic with pagination support

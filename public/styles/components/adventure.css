@@ -1,0 +1,186 @@
+/**
+ * Adventure component styles
+ * For SQLab episodes, tasks and feedback
+ */
+
+/* ===== Episode Statement Styles ===== */
+.episode-statement {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .episode-statement .label {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .episode-statement .counter {
+    font-size: var(--font-size-xl);
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .episode-statement .text {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .episode-statement .statement {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid #eee;
+  }
+  
+  .episode-statement .statement .label {
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .episode-statement pre {
+    background-color: #f5f5f5;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    overflow-x: auto;
+    border-left: 3px solid var(--color-secondary);
+    margin: var(--spacing-sm) 0;
+  }
+  
+  .episode-statement code {
+    font-family: var(--font-code);
+    background-color: #f5f5f5;
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+  
+  .episode-statement pre code {
+    background-color: transparent;
+    padding: 0;
+  }
+  
+  /* ===== Episode Correction Styles ===== */
+  .episode-correction {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    background-color: #f9fff9;
+    border-left: 4px solid #4CAF50;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .episode-correction .label {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .episode-correction .counter {
+    font-size: var(--font-size-xl);
+    color: #4CAF50;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .episode-correction .preamble {
+    margin-bottom: var(--spacing-md);
+    color: #4CAF50;
+    font-weight: var(--font-weight-bold);
+  }
+  
+  .episode-correction .solutions {
+    margin-top: var(--spacing-sm);
+  }
+  
+  .episode-correction .solution {
+    background-color: white;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    border: 1px solid #e0e0e0;
+  }
+  
+  .episode-correction pre {
+    margin: 0;
+    background-color: #f5f5f5;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    overflow-x: auto;
+  }
+  
+  .episode-correction code {
+    font-family: var(--font-code);
+  }
+  
+  /* Check actions styles */
+  .check-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-md);
+  }
+  
+  #check-solution-btn {
+    background-color: var(--color-primary);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius-sm);
+    border: none;
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  #check-solution-btn:hover {
+    background-color: var(--color-secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  /* Dark theme styles */
+  .dark-theme .episode-statement {
+    background-color: var(--dark-element);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .dark-theme .episode-statement .statement {
+    border-top-color: #444;
+  }
+  
+  .dark-theme .episode-statement pre,
+  .dark-theme .episode-statement code {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+  }
+  
+  .dark-theme .episode-statement pre {
+    border-left-color: var(--dark-secondary);
+  }
+  
+  .dark-theme .episode-correction {
+    background-color: #0a3a0a;
+    border-left-color: #2e7d32;
+  }
+  
+  .dark-theme .episode-correction .preamble,
+  .dark-theme .episode-correction .counter {
+    color: #81c784;
+  }
+  
+  .dark-theme .episode-correction .solution {
+    background-color: var(--dark-element);
+    border-color: #444;
+  }
+  
+  .dark-theme .episode-correction pre {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+  }
