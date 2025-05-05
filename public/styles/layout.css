@@ -55,6 +55,30 @@ h1 {
   transform: rotate(45deg);
 }
 
+/* Context container for instructions */
+.context-container {
+  background-color: var(--color-white);
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.context-content {
+  text-align: center;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-text {
+  color: #777;
+  font-style: italic;
+  margin: 0;
+}
+
 /* Results container */
 .results {
   margin-top: var(--spacing-lg);
@@ -78,6 +102,15 @@ h1 {
 /* Dark theme overrides */
 .dark-theme header {
   background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
+}
+
+.dark-theme .context-container {
+  background-color: var(--dark-element);
+  border-color: #444;
+}
+
+.dark-theme .placeholder-text {
+  color: #aaa;
 }
 
 .dark-theme .results-container {

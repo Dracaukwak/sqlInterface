@@ -5,6 +5,7 @@
 import { executeQuery } from '../models/queryModel.js';
 import { t } from './localizationController.js';
 
+
 // Current episode state
 let currentEpisode = null;
 let currentFormula = null;
@@ -14,7 +15,7 @@ let currentFormula = null;
  */
 export function initContext() {
     // Get references to UI elements
-    const episodeContainer = document.getElementById('episode-container');
+    const contextContainer = document.querySelector('.context-content');
     const checkBtn = document.getElementById('check-btn');
     const controlContainer = document.getElementById('control-container');
     const checkSolutionBtn = document.getElementById('check-solution-btn');
@@ -42,7 +43,7 @@ export function initContext() {
     async function loadEpisode(token) {
         try {
             // Display loading indicator
-            episodeContainer.innerHTML = `<p class="loading">${t('context.loading')}</p>`;
+            contextContainer.innerHTML = `<p class="loading">${t('context.loading')}</p>`;
             
             let response;
             if (token === null) {
@@ -65,8 +66,8 @@ export function initContext() {
                         currentEpisode = episodeData.task;
                         currentFormula = episodeData.formula?.code || null;
                         
-                        // Display the episode in the container
-                        episodeContainer.innerHTML = episodeData.task;
+                        // Display the episode in the context area
+                        contextContainer.innerHTML = episodeData.task;
                     }
                     
                     // Display feedback if available
@@ -77,14 +78,14 @@ export function initContext() {
                     }
                 } catch (error) {
                     console.error('Error parsing episode data:', error);
-                    episodeContainer.innerHTML = `<p class="error">Error parsing episode data: ${error.message}</p>`;
+                    contextContainer.innerHTML = `<p class="error">Error parsing episode data: ${error.message}</p>`;
                 }
             } else {
-                episodeContainer.innerHTML = `<p class="error">${t('context.loadError')}</p>`;
+                contextContainer.innerHTML = `<p class="error">${t('context.loadError')}</p>`;
             }
         } catch (error) {
             console.error('Error loading episode:', error);
-            episodeContainer.innerHTML = `<p class="error">${error.message}</p>`;
+            contextContainer.innerHTML = `<p class="error">${error.message}</p>`;
         }
     }
 
@@ -140,8 +141,8 @@ export function initContext() {
             if (!query.toLowerCase().includes(currentFormula.toLowerCase())) {
                 enhancedQuery = addColumnToSelects(query, currentFormula);
                 
-                // Transparent formula injection - no UI update
-                // queryInput.value = enhancedQuery;
+                // Update the query input to show the enhanced query to the user
+                //queryInput.value = enhancedQuery;
             }
             
             // Execute the enhanced query
