@@ -14,5 +14,9 @@
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
     "mariadb": "^3.4.1"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

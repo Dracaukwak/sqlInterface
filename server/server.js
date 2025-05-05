@@ -1,18 +1,24 @@
 // server.js - Entry point for the Express application
-const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const { DEFAULT_SERVER_PORT } = require('../public/utils/constants');
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import { DEFAULT_SERVER_PORT } from '../public/utils/constants.js';
 
 // Import routes
-const apiRoutes = require('./routes/apiRoutes');
-const staticRoutes = require('./routes/staticRoutes');
+import apiRoutes from './routes/apiRoutes.js';
+import staticRoutes from './routes/staticRoutes.js';
 
 // Import middlewares
-const bigIntHandler = require('./middlewares/bigIntHandler');
+import bigIntHandler from './middlewares/bigIntHandler.js';
 
 const app = express();
 const port = process.env.PORT || DEFAULT_SERVER_PORT;
+
+import { fileURLToPath } from 'url';
+
+// Recreate __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configure global middlewares
 app.use(bodyParser.json());

@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Lists all TSV files available in the public/data folder
@@ -25,6 +25,6 @@ function listTsvFiles(req, res, next) {
   }
 }
 
-module.exports = {
+export default {
   listTsvFiles
 };

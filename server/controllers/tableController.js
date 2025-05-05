@@ -1,4 +1,4 @@
-const databaseService = require('../services/databaseService');
+import databaseService from '../services/databaseService.js';
 
 /**
  * Retrieves the list of database tables
@@ -37,7 +37,7 @@ async function getTableData(req, res, next) {
   }
 }
 
-module.exports = {
+export default {
   listTables,
   getTableData
 };
