@@ -42,4 +42,4 @@ function bigIntHandler(req, res, next) {
   next();
 }
 
-module.exports = bigIntHandler;
+export default bigIntHandler;

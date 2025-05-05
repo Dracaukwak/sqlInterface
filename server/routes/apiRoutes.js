@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 // Import controllers
-const databaseController = require('../controllers/databaseController');
-const queryController = require('../controllers/queryController');
-const tableController = require('../controllers/tableController');
-const fileController = require('../controllers/fileController');
+import databaseController from '../controllers/databaseController.js';
+import queryController from '../controllers/queryController.js';
+import tableController from '../controllers/tableController.js';
+import fileController from '../controllers/fileController.js';
 
 // Routes for database information
 router.get('/database-info', databaseController.getDatabaseInfo);
@@ -20,4 +20,4 @@ router.get('/table-data/:tableName', tableController.getTableData);
 // Routes for TSV files
 router.get('/list-tsv-files', fileController.listTsvFiles);
 
-module.exports = router;
+export default router;

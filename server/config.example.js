@@ -11,7 +11,7 @@ const dbConfig = {
     connectionLimit: 5
   };
   
-  module.exports = {
+  export default {
     dbConfig
   };
   

@@ -1,9 +1,9 @@
-const mariadb = require('mariadb');
-const { dbConfig } = require('../config');
-const { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT } = require('../../public/utils/constants');
+import mariadb from 'mariadb';
+import dbConfig from '../config.js';
+import { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT } from '../../public/utils/constants.js';
 
 // Create database connection pool
-const pool = mariadb.createPool(dbConfig);
+const pool = mariadb.createPool(dbConfig.dbConfig);
 
 /**
  * Gets a connection from the pool
@@ -136,7 +136,7 @@ function formatAdventureName(dbName) {
   return dbName;
 }
 
-module.exports = {
+export default {
   getConnection,
   executeQuery,
   getDatabaseInfo,

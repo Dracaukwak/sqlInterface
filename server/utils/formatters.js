@@ -35,7 +35,7 @@ function formatDatabaseName(dbName) {
   return dbName;
 }
 
-module.exports = {
+export default {
   escapeHtml,
   formatDatabaseName
 };
