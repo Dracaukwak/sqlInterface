@@ -142,7 +142,7 @@ export function initContext() {
                 enhancedQuery = addColumnToSelects(query, currentFormula);
                 
                 // Update the query input to show the enhanced query to the user
-                queryInput.value = enhancedQuery;
+                //queryInput.value = enhancedQuery;
             }
             
             // Execute the enhanced query
