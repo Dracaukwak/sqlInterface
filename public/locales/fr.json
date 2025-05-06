@@ -24,11 +24,13 @@
     "notes": "Notes"
   },
   "notes": {
-    "placeholder": "Ce que vous écrivez ici est enregistré localement et persistera entre les sessions."
+    "placeholder": "Ce que vous écrivez ici est enregistré localement et persistera entre les sessions.",
+    "confirmClear": "Êtes-vous sûr de vouloir effacer toutes vos notes ?"
   },
   "businessTables": {
     "title": "Tables",
-    "loading": "Chargement des tables..."
+    "loading": "Chargement des tables...",
+    "loadingColumns": "Chargement des colonnes..."
   },
   "schema": {
     "loading": "Chargement du schéma...",
@@ -39,8 +41,15 @@
     "noResults": "Aucun résultat",
     "runPrompt": "Exécutez une requête pour voir les résultats"
   },
+  "check": {
+    "noFormula": "Aucune formule disponible pour cet épisode",
+    "noTokenFound": "Votre requête a été exécutée avec succès mais n'a pas généré de jeton valide",
+    "noTokenColumn": "Aucune colonne de jeton trouvée dans le résultat",
+    "invalidToken": "Jeton ou commande decrypt invalide"
+  },
   "control": {
     "title": "Vérifier",
+    "checkSolution": "Vérifier la solution",
     "developing": "Fonctionnalité en cours de développement..."
   },
   "table": {
@@ -57,6 +66,7 @@
   },
   "error": {
     "tableList": "Impossible de charger la liste des tables",
-    "tableData": "Impossible de charger les données de la table"
+    "tableData": "Impossible de charger les données de la table",
+    "genericError": "Une erreur s'est produite : {message}"
   }
 }

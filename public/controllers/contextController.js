@@ -1,6 +1,5 @@
 /**
  * Controller for handling adventure context, tasks, and verification
- * Manages the display of episode statements and feedback
  */
 import { executeQuery } from '../models/queryModel.js';
 import { t } from './localizationController.js';
@@ -8,6 +7,18 @@ import { t } from './localizationController.js';
 // Current episode state
 let currentEpisode = null;
 let currentFormula = null;
+let currentEpisodeNumber = null;
+
+// Utility functions
+const showControlError = (controlContainer, message) => {
+    controlContainer.innerHTML = `<div class="error">${message}</div>`;
+    document.querySelector('.tab[data-tab="control"]').click();
+    if (currentEpisode) {
+        episodeContainer.innerHTML = currentEpisode;
+    }
+};
+
+const goToControlTab = () => document.querySelector('.tab[data-tab="control"]').click();
 
 /**
  * Initializes the context and check functionality
@@ -15,171 +26,219 @@ let currentFormula = null;
 export function initContext() {
     // Get references to UI elements
     const episodeContainer = document.getElementById('episode-container');
-    const checkBtn = document.getElementById('check-btn');
     const controlContainer = document.getElementById('control-container');
-    const checkSolutionBtn = document.getElementById('check-solution-btn');
     
-    // Initialize the context by attempting to load the first episode
-    loadEpisode(null);
-    
-    // Add event listener for check button (tab icon)
-    checkBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent tab click from interfering
+    // Initialize event listeners
+    document.getElementById('check-btn').addEventListener('click', e => {
+        e.stopPropagation();
         checkSolution();
     });
     
-    // Add event listener for check solution button (in control tab)
+    const checkSolutionBtn = document.getElementById('check-solution-btn');
     if (checkSolutionBtn) {
-        checkSolutionBtn.addEventListener('click', () => {
-            checkSolution();
-        });
+        checkSolutionBtn.addEventListener('click', checkSolution);
     }
-
+    
+    // Start with first episode
+    loadInitialEpisode();
+    
     /**
-     * Loads an episode by token or the first episode if token is null
-     * @param {string|null} token - Episode token or null for first episode
+     * Initial load of the first episode
      */
-    async function loadEpisode(token) {
+    async function loadInitialEpisode() {
         try {
-            // Display loading indicator
             episodeContainer.innerHTML = `<p class="loading">${t('context.loading')}</p>`;
-            
-            let response;
-            if (token === null) {
-                // Load first episode with initial call
-                response = await executeQuery('SELECT decrypt(42)', 0, 10);
-            } else {
-                // Load next episode with provided token
-                response = await executeQuery(`SELECT decrypt(${token})`, 0, 10);
-            }
-            
-            // Check if we have a valid response with task
-            if (response.rows?.length > 0 && response.rows[0]?.length > 0) {
-                try {
-                    // Parse the JSON response
-                    const data = response.rows[0][0];
-                    const episodeData = typeof data === 'string' ? JSON.parse(data) : data;
-                    
-                    // Update state
-                    if (episodeData.task) {
-                        currentEpisode = episodeData.task;
-                        currentFormula = episodeData.formula?.code || null;
-                        
-                        // Display the episode in the container
-                        episodeContainer.innerHTML = episodeData.task;
-                    }
-                    
-                    // Display feedback if available
-                    if (episodeData.feedback) {
-                        controlContainer.innerHTML = episodeData.feedback;
-                        // Auto-switch to the check tab to show feedback
-                        document.querySelector('.tab[data-tab="control"]').click();
-                    }
-                } catch (error) {
-                    console.error('Error parsing episode data:', error);
-                    episodeContainer.innerHTML = `<p class="error">Error parsing episode data: ${error.message}</p>`;
-                }
-            } else {
-                episodeContainer.innerHTML = `<p class="error">${t('context.loadError')}</p>`;
-            }
+            const response = await executeQuery('SELECT decrypt(42)', 0, 10);
+            processEpisodeResponse(response);
         } catch (error) {
-            console.error('Error loading episode:', error);
+            console.error('Error loading initial episode:', error);
             episodeContainer.innerHTML = `<p class="error">${error.message}</p>`;
         }
     }
 
     /**
-     * Checks the current solution by executing the query and validating the token
+     * Loads the next episode using the provided token
+     */
+    async function loadNextEpisode(token) {
+        try {
+            episodeContainer.innerHTML = `<p class="loading">${t('context.loading')}</p>`;
+            const response = await executeQuery(`SELECT decrypt(${token})`, 0, 10);
+            processEpisodeResponse(response);
+        } catch (error) {
+            console.error('Error loading next episode:', error);
+            episodeContainer.innerHTML = `<p class="error">${error.message}</p>`;
+        }
+    }
+
+    /**
+     * Processes the response from a decrypt query
+     */
+    function processEpisodeResponse(response) {
+        if (!response.rows?.length || !response.rows[0]?.length) {
+            episodeContainer.innerHTML = `<p class="error">${t('context.loadError')}</p>`;
+            return;
+        }
+        
+        try {
+            const data = response.rows[0][0];
+            let episodeData;
+            if (typeof data === 'string') {
+                episodeData = JSON.parse(data);
+            } else {
+                episodeData = data;
+            }
+            handleEpisodeData(episodeData);
+        } catch (error) {
+            console.error('Error parsing episode data:', error);
+            episodeContainer.innerHTML = `<p class="error">Error parsing episode data: ${error.message}</p>`;
+        }
+    }
+
+    /**
+     * Handles different types of episode data responses
+     */
+    function handleEpisodeData(episodeData) {
+        // First determine if this is a hint
+        const isHint = episodeData.feedback && !episodeData.task && 
+                      episodeData.feedback.includes('<div class=\'hint\'>');
+        
+        if (isHint) {
+            // Display hint without changing episode
+            controlContainer.innerHTML = episodeData.feedback;
+            goToControlTab();
+            if (currentEpisode) {
+                episodeContainer.innerHTML = currentEpisode;
+            }
+            return;
+        }
+        
+        // Update formula if provided
+        if (episodeData.formula?.code) {
+            currentFormula = episodeData.formula.code;
+        }
+        
+        // Update episode if provided
+        if (episodeData.task) {
+            currentEpisode = episodeData.task;
+            
+            // Extract episode number if available
+            const match = episodeData.task.match(/<div class='task_number'>(\d+)<\/div>/);
+            if (match && match[1]) {
+                currentEpisodeNumber = parseInt(match[1]);
+            }
+            
+            episodeContainer.innerHTML = episodeData.task;
+        }
+        
+        // Display feedback if available
+        if (episodeData.feedback) {
+            controlContainer.innerHTML = episodeData.feedback;
+            goToControlTab();
+        }
+    }
+
+    /**
+     * Displays a hint for the current query
+     */
+    async function displayHintForQuery(query) {
+        try {
+            const hashResponse = await executeQuery(`SELECT decrypt(hash(${JSON.stringify(query)}))`, 0, 10);
+            
+            if (hashResponse.rows?.length > 0 && hashResponse.rows[0]?.length > 0) {
+                const hintData = hashResponse.rows[0][0];
+                
+                try {
+                    let hintObj;
+                    if (typeof hintData === 'string') {
+                        hintObj = JSON.parse(hintData);
+                    } else {
+                        hintObj = hintData;
+                    }
+                    
+                    if (hintObj.feedback) {
+                        handleEpisodeData(hintObj);
+                        return true;
+                    }
+                } catch (e) {
+                    showControlError(controlContainer, hintData);
+                    return true;
+                }
+            }
+            return false;
+        } catch (error) {
+            console.error('Error fetching hint:', error);
+            return false;
+        }
+    }
+
+    /**
+     * Checks the current solution
      */
     async function checkSolution() {
         try {
-            // Get the current query
+            // Get current query
             const queryInput = document.getElementById('query-input');
             const query = queryInput.value.trim();
             
-            // Make sure we have a query
             if (!query) {
-                controlContainer.innerHTML = `<div class="error">${t('query.emptyError')}</div>`;
+                showControlError(controlContainer, t('query.emptyError'));
                 return;
             }
             
-            // Check if it's a special decrypt query
+            // Check for special decrypt query
             if (/^SELECT\s+decrypt\s*\(\s*\d+\s*\)/i.test(query)) {
-                // It's already a decrypt query, just execute it directly
                 const response = await executeQuery(query, 0, 10);
-                
-                // If we get a valid response with task/feedback, it was a valid token
-                if (response.rows?.length > 0 && response.rows[0]?.length > 0) {
-                    try {
-                        const data = response.rows[0][0];
-                        const episodeData = typeof data === 'string' ? JSON.parse(data) : data;
-                        
-                        if (episodeData.task || episodeData.feedback) {
-                            // Update the state with new episode data
-                            loadEpisode(null); // Pass null to handle the already-loaded data
-                            return;
-                        }
-                    } catch (error) {
-                        console.error('Error parsing episode data during decrypt:', error);
-                    }
-                }
-                
-                // If we got here, the decrypt query didn't return a valid episode
-                controlContainer.innerHTML = `<div class="error">Invalid token or decrypt command</div>`;
+                processEpisodeResponse(response);
                 return;
             }
             
-            // Check if we have a formula for the current episode
+            // Validate formula exists
             if (!currentFormula) {
-                controlContainer.innerHTML = `<div class="error">${t('check.noFormula')}</div>`;
+                showControlError(controlContainer, t('check.noFormula'));
                 return;
             }
             
-            // Inject the formula into the query if it's not already there
+            // Execute query with formula
             let enhancedQuery = query;
             if (!query.toLowerCase().includes(currentFormula.toLowerCase())) {
                 enhancedQuery = addColumnToSelects(query, currentFormula);
-                
-                // Transparent formula injection - no UI update
-                // queryInput.value = enhancedQuery;
             }
             
-            // Execute the enhanced query
             const response = await executeQuery(enhancedQuery, 0, 10);
             
-            // Display results in the execution tab first
+            // Show results in execution tab
             const executeBtn = document.getElementById('execute-btn');
             if (executeBtn) {
                 executeBtn.click();
             }
             
-            // Look for token in results
+            // Check for token in results
             if (response.columns && response.rows?.length > 0) {
-                // Find the token column index
                 const tokenIndex = response.columns.findIndex(col => col.toLowerCase() === 'token');
                 
                 if (tokenIndex !== -1) {
-                    // Get the token value from the first row
                     const token = response.rows[0][tokenIndex];
-                    
                     if (token) {
-                        // Success - load the next episode with this token
-                        loadEpisode(token);
+                        loadNextEpisode(token);
                         return;
                     }
                 }
                 
-                controlContainer.innerHTML = `<div class="error">${t('check.noTokenFound')}</div>`;
+                // No token found, try to get hint
+                const hintFound = await displayHintForQuery(query);
+                if (!hintFound) {
+                    showControlError(controlContainer, t('check.noTokenFound'));
+                }
             } else {
-                controlContainer.innerHTML = `<div class="error">${t('check.noTokenColumn')}</div>`;
+                showControlError(controlContainer, t('check.noTokenColumn'));
             }
         } catch (error) {
             console.error('Error checking solution:', error);
-            controlContainer.innerHTML = `<div class="error">${error.message}</div>`;
+            showControlError(controlContainer, error.message);
         }
     }
     
-    // Add functions to window so they can be called from other modules
-    window.loadEpisode = loadEpisode;
+    // Export functions to window
+    window.loadEpisode = loadNextEpisode;
     window.checkSolution = checkSolution;
 }

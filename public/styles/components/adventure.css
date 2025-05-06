@@ -1,6 +1,6 @@
 /**
  * Adventure component styles
- * For SQLab episodes, tasks and feedback
+ * For SQLab episodes, tasks, hints and feedback
  */
 
 /* ===== Episode Container ===== */
@@ -13,15 +13,22 @@
   min-height: 100px;
 }
 
+/* ===== Loading State ===== */
+#episode-container .loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  color: var(--color-secondary);
+  font-style: italic;
+}
+
 /* ===== Episode Statement Styles ===== */
 .episode-statement {
   display: flex;
   flex-direction: column;
   padding: var(--spacing-md);
   background-color: transparent;
-  /* Removed redundant properties now handled by episode-container */
-  /* border-radius: var(--border-radius-md); */
-  /* box-shadow: var(--shadow-sm); */
 }
   
 .episode-statement .label {
@@ -32,7 +39,7 @@
   letter-spacing: 1px;
 }
   
-.episode-statement .counter {
+.episode-statement .task_number {
   font-size: var(--font-size-xl);
   color: var(--color-accent);
   font-weight: var(--font-weight-bold);
@@ -73,7 +80,57 @@
   background-color: transparent;
   padding: 0;
 }
-  
+
+/* ===== Epilogue Styles ===== */
+.epilogue {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md);
+  background-color: #f9f9ff;
+  border-radius: var(--border-radius-md);
+}
+
+.epilogue .text {
+  font-style: italic;
+}
+
+/* ===== Hint Styles ===== */
+.hint {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  background-color: #fff9f2;
+  border-left: 4px solid #ff9800;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.hint .label {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hint .task_number {
+  font-size: var(--font-size-xl);
+  color: #ff9800;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.hint .preamble {
+  margin-bottom: var(--spacing-md);
+  color: #ff9800;
+  font-weight: var(--font-weight-bold);
+}
+
+.hint .text {
+  color: #333;
+}
+
 /* ===== Episode Correction Styles ===== */
 .episode-correction {
   display: flex;
@@ -94,7 +151,7 @@
   letter-spacing: 1px;
 }
   
-.episode-correction .counter {
+.episode-correction .task_number {
   font-size: var(--font-size-xl);
   color: #4CAF50;
   font-weight: var(--font-weight-bold);
@@ -130,6 +187,59 @@
 .episode-correction code {
   font-family: var(--font-code);
 }
+
+/* === Exercise Statement & Correction Styles === */
+.exercise-statement {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md);
+  background-color: #f0f8ff;
+  border-radius: var(--border-radius-md);
+  border-left: 4px solid #2196F3;
+  margin-bottom: var(--spacing-md);
+}
+
+.exercise-statement .label {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+}
+
+.exercise-statement .task_number {
+  font-size: var(--font-size-xl);
+  color: #2196F3;
+  font-weight: var(--font-weight-bold);
+}
+
+.exercise-correction {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md);
+  background-color: #f9fff9;
+  border-radius: var(--border-radius-md);
+  border-left: 4px solid #4CAF50;
+  margin-bottom: var(--spacing-md);
+}
+
+.exercise-correction .label {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+}
+
+.exercise-correction .task_number {
+  font-size: var(--font-size-xl);
+  color: #4CAF50;
+  font-weight: var(--font-weight-bold);
+}
+
+.exercise-correction .preamble {
+  color: #4CAF50;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+}
   
 /* Check actions styles */
 .check-actions {
@@ -155,6 +265,17 @@
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
+
+/* Error messages */
+#control-container .error {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  border-left: 4px solid #c62828;
+  margin-bottom: var(--spacing-md);
+  font-weight: var(--font-weight-bold);
+}
   
 /* Dark theme styles */
 .dark-theme #episode-container {
@@ -164,8 +285,6 @@
 
 .dark-theme .episode-statement {
   background-color: transparent;
-  /* Removed redundant shadow now handled by episode-container */
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); */
 }
   
 .dark-theme .episode-statement .statement {
@@ -181,6 +300,20 @@
 .dark-theme .episode-statement pre {
   border-left-color: var(--dark-secondary);
 }
+
+.dark-theme .hint {
+  background-color: #332b1e;
+  border-left-color: #ff9800;
+}
+
+.dark-theme .hint .preamble,
+.dark-theme .hint .task_number {
+  color: #ffb74d;
+}
+
+.dark-theme .hint .text {
+  color: #e0e0e0;
+}
   
 .dark-theme .episode-correction {
   background-color: #0a3a0a;
@@ -188,7 +321,7 @@
 }
   
 .dark-theme .episode-correction .preamble,
-.dark-theme .episode-correction .counter {
+.dark-theme .episode-correction .task_number {
   color: #81c784;
 }
   
@@ -200,4 +333,29 @@
 .dark-theme .episode-correction pre {
   background-color: #2a2a2a;
   color: #e0e0e0;
+}
+
+.dark-theme .exercise-statement {
+  background-color: #0d2234;
+  border-left-color: #2196F3;
+}
+
+.dark-theme .exercise-statement .task_number {
+  color: #64b5f6;
+}
+
+.dark-theme .exercise-correction {
+  background-color: #0a3a0a;
+  border-left-color: #2e7d32;
+}
+
+.dark-theme .exercise-correction .task_number,
+.dark-theme .exercise-correction .preamble {
+  color: #81c784;
+}
+
+.dark-theme #control-container .error {
+  background-color: #3a0a0a;
+  color: #ef9a9a;
+  border-left-color: #c62828;
 }

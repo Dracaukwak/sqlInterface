@@ -24,11 +24,13 @@
     "notes": "Notes"
   },
   "notes": {
-    "placeholder": "What you write here is saved locally and will persist across sessions."
+    "placeholder": "What you write here is saved locally and will persist across sessions.",
+    "confirmClear": "Are you sure you want to clear all your notes?"
   },
   "businessTables": {
     "title": "Tables",
-    "loading": "Loading tables..."
+    "loading": "Loading tables...",
+    "loadingColumns": "Loading columns..."
   },
   "schema": {
     "loading": "Loading schema...",
@@ -39,8 +41,15 @@
     "noResults": "No results",
     "runPrompt": "Run a query to see the results"
   },
+  "check": {
+    "noFormula": "No formula available for this episode",
+    "noTokenFound": "Your query executed successfully but did not generate a valid token",
+    "noTokenColumn": "No token column found in the result",
+    "invalidToken": "Invalid token or decrypt command"
+  },
   "control": {
     "title": "Check",
+    "checkSolution": "Check solution",
     "developing": "Feature under development..."
   },
   "table": {
@@ -57,6 +66,7 @@
   },
   "error": {
     "tableList": "Failed to load table list",
-    "tableData": "Failed to load table data"
+    "tableData": "Failed to load table data",
+    "genericError": "An error occurred: {message}"
   }
 }
