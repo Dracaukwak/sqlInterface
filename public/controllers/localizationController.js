@@ -1,22 +1,16 @@
 /**
  * Controller for handling localization in the UI
- * Manages applying translations to DOM elements
+ * Note: This module is maintained for compatibility with existing code,
+ * but all functionality is now delegated to i18nManager.js
  */
 import i18nManager from '../utils/i18nManager.js';
 
 /**
  * Initializes language selection and localization functionality
- * Sets up event listeners and applies initial translations
+ * This function is maintained for compatibility, use i18nManager.initialize() directly in new code
  */
 export function initLocalization() {
-    // Initialize i18n system
-    i18nManager.initialize();
-    
-    // Setup language selector UI
-    i18nManager.setupLanguageSelector();
-    
-    // Apply initial translations
-    applyTranslations();
+    return i18nManager.initialize();
 }
 
 /**
@@ -63,8 +57,7 @@ export function applyTranslations() {
 
 /**
  * Translates a string using the i18n service
- * Helper function to use in JavaScript files
- * 
+ * @deprecated Use import { translate as t } from '../utils/i18nManager.js' directly
  * @param {string} key - Translation key (e.g., 'common.save')
  * @param {Object} params - Parameters for the translation (for placeholders)
  * @returns {string} - Translated string
@@ -75,6 +68,7 @@ export function t(key, params = {}) {
 
 /**
  * Gets the current locale code
+ * @deprecated Use i18nManager.getLocale() directly
  * @returns {string} - Current locale code (e.g., 'en', 'fr')
  */
 export function getCurrentLocale() {

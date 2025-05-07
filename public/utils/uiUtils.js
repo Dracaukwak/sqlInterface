@@ -2,7 +2,7 @@
  * UI utilities for common interface operations
  * Centralizes UI manipulation functions used across the application
  */
-import { t } from '../controllers/localizationController.js';
+import { translate as t } from '../utils/i18nManager.js';
 
 /**
  * Shows a loading indicator in a container

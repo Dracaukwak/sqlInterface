@@ -1,6 +1,6 @@
 /**
- * i18n Manager - Centralizes all translation-related functionality
- * Connects the translation service with the application
+ * i18n Manager - Facade for the global localization service
+ * Centralizes all interactions with window.i18n into a cohesive API
  */
 import { applyTranslations as applyTranslationsToDOM } from '../controllers/localizationController.js';
 
@@ -11,6 +11,12 @@ import { applyTranslations as applyTranslationsToDOM } from '../controllers/loca
  */
 export async function initialize(defaultLocale = 'en') {
     try {
+        // Check if the global i18n service exists
+        if (!window.i18n) {
+            console.error('Global localization service (window.i18n) not available! Make sure localizationService.js is loaded before i18nManager.js');
+            return;
+        }
+        
         // If already initialized, just return
         if (window.i18n.isInitialized()) {
             return;
