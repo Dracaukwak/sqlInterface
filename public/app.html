@@ -12,7 +12,7 @@
 
     <!-- Icon library (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <!-- App-specific styles -->
     <style>
         /* Home button styles */
@@ -32,7 +32,7 @@
             cursor: pointer;
             transition: all var(--transition-medium);
         }
-
+        
         #home-button:hover {
             background-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-50%) scale(1.1);
@@ -67,7 +67,7 @@
 
         <!-- Title -->
         <h1><span id="database-name" data-i18n="app.loading">Loading...</span></h1>
-
+        
         <!-- Home button -->
         <i id="home-button" class="fas fa-home" title="Return to home"></i>
     </header>
@@ -151,11 +151,8 @@
     <script src="https://unpkg.com/node-sql-parser@5.3.8/umd/index.umd.js"></script>
     <script src="utils/sqlUtils.js" type="module"></script>
     <script src="tsv-loader.js"></script>
-    <!-- Localization service should be loaded before other modules -->
+    <!-- Localization service should be loaded before main -->
     <script src="utils/localizationService.js"></script>
-    <!-- Our utilities and services -->
-    <script type="module" src="utils/i18nManager.js"></script>
-    <!-- Main application script -->
     <script type="module" src="app.js"></script>
 
 </body>

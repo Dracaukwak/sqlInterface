@@ -47,47 +47,42 @@
 
     <div class="home-container">
         <h2 class="home-title" data-i18n="home.welcome">Welcome to SQLab</h2>
-
+        
         <div class="selection-container">
             <div class="selection-group">
                 <h3 class="selection-title" data-i18n="home.selectDatabase">Select Database</h3>
                 <div class="database-options">
                     <div class="option-card" data-db="sqlab_island">
                         <div class="option-title">SQLab Island</div>
-                        <div class="option-description" data-i18n="home.islandDescription">Explore an adventure on a
-                            mysterious island using SQL queries.</div>
+                        <div class="option-description" data-i18n="home.islandDescription">Explore an adventure on a mysterious island using SQL queries.</div>
                     </div>
                     <div class="option-card" data-db="sessform">
                         <div class="option-title">SQLab SessForm</div>
-                        <div class="option-description" data-i18n="home.sessformDescription">Practice SQL with exercises
-                            from the SessForm database.</div>
+                        <div class="option-description" data-i18n="home.sessformDescription">Practice SQL with exercises from the SessForm database.</div>
                     </div>
                 </div>
             </div>
-
+            
             <div class="selection-group">
                 <h3 class="selection-title" data-i18n="home.selectContent">Select Content Type</h3>
                 <div class="content-options" data-db="sqlab_island">
                     <div class="option-card" data-content="1" data-kind="adventure">
                         <div class="option-title" data-i18n="home.adventureOption">Adventure</div>
-                        <div class="option-description" data-i18n="home.adventureDescription">Follow a narrative
-                            adventure solving SQL puzzles to progress.</div>
+                        <div class="option-description" data-i18n="home.adventureDescription">Follow a narrative adventure solving SQL puzzles to progress.</div>
                     </div>
                 </div>
                 <div class="content-options" data-db="sessform">
                     <div class="option-card" data-content="0" data-kind="exercises">
                         <div class="option-title" data-i18n="home.exercisesOption">Exercises</div>
-                        <div class="option-description" data-i18n="home.exercisesDescription">Practice SQL with
-                            individual exercises of increasing difficulty.</div>
+                        <div class="option-description" data-i18n="home.exercisesDescription">Practice SQL with individual exercises of increasing difficulty.</div>
                     </div>
                     <div class="option-card" data-content="1" data-kind="adventure">
                         <div class="option-title" data-i18n="home.adventureOption">Adventure</div>
-                        <div class="option-description" data-i18n="home.adventureDescription">Follow a narrative
-                            adventure solving SQL puzzles to progress.</div>
+                        <div class="option-description" data-i18n="home.adventureDescription">Follow a narrative adventure solving SQL puzzles to progress.</div>
                     </div>
                 </div>
             </div>
-
+            
             <!-- Saved session information -->
             <div id="session-info" class="session-info">
                 <div class="session-info-title" data-i18n="home.sessionAvailable">Saved Session Available:</div>
@@ -105,7 +100,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="action-buttons">
             <button id="start-button" class="start-button" data-i18n="home.startButton">Start New</button>
             <button id="resume-button" class="resume-button" data-i18n="home.resumeButton">Resume Session</button>
@@ -119,10 +114,6 @@
 
     <!-- JavaScript modules -->
     <script src="utils/localizationService.js"></script>
-    <!-- Our utilities and services -->
-    <script type="module" src="utils/i18nManager.js"></script>
-    <!-- Main home page script -->
     <script type="module" src="home.js"></script>
 </body>
-
 </html>
