@@ -2,23 +2,25 @@
 <html lang="en">
 
 <head>
-    <!-- Meta information and document title -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="app.title">SQLab</title>
+    <title data-i18n="app.homeTitle">SQLab - Home</title>
 
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="styles/main.css">
+    <!-- Header specific styles -->
+    <link rel="stylesheet" href="styles/header.css">
+    <!-- Home page specific styles -->
+    <link rel="stylesheet" href="styles/home.css">
 
     <!-- Icon library (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-
-    <!-- Header with dynamic database name and left-positioned hamburger menu -->
+    <!-- Header with logo and theme toggle -->
     <header>
-        <!-- Hamburger menu that contains language selector and theme toggle -->
+        <!-- Hamburger menu for language and theme selection -->
         <div class="hamburger-menu">
             <i id="menu-toggle" class="fas fa-bars"></i>
             <div class="dropdown-menu">
@@ -40,92 +42,78 @@
         </div>
 
         <!-- Title -->
-        <h1><span id="database-name" data-i18n="app.loading">Loading...</span></h1>
+        <h1 data-i18n="app.title">SQLab</h1>
     </header>
 
-    <!-- Episode container for adventure content -->
-    <div id="episode-container">
-        <!-- Episode content will be injected here directly -->
-    </div>
-
-    <!-- SQL query input zone (positioned above the tab navigation) -->
-    <div class="query-container top-query">
-        <textarea id="query-input" data-i18n-placeholder="query.placeholder"
-            placeholder="Enter your SQL query here..."></textarea>
-    </div>
-
-    <!-- Navigation tabs for switching between interface sections -->
-    <div class="tabs">
-        <div class="tab" data-tab="schema" data-i18n="tabs.schema">Schema</div>
-        <div class="tab active" data-tab="business-tables" data-i18n="tabs.businessTables">Tables</div>
-        <div class="tab" data-tab="execution">
-            <span data-i18n="tabs.execution">Run</span> <i id="execute-btn" class="fas fa-play-circle execute-icon"></i>
-        </div>
-        <!-- Check tab with verification functionality -->
-        <div class="tab" data-tab="control">
-            <span data-i18n="tabs.control">Check</span> <i id="check-btn" class="fas fa-check-circle execute-icon"></i>
-        </div>
-        <div class="tab" data-tab="notes" data-i18n="tabs.notes">Notes</div>
-    </div>
-
-    <!-- Business Tables tab content -->
-    <div id="business-tables" class="tab-content active">
-        <div id="business-tables-container">
-            <div class="loading" data-i18n="businessTables.loading">Loading tables...</div>
-        </div>
-    </div>
-
-    <!-- Schema tab content -->
-    <div id="schema" class="tab-content">
-        <div id="schema-container">
-
-        </div>
-    </div>
-
-    <!-- SQL execution tab with results -->
-    <div id="execution" class="tab-content">
-        <div class="results" id="results">
-            <div class="results-container">
-                <table id="results-table">
-                    <thead>
-                        <tr>
-                            <th data-i18n="execution.noResults">No results</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-i18n="execution.runPrompt">Run a query to see the results</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="home-container">
+        <h2 class="home-title" data-i18n="home.welcome">Welcome to SQLab</h2>
+        
+        <div class="selection-container">
+            <div class="selection-group">
+                <h3 class="selection-title" data-i18n="home.selectDatabase">Select Database</h3>
+                <div class="database-options">
+                    <div class="option-card" data-db="sqlab_island">
+                        <div class="option-title">SQLab Island</div>
+                        <div class="option-description" data-i18n="home.islandDescription">Explore an adventure on a mysterious island using SQL queries.</div>
+                    </div>
+                    <div class="option-card" data-db="sessform">
+                        <div class="option-title">SQLab SessForm</div>
+                        <div class="option-description" data-i18n="home.sessformDescription">Practice SQL with exercises from the SessForm database.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="selection-group">
+                <h3 class="selection-title" data-i18n="home.selectContent">Select Content Type</h3>
+                <div class="content-options" data-db="sqlab_island">
+                    <div class="option-card" data-content="1" data-kind="adventure">
+                        <div class="option-title" data-i18n="home.adventureOption">Adventure</div>
+                        <div class="option-description" data-i18n="home.adventureDescription">Follow a narrative adventure solving SQL puzzles to progress.</div>
+                    </div>
+                </div>
+                <div class="content-options" data-db="sessform">
+                    <div class="option-card" data-content="0" data-kind="exercises">
+                        <div class="option-title" data-i18n="home.exercisesOption">Exercises</div>
+                        <div class="option-description" data-i18n="home.exercisesDescription">Practice SQL with individual exercises of increasing difficulty.</div>
+                    </div>
+                    <div class="option-card" data-content="1" data-kind="adventure">
+                        <div class="option-title" data-i18n="home.adventureOption">Adventure</div>
+                        <div class="option-description" data-i18n="home.adventureDescription">Follow a narrative adventure solving SQL puzzles to progress.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Saved session information -->
+            <div id="session-info" class="session-info">
+                <div class="session-info-title" data-i18n="home.sessionAvailable">Saved Session Available:</div>
+                <div class="session-detail">
+                    <span data-i18n="home.sessionDatabase">Database:</span> <span id="session-database"></span>
+                </div>
+                <div class="session-detail">
+                    <span data-i18n="home.sessionContent">Content:</span> <span id="session-content"></span>
+                </div>
+                <div class="session-detail">
+                    <span data-i18n="home.sessionEpisode">Episode:</span> <span id="session-episode"></span>
+                </div>
+                <div class="session-detail">
+                    <span data-i18n="home.sessionLastAccess">Last accessed:</span> <span id="session-date"></span>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- Control tab (check solution) -->
-    <div id="control" class="tab-content">
-        <div id="control-container">
-            <!-- Feedback will be displayed here -->
-        </div>
-        <div class="check-actions">
-            <button id="check-solution-btn" data-i18n="control.checkSolution">Check solution</button>
+        
+        <div class="action-buttons">
+            <button id="start-button" class="start-button" data-i18n="home.startButton">Start New</button>
+            <button id="resume-button" class="resume-button" data-i18n="home.resumeButton">Resume Session</button>
         </div>
     </div>
 
-    <!-- Notes tab content -->
-    <div id="notes" class="tab-content">
-        <textarea id="notes-textarea" data-i18n-placeholder="notes.placeholder"
-            placeholder="Write your notes here..."></textarea>
+    <!-- Loading overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
     </div>
 
     <!-- JavaScript modules -->
-    <script src="https://unpkg.com/node-sql-parser@5.3.8/umd/index.umd.js"></script>
-    <script src="utils/sqlUtils.js" type="module"></script>
-    <script src="tsv-loader.js"></script>
-    <!-- Localization service should be loaded before main -->
     <script src="utils/localizationService.js"></script>
-    <script type="module" src="main.js"></script>
-
+    <script type="module" src="home.js"></script>
 </body>
-
 </html>

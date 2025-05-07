@@ -10,6 +10,10 @@ import fileController from '../controllers/fileController.js';
 // Routes for database information
 router.get('/database-info', databaseController.getDatabaseInfo);
 
+// Routes for database selection and TOC data
+router.post('/set-database', databaseController.setDatabase);
+router.post('/get-toc', databaseController.getTocData);
+
 // Routes for query execution
 router.post('/execute-query', queryController.executeQuery);
 

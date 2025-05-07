@@ -11,29 +11,36 @@ export function initLocalization() {
     // Get reference to the language selector
     const languageSelector = document.getElementById('language-selector');
     
-    // Set initial value of selector to current locale
-    languageSelector.value = window.i18n.getCurrentLocale();
+    if (languageSelector) {
+        // Set initial value of selector to current locale
+        languageSelector.value = window.i18n.getCurrentLocale();
+        
+        // Remove previous event listeners by replacing the element
+        const newSelector = languageSelector.cloneNode(true);
+        languageSelector.parentNode.replaceChild(newSelector, languageSelector);
+        
+        // Handle language change from the selector
+        newSelector.addEventListener('change', async (event) => {
+            const newLocale = event.target.value;
+            await window.i18n.setLocale(newLocale);
+        });
+    }
     
-    // Apply initial translations to the page
+    // Apply initial translations
     applyTranslations();
     
-    // Handle language change from the selector
-    languageSelector.addEventListener('change', async (event) => {
-        const newLocale = event.target.value;
-        await window.i18n.setLocale(newLocale);
-    });
-    
-    // Listen for locale changes from other sources
-    window.addEventListener('localeChanged', () => {
-        applyTranslations();
-    });
+    // Add event listener for locale changes, but only once
+    if (!window.localizationControllerInitialized) {
+        window.addEventListener('localeChanged', applyTranslations);
+        window.localizationControllerInitialized = true;
+    }
 }
 
 /**
  * Applies translations to all elements with data-i18n attributes
  * Updates text content, placeholders, and title attributes based on translation keys
  */
-function applyTranslations() {
+export function applyTranslations() {
     // Find all elements with data-i18n attribute (for text content)
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');

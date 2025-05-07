@@ -1,9 +1,92 @@
 import mariadb from 'mariadb';
-import dbConfig from '../config.js';
+import defaultConfig from '../config.js';
 import { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT } from '../../public/utils/constants.js';
 
+// Store the current configuration (initially loaded from config.js)
+let currentConfig = { ...defaultConfig.dbConfig };
+
 // Create database connection pool
-const pool = mariadb.createPool(dbConfig.dbConfig);
+let pool = mariadb.createPool(currentConfig);
+
+/**
+ * Sets the database to use for the application
+ * @param {string} databaseName - Name of the database to use
+ * @returns {Promise<Object>} Result of the operation
+ */
+async function setDatabase(databaseName) {
+  try {
+    // Close existing pool connections
+    await pool.end();
+    
+    // Create new configuration with updated database name
+    currentConfig = { 
+      ...currentConfig,
+      database: databaseName
+    };
+    
+    // Create new connection pool with updated configuration
+    pool = mariadb.createPool(currentConfig);
+    
+    // Test connection
+    const conn = await pool.getConnection();
+    await conn.query(`USE ${databaseName}`);
+    conn.release();
+    
+    return {
+      database: databaseName,
+      host: currentConfig.host,
+      port: currentConfig.port
+    };
+  } catch (err) {
+    console.error(`Error setting database to ${databaseName}:`, err);
+    throw err;
+  }
+}
+
+/**
+ * Gets table of contents data from a specific database
+ * @param {string} databaseName - Database to get TOC data from
+ * @returns {Promise<Object>} Parsed TOC data
+ */
+async function getTocData(databaseName) {
+  let tempPool = null;
+  let conn = null;
+  
+  try {
+    // Create a temporary pool for this specific database
+    tempPool = mariadb.createPool({
+      ...currentConfig,
+      database: databaseName
+    });
+    
+    // Get connection from temporary pool
+    conn = await tempPool.getConnection();
+    
+    // Query for TOC data
+    const result = await conn.query(
+      "SELECT value FROM sqlab_info WHERE name = 'toc' LIMIT 1"
+    );
+    
+    if (result.length === 0) {
+      throw new Error(`No TOC data found in database ${databaseName}`);
+    }
+    
+    // Parse JSON TOC data
+    try {
+      return JSON.parse(result[0].value);
+    } catch (parseError) {
+      console.error('Error parsing TOC data:', parseError);
+      throw new Error('Invalid TOC data format');
+    }
+  } catch (err) {
+    console.error(`Error getting TOC data from ${databaseName}:`, err);
+    throw err;
+  } finally {
+    // Close connection and pool
+    if (conn) conn.release();
+    if (tempPool) await tempPool.end();
+  }
+}
 
 /**
  * Gets a connection from the pool
@@ -47,15 +130,15 @@ async function getDatabaseInfo() {
     // Build response object
     return {
       name: dbName,
-      host: hostInfo[0].host || dbConfig.host,
-      port: dbConfig.port,
+      host: hostInfo[0].host || currentConfig.host,
+      port: currentConfig.port,
       adventure: formatAdventureName(dbName)
     };
   } catch (err) {
     console.error('Error fetching database info:', err);
     return {
       name: 'Not connected',
-      host: dbConfig.host,
+      host: currentConfig.host,
       adventure: 'Unknown'
     };
   }
@@ -70,7 +153,6 @@ async function listTables() {
   const dbInfo = await executeQuery("SELECT DATABASE() as name");
   const currentDatabase = dbInfo[0].name;
   
- 
   const result = await executeQuery(`
     SELECT table_name AS table_name 
     FROM information_schema.tables 
@@ -142,5 +224,7 @@ export default {
   getDatabaseInfo,
   listTables,
   getTableData,
-  formatAdventureName
+  formatAdventureName,
+  setDatabase,
+  getTocData
 };

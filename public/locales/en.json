@@ -1,12 +1,31 @@
 {
   "app": {
     "title": "SQLab",
+    "homeTitle": "SQLab - Home",
     "loading": "Loading..."
   },
   "header": {
     "toggleTheme": "Toggle theme",
     "language": "Language",
     "theme": "Theme"
+  },
+  "home": {
+    "welcome": "Welcome to SQLab",
+    "selectDatabase": "Select Database",
+    "selectContent": "Select Content Type",
+    "islandDescription": "Explore an adventure on a mysterious island using SQL queries.",
+    "sessformDescription": "Practice SQL with exercises from the SessForm database.",
+    "adventureOption": "Adventure",
+    "adventureDescription": "Follow a narrative adventure solving SQL puzzles to progress.",
+    "exercisesOption": "Exercises",
+    "exercisesDescription": "Practice SQL with individual exercises of increasing difficulty.",
+    "startButton": "Start New",
+    "resumeButton": "Resume Session",
+    "sessionAvailable": "Saved Session Available:",
+    "sessionDatabase": "Database:",
+    "sessionContent": "Content:",
+    "sessionEpisode": "Episode:",
+    "sessionLastAccess": "Last accessed:"
   },
   "context": {
     "loading": "Loading episode...",
@@ -25,7 +44,7 @@
   },
   "notes": {
     "placeholder": "What you write here is saved locally and will persist across sessions.",
-    "confirmClear": "Are you sure you want to clear all your notes?"
+    "confirmClear": "Do you want to clear all your notes? This cannot be undone."
   },
   "businessTables": {
     "title": "Tables",
@@ -41,16 +60,13 @@
     "noResults": "No results",
     "runPrompt": "Run a query to see the results"
   },
-  "check": {
-    "noFormula": "No formula available for this episode",
-    "noTokenFound": "Your query executed successfully but did not generate a valid token",
-    "noTokenColumn": "No token column found in the result",
-    "invalidToken": "Invalid token or decrypt command"
-  },
   "control": {
     "title": "Check",
+    "developing": "Feature under development...",
     "checkSolution": "Check solution",
-    "developing": "Feature under development..."
+    "noFormula": "No verification formula available.",
+    "noTokenFound": "No token found in the results. Your solution might be incorrect.",
+    "noTokenColumn": "No token column found in the results. Make sure your query includes the right verification."
   },
   "table": {
     "pagination": {
@@ -66,7 +82,11 @@
   },
   "error": {
     "tableList": "Failed to load table list",
-    "tableData": "Failed to load table data",
-    "genericError": "An error occurred: {message}"
+    "tableData": "Failed to load table data"
+  },
+  "check": {
+    "noFormula": "No verification formula available.",
+    "noTokenFound": "No token found in the results. Your solution might be incorrect.",
+    "noTokenColumn": "No token column found in the results. Make sure your query includes the right verification."
   }
 }

@@ -158,5 +158,5 @@ class LocalizationService {
     }
 }
 
-// Export a singleton instance
-window.i18n = new LocalizationService();
+// Export a singleton instance - protect from multiple instantiations
+window.i18n = window.i18n || new LocalizationService();

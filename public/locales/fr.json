@@ -1,12 +1,31 @@
 {
   "app": {
     "title": "SQLab",
+    "homeTitle": "SQLab - Accueil",
     "loading": "Chargement..."
   },
   "header": {
     "toggleTheme": "Changer de thème",
     "language": "Langue",
     "theme": "Thème"
+  },
+  "home": {
+    "welcome": "Bienvenue sur SQLab",
+    "selectDatabase": "Sélectionner la base de données",
+    "selectContent": "Sélectionner le type de contenu",
+    "islandDescription": "Explorez une aventure sur une île mystérieuse en utilisant des requêtes SQL.",
+    "sessformDescription": "Pratiquez SQL avec des exercices de la base de données SessForm.",
+    "adventureOption": "Aventure",
+    "adventureDescription": "Suivez une aventure narrative en résolvant des énigmes SQL pour progresser.",
+    "exercisesOption": "Exercices",
+    "exercisesDescription": "Pratiquez SQL avec des exercices individuels de difficulté croissante.",
+    "startButton": "Nouvelle Session",
+    "resumeButton": "Reprendre Session",
+    "sessionAvailable": "Session sauvegardée disponible :",
+    "sessionDatabase": "Base de données :",
+    "sessionContent": "Contenu :",
+    "sessionEpisode": "Épisode :",
+    "sessionLastAccess": "Dernier accès :"
   },
   "context": {
     "loading": "Chargement de l'épisode...",
@@ -25,7 +44,7 @@
   },
   "notes": {
     "placeholder": "Ce que vous écrivez ici est enregistré localement et persistera entre les sessions.",
-    "confirmClear": "Êtes-vous sûr de vouloir effacer toutes vos notes ?"
+    "confirmClear": "Voulez-vous effacer toutes vos notes ? Cette action ne peut pas être annulée."
   },
   "businessTables": {
     "title": "Tables",
@@ -41,16 +60,13 @@
     "noResults": "Aucun résultat",
     "runPrompt": "Exécutez une requête pour voir les résultats"
   },
-  "check": {
-    "noFormula": "Aucune formule disponible pour cet épisode",
-    "noTokenFound": "Votre requête a été exécutée avec succès mais n'a pas généré de jeton valide",
-    "noTokenColumn": "Aucune colonne de jeton trouvée dans le résultat",
-    "invalidToken": "Jeton ou commande decrypt invalide"
-  },
   "control": {
     "title": "Vérifier",
+    "developing": "Fonctionnalité en cours de développement...",
     "checkSolution": "Vérifier la solution",
-    "developing": "Fonctionnalité en cours de développement..."
+    "noFormula": "Aucune formule de vérification disponible.",
+    "noTokenFound": "Aucun jeton trouvé dans les résultats. Votre solution est peut-être incorrecte.",
+    "noTokenColumn": "Aucune colonne de jeton trouvée dans les résultats. Assurez-vous que votre requête inclut la bonne vérification."
   },
   "table": {
     "pagination": {
@@ -66,7 +82,11 @@
   },
   "error": {
     "tableList": "Impossible de charger la liste des tables",
-    "tableData": "Impossible de charger les données de la table",
-    "genericError": "Une erreur s'est produite : {message}"
+    "tableData": "Impossible de charger les données de la table"
+  },
+  "check": {
+    "noFormula": "Aucune formule de vérification disponible.",
+    "noTokenFound": "Aucun jeton trouvé dans les résultats. Votre solution est peut-être incorrecte.",
+    "noTokenColumn": "Aucune colonne de jeton trouvée dans les résultats. Assurez-vous que votre requête inclut la bonne vérification."
   }
 }

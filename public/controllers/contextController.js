@@ -1,5 +1,6 @@
 /**
  * Controller for handling adventure context, tasks, and verification
+ * Also implements progress saving functionality
  */
 import { executeQuery } from '../models/queryModel.js';
 import { t } from './localizationController.js';
@@ -8,13 +9,14 @@ import { t } from './localizationController.js';
 let currentEpisode = null;
 let currentFormula = null;
 let currentEpisodeNumber = null;
+let currentEpisodeToken = null;
 
 // Utility functions
 const showControlError = (controlContainer, message) => {
     controlContainer.innerHTML = `<div class="error">${message}</div>`;
     document.querySelector('.tab[data-tab="control"]').click();
     if (currentEpisode) {
-        episodeContainer.innerHTML = currentEpisode;
+        document.getElementById('episode-container').innerHTML = currentEpisode;
     }
 };
 
@@ -39,7 +41,15 @@ export function initContext() {
         checkSolutionBtn.addEventListener('click', checkSolution);
     }
     
-    // Start with first episode
+    // Add home button event listener
+    document.getElementById('home-button').addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+    
+    // Try to restore session state
+    restoreSessionState();
+    
+    // Start with the entry episode stored in localStorage or fallback to default
     loadInitialEpisode();
     
     /**
@@ -48,8 +58,32 @@ export function initContext() {
     async function loadInitialEpisode() {
         try {
             episodeContainer.innerHTML = `<p class="loading">${t('context.loading')}</p>`;
-            const response = await executeQuery('SELECT decrypt(42)', 0, 10);
-            processEpisodeResponse(response);
+            
+            // Check if we have a current episode token first (for resuming a session)
+            const resumeToken = localStorage.getItem('currentEpisodeToken');
+            
+            if (resumeToken) {
+                // Resume from saved token
+                console.log('Resuming from saved token:', resumeToken);
+                const response = await executeQuery(`SELECT decrypt(${resumeToken})`, 0, 10);
+                processEpisodeResponse(response);
+                return;
+            }
+            
+            // Try to get entry token from localStorage
+            const entryToken = localStorage.getItem('entryToken');
+            
+            if (entryToken) {
+                // Use stored entry token
+                console.log('Starting with entry token:', entryToken);
+                const response = await executeQuery(`SELECT decrypt(${entryToken})`, 0, 10);
+                processEpisodeResponse(response);
+            } else {
+                // Fallback to default (42)
+                console.log('Using default token: 42');
+                const response = await executeQuery('SELECT decrypt(42)', 0, 10);
+                processEpisodeResponse(response);
+            }
         } catch (error) {
             console.error('Error loading initial episode:', error);
             episodeContainer.innerHTML = `<p class="error">${error.message}</p>`;
@@ -62,8 +96,17 @@ export function initContext() {
     async function loadNextEpisode(token) {
         try {
             episodeContainer.innerHTML = `<p class="loading">${t('context.loading')}</p>`;
+            
+            // Save the token for resume functionality
+            currentEpisodeToken = token;
+            localStorage.setItem('currentEpisodeToken', token);
+            
+            // Execute decrypt query
             const response = await executeQuery(`SELECT decrypt(${token})`, 0, 10);
             processEpisodeResponse(response);
+            
+            // Save the session after loading new episode
+            saveSessionState();
         } catch (error) {
             console.error('Error loading next episode:', error);
             episodeContainer.innerHTML = `<p class="error">${error.message}</p>`;
@@ -125,6 +168,8 @@ export function initContext() {
             const match = episodeData.task.match(/<div class='task_number'>(\d+)<\/div>/);
             if (match && match[1]) {
                 currentEpisodeNumber = parseInt(match[1]);
+                // Save to localStorage for session resuming
+                localStorage.setItem('currentEpisodeNumber', currentEpisodeNumber);
             }
             
             episodeContainer.innerHTML = episodeData.task;
@@ -135,6 +180,9 @@ export function initContext() {
             controlContainer.innerHTML = episodeData.feedback;
             goToControlTab();
         }
+        
+        // Save session state after processing episode data
+        saveSessionState();
     }
 
     /**
@@ -235,6 +283,70 @@ export function initContext() {
         } catch (error) {
             console.error('Error checking solution:', error);
             showControlError(controlContainer, error.message);
+        }
+    }
+    
+    /**
+     * Saves the current session state to localStorage
+     */
+    function saveSessionState() {
+        if (!currentEpisodeNumber || !currentEpisodeToken) {
+            return; // Don't save if we don't have an episode
+        }
+        
+        const selectedDb = localStorage.getItem('selectedDb');
+        const selectedContent = localStorage.getItem('selectedContent');
+        const contentType = localStorage.getItem('contentType');
+        const entryToken = localStorage.getItem('entryToken');
+        
+        if (!selectedDb || !selectedContent) {
+            return; // Don't save if we don't have db/content selection
+        }
+        
+        // Create session key
+        const sessionKey = `${selectedDb}_${selectedContent}`;
+        
+        // Load existing sessions
+        let sessions = {};
+        try {
+            const savedSessionsStr = localStorage.getItem('sqlabSessions');
+            if (savedSessionsStr) {
+                sessions = JSON.parse(savedSessionsStr);
+            }
+        } catch (e) {
+            console.error('Error loading saved sessions:', e);
+        }
+        
+        // Update or add session
+        sessions[sessionKey] = {
+            database: selectedDb,
+            content: selectedContent,
+            contentType: contentType,
+            entryToken: entryToken,
+            currentToken: currentEpisodeToken,
+            episodeNumber: currentEpisodeNumber,
+            timestamp: Date.now()
+        };
+        
+        // Save back to localStorage
+        localStorage.setItem('sqlabSessions', JSON.stringify(sessions));
+        console.log('Session saved:', sessions[sessionKey]);
+    }
+    
+    /**
+     * Restores session state from localStorage
+     */
+    function restoreSessionState() {
+        // Try to restore current episode token
+        const savedToken = localStorage.getItem('currentEpisodeToken');
+        if (savedToken) {
+            currentEpisodeToken = savedToken;
+        }
+        
+        // Try to restore current episode number
+        const savedEpisodeNumber = localStorage.getItem('currentEpisodeNumber');
+        if (savedEpisodeNumber) {
+            currentEpisodeNumber = parseInt(savedEpisodeNumber);
         }
     }
     
