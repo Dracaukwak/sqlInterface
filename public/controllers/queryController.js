@@ -1,9 +1,11 @@
-import { executeQuery } from '../models/queryModel.js';
+/**
+ * Query controller for handling SQL execution
+ */
+import dbService from '../services/dbService.js';
 import { displayResults } from '../views/queryView.js';
 import { showError } from '../utils/paginationUtils.js';
 import { translate as t } from '../utils/i18nManager.js';
 import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_OFFSET } from '../utils/constants.js';
-
 
 /**
  * Initializes the SQL query execution logic with pagination support
@@ -51,8 +53,8 @@ export function initQueryExecution() {
         currentQuery = query;
         
         try {
-            // Execute the query with pagination parameters
-            const data = await executeQuery(query, currentOffset, currentLimit);
+            // Use the unified dbService to execute the query
+            const data = await dbService.executeQuery(query, currentOffset, currentLimit);
 
             // Reset results container to ensure clean output each time
             resultsContainer.innerHTML = `
@@ -96,8 +98,8 @@ export function initQueryExecution() {
      */
     async function executeQueryWithPagination() {
         try {
-            // Execute the stored query with new pagination parameters
-            const data = await executeQuery(currentQuery, currentOffset, currentLimit);
+            // Use the unified dbService to execute the query with new pagination
+            const data = await dbService.executeQuery(currentQuery, currentOffset, currentLimit);
             
             // Get existing table and container
             const resultsTable = document.getElementById('results-table');

@@ -1,24 +1,10 @@
 /**
  * Model for managing episode data and operations
  * Handles loading, processing, and extracting metadata from episodes
+ * 
+ * Note: Most functionality has been moved to contextController.js
+ * This file remains for compatibility
  */
-import { executeQuery } from './queryModel.js';
-import dbService from '../services/dbService.js';
-
-/**
- * Loads an episode using a token
- * @param {string|number} token - The token to decrypt
- * @returns {Promise<Object>} - The processed episode data
- */
-export async function loadEpisodeByToken(token) {
-    try {
-        const response = await dbService.executeSQL(`SELECT decrypt(${token})`, 0, 10);
-        return processEpisodeResponse(response);
-    } catch (error) {
-        console.error('Error loading episode:', error);
-        throw error;
-    }
-}
 
 /**
  * Processes the response from a decrypt query
@@ -76,46 +62,6 @@ export function extractEpisodeNumber(episodeContent) {
 }
 
 /**
- * Gets hint for a given query by hashing it
- * @param {string} query - SQL query to get hint for
- * @returns {Promise<Object|null>} - Hint data if available
- */
-export async function getHintForQuery(query) {
-    try {
-        const hashResponse = await dbService.executeSQL(
-            `SELECT decrypt(hash(${JSON.stringify(query)}))`, 
-            0, 
-            10
-        );
-        
-        if (hashResponse.rows?.length > 0 && hashResponse.rows[0]?.length > 0) {
-            const hintData = hashResponse.rows[0][0];
-            
-            try {
-                let hintObj;
-                if (typeof hintData === 'string') {
-                    hintObj = JSON.parse(hintData);
-                } else {
-                    hintObj = hintData;
-                }
-                
-                return hintObj;
-            } catch (e) {
-                console.error('Error parsing hint data:', e);
-                return {
-                    rawHint: hintData
-                };
-            }
-        }
-        
-        return null;
-    } catch (error) {
-        console.error('Error fetching hint:', error);
-        return null;
-    }
-}
-
-/**
  * Enhances a query with the verification formula if needed
  * @param {string} query - Original SQL query
  * @param {string} formula - Verification formula to add
@@ -132,4 +78,13 @@ export function enhanceQueryWithFormula(query, formula) {
     // Otherwise, add the formula to the SELECT clause
     // Using the external addColumnToSelects function from sqlUtils
     return window.addColumnToSelects(query, formula);
+}
+
+// Legacy functions to maintain compatibility - these just throw errors if called
+export async function loadEpisodeByToken() {
+    throw new Error('This function has been moved to contextController.js');
+}
+
+export async function getHintForQuery() {
+    throw new Error('This function has been moved to contextController.js');
 }

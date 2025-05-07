@@ -53,7 +53,7 @@ async function loadAdventureTitle() {
         // Show loading indicator
         titleElement.textContent = t('app.loading');
 
-        // Get adventure title using the service
+        // Get adventure title using the unified service
         const adventureTitle = await dbService.getAdventureTitle();
 
         // Get content type display name

@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', async () => {
    */
   async function loadTocData(dbName) {
     try {
-      // Get TOC data using the service
+      // Get TOC data using the unified service
       const data = await dbService.getTocData(dbName);
       tocData = data.toc;
       console.log('TOC data loaded:', tocData);
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         localStorage.removeItem('currentEpisodeNumber');
       }
 
-      // Set database for the session
+      // Set database for the session using unified service
       await dbService.setDatabase(selectedDb);
 
       // Redirect to main interface
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Restore the session
         sessionManager.restoreSession(session);
 
-        // Set database for the session
+        // Set database for the session using unified service
         await dbService.setDatabase(selectedDb);
 
         // Redirect to main interface

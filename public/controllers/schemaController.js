@@ -1,4 +1,6 @@
-// Update import
+/**
+ * Controller for handling schema display
+ */
 import dbService from '../services/dbService.js';
 import { translate as t } from '../utils/i18nManager.js';
 import { showLoading, showInfo, showError } from '../utils/uiUtils.js';
@@ -21,7 +23,7 @@ export function initSchema() {
         showLoading(schemaContainer, t('schema.loading'));
         
         try {
-            // Get relational schema SVG
+            // Use the unified dbService to get the schema
             const schemaSvg = await dbService.getRelationalSchema();
             
             if (!schemaSvg) {

@@ -2,19 +2,16 @@
  * Controller for handling adventure context, tasks, and verification
  * Connects episode model and UI interactions
  */
-import { executeQuery } from '../models/queryModel.js';
+import dbService from '../services/dbService.js';
 import {
-    loadEpisodeByToken,
     processEpisodeResponse,
     isHint,
     extractEpisodeNumber,
-    getHintForQuery,
     enhanceQueryWithFormula
 } from '../models/episodeModel.js';
 import sessionManager from '../utils/sessionManager.js';
 import { showError, showLoading, activateTab } from '../utils/uiUtils.js';
 import { translate as t } from '../utils/i18nManager.js';
-
 
 // Current episode state
 let currentEpisode = null;
@@ -32,6 +29,7 @@ const showControlError = (controlContainer, message) => {
 };
 
 const goToControlTab = () => activateTab('control');
+
 /**
  * Initializes the context and check functionality
  */
@@ -97,6 +95,60 @@ export function initContext() {
         }
     }
 
+    /**
+     * Loads an episode using a token
+     * @param {string|number} token - The token to decrypt
+     * @returns {Promise<Object>} - The processed episode data
+     */
+    async function loadEpisodeByToken(token) {
+        try {
+            const response = await dbService.executeQuery(`SELECT decrypt(${token})`, 0, 10);
+            return processEpisodeResponse(response);
+        } catch (error) {
+            console.error('Error loading episode:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Gets hint for a given query by hashing it
+     * @param {string} query - SQL query to get hint for
+     * @returns {Promise<Object|null>} - Hint data if available
+     */
+    async function getHintForQuery(query) {
+        try {
+            const hashResponse = await dbService.executeQuery(
+                `SELECT decrypt(hash(${JSON.stringify(query)}))`, 
+                0, 
+                10
+            );
+            
+            if (hashResponse.rows?.length > 0 && hashResponse.rows[0]?.length > 0) {
+                const hintData = hashResponse.rows[0][0];
+                
+                try {
+                    let hintObj;
+                    if (typeof hintData === 'string') {
+                        hintObj = JSON.parse(hintData);
+                    } else {
+                        hintObj = hintData;
+                    }
+                    
+                    return hintObj;
+                } catch (e) {
+                    console.error('Error parsing hint data:', e);
+                    return {
+                        rawHint: hintData
+                    };
+                }
+            }
+            
+            return null;
+        } catch (error) {
+            console.error('Error fetching hint:', error);
+            return null;
+        }
+    }
 
     /**
      * Loads the next episode using the provided token
@@ -182,7 +234,7 @@ export function initContext() {
 
             // Check for special decrypt query
             if (/^SELECT\s+decrypt\s*\(\s*\d+\s*\)/i.test(query)) {
-                const response = await executeQuery(query, 0, 10);
+                const response = await dbService.executeQuery(query, 0, 10);
                 const episodeData = await processEpisodeResponse(response);
                 handleEpisodeData(episodeData);
                 return;
@@ -198,7 +250,7 @@ export function initContext() {
             const enhancedQuery = enhanceQueryWithFormula(query, currentFormula);
 
             // Execute the query
-            const response = await executeQuery(enhancedQuery, 0, 10);
+            const response = await dbService.executeQuery(enhancedQuery, 0, 10);
 
             // Show results in execution tab
             const executeBtn = document.getElementById('execute-btn');
