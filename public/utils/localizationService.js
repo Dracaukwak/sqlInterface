@@ -158,5 +158,14 @@ class LocalizationService {
     }
 }
 
-// Export a singleton instance - protect from multiple instantiations
-window.i18n = window.i18n || new LocalizationService();
+// Create the singleton instance
+
+const instance = window.i18n || new LocalizationService();
+
+// Expose the instance to the `window` object for backward compatibility
+window.i18n = instance;
+
+
+// Export the instance as an ES6 module
+// This allows modern JavaScript modules to import and use the singleton instance of the service.
+export default instance;
