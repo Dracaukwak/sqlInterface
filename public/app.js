@@ -6,7 +6,7 @@ import { initTabs } from './controllers/tabController.js';
 import { initQueryExecution } from './controllers/queryController.js';
 import { initBusinessTables } from './controllers/tableController.js';
 import { initNotes } from './controllers/notesController.js';
-import { getAdventureTitle } from './models/dbModel.js';
+import dbService from './services/dbService.js';
 import { initSchema } from './controllers/schemaController.js';
 import { initContext } from './controllers/contextController.js';
 import { initCommon } from './utils/commonInit.js';
@@ -14,7 +14,7 @@ import { applyTranslations, t } from './controllers/localizationController.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('Initializing app...');
-    
+
     // Check if we have a selected database in localStorage
     const selectedDb = localStorage.getItem('selectedDb');
     if (!selectedDb) {
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize common components (localization, theme, menu)
     await initCommon();
-    
+
     // Apply translations again to ensure all elements are properly translated
     setTimeout(applyTranslations, 200);
 
@@ -57,12 +57,12 @@ async function loadAdventureTitle() {
         titleElement.textContent = t('app.loading');
 
         // Get adventure title directly from sqlab_info table
-        const adventureTitle = await getAdventureTitle();
+        const adventureTitle = await dbService.getAdventureTitle();
 
         // Get content type display name
         const contentType = localStorage.getItem('contentType') || 'adventure';
-        const contentLabel = contentType === 'exercises' 
-            ? t('home.exercisesOption') 
+        const contentLabel = contentType === 'exercises'
+            ? t('home.exercisesOption')
             : t('home.adventureOption');
 
         // Update page title and displayed name with content type
@@ -74,5 +74,4 @@ async function loadAdventureTitle() {
         // Fallback text in case of error
         document.getElementById('database-name').textContent = t('database.unknown');
     }
-    
 }

@@ -6,6 +6,7 @@
 import { initCommon } from './utils/commonInit.js';
 import sessionManager from './utils/sessionManager.js';
 import { t } from './controllers/localizationController.js';
+import dbService from './services/dbService.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('Initializing home page...');
@@ -127,35 +128,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  /**
-   * Loads table of contents data for the selected database
-   * @param {string} dbName - Selected database name
-   */
-  async function loadTocData(dbName) {
-    try {
-      // Set up request to temporarily use the selected database
-      const response = await fetch('/get-toc', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ database: dbName })
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to load TOC data: ${response.status}`);
-      }
-
-      // Parse response
-      const data = await response.json();
+/**
+ * Loads table of contents data for the selected database
+ * @param {string} dbName - Selected database name
+ */
+async function loadTocData(dbName) {
+  try {
+      // Get TOC data using the service
+      const data = await dbService.getTocData(dbName);
       tocData = data.toc;
-
       console.log('TOC data loaded:', tocData);
-    } catch (error) {
+  } catch (error) {
       console.error('Error loading TOC data:', error);
       throw error;
-    }
   }
+}
 
   // Start button listener
   startButton.addEventListener('click', async function () {
@@ -254,31 +241,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     return null;
   }
 
-  /**
-   * Sets the database for the session
-   * @param {string} dbName - Database name to set
-   * @returns {Promise<void>}
-   */
-  async function setDatabase(dbName) {
-    try {
-      const response = await fetch('/set-database', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ database: dbName })
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to set database: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
+ /**
+ * Sets the database for the session
+ * @param {string} dbName - Database name to set
+ * @returns {Promise<void>}
+ */
+async function setDatabase(dbName) {
+  try {
+      return await dbService.setDatabase(dbName);
+  } catch (error) {
       console.error('Error setting database:', error);
       throw error;
-    }
   }
+}
 
   /**
    * Checks for saved sessions and updates UI accordingly

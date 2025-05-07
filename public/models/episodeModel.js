@@ -3,6 +3,7 @@
  * Handles loading, processing, and extracting metadata from episodes
  */
 import { executeQuery } from './queryModel.js';
+import dbService from '../services/dbService.js';
 
 /**
  * Loads an episode using a token
@@ -11,7 +12,7 @@ import { executeQuery } from './queryModel.js';
  */
 export async function loadEpisodeByToken(token) {
     try {
-        const response = await executeQuery(`SELECT decrypt(${token})`, 0, 10);
+        const response = await dbService.executeSQL(`SELECT decrypt(${token})`, 0, 10);
         return processEpisodeResponse(response);
     } catch (error) {
         console.error('Error loading episode:', error);
@@ -81,7 +82,7 @@ export function extractEpisodeNumber(episodeContent) {
  */
 export async function getHintForQuery(query) {
     try {
-        const hashResponse = await executeQuery(
+        const hashResponse = await dbService.executeSQL(
             `SELECT decrypt(hash(${JSON.stringify(query)}))`, 
             0, 
             10

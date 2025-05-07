@@ -1,5 +1,7 @@
-import { getRelationalSchema } from '../models/dbModel.js';
+// Update import
+import dbService from '../services/dbService.js';
 import { translate as t } from '../utils/i18nManager.js';
+import { showLoading, showInfo, showError } from '../utils/uiUtils.js';
 
 /**
  * Initializes the Schema tab functionality
@@ -16,14 +18,14 @@ export function initSchema() {
      */
     async function loadSchema() {
         // Show loading message
-        schemaContainer.innerHTML = `<div class="loading">${t('schema.loading')}</div>`;
+        showLoading(schemaContainer, t('schema.loading'));
         
         try {
             // Get relational schema SVG
-            const schemaSvg = await getRelationalSchema();
+            const schemaSvg = await dbService.getRelationalSchema();
             
             if (!schemaSvg) {
-                schemaContainer.innerHTML = `<div class="info">${t('schema.notAvailable')}</div>`;
+                showInfo(schemaContainer, t('schema.notAvailable'));
                 return;
             }
             
@@ -40,7 +42,7 @@ export function initSchema() {
             }
         } catch (error) {
             console.error('Error loading schema:', error);
-            schemaContainer.innerHTML = `<div class="error">${error.message}</div>`;
+            showError(schemaContainer, error.message);
         }
     }
 }
