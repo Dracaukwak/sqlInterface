@@ -5,7 +5,7 @@
  */
 import { initCommon } from './utils/commonInit.js';
 import sessionManager from './utils/sessionManager.js';
-import { t } from './controllers/localizationController.js';
+import { translate as t } from './utils/i18nManager.js';
 import dbService from './services/dbService.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let selectedContent = null;
   let contentType = null;
   let tocData = null;
-  let savedSessions = loadSavedSessions();
+  let savedSessions = sessionManager.getAllSessions();
 
   // Check for saved sessions and update UI
   checkForSavedSessions();
@@ -128,21 +128,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-/**
- * Loads table of contents data for the selected database
- * @param {string} dbName - Selected database name
- */
-async function loadTocData(dbName) {
-  try {
+  /**
+   * Loads table of contents data for the selected database
+   * @param {string} dbName - Selected database name
+   */
+  async function loadTocData(dbName) {
+    try {
       // Get TOC data using the service
       const data = await dbService.getTocData(dbName);
       tocData = data.toc;
       console.log('TOC data loaded:', tocData);
-  } catch (error) {
+    } catch (error) {
       console.error('Error loading TOC data:', error);
       throw error;
+    }
   }
-}
 
   // Start button listener
   startButton.addEventListener('click', async function () {
@@ -169,7 +169,7 @@ async function loadTocData(dbName) {
       }
 
       // Set database for the session
-      await setDatabase(selectedDb);
+      await dbService.setDatabase(selectedDb);
 
       // Redirect to main interface
       window.location.href = 'app.html';
@@ -204,7 +204,7 @@ async function loadTocData(dbName) {
         sessionManager.restoreSession(session);
 
         // Set database for the session
-        await setDatabase(selectedDb);
+        await dbService.setDatabase(selectedDb);
 
         // Redirect to main interface
         window.location.href = 'app.html';
@@ -216,7 +216,6 @@ async function loadTocData(dbName) {
         alert(`Error resuming session: ${error.message}`);
       }
     });
-
   }
 
   /**
@@ -241,27 +240,13 @@ async function loadTocData(dbName) {
     return null;
   }
 
- /**
- * Sets the database for the session
- * @param {string} dbName - Database name to set
- * @returns {Promise<void>}
- */
-async function setDatabase(dbName) {
-  try {
-      return await dbService.setDatabase(dbName);
-  } catch (error) {
-      console.error('Error setting database:', error);
-      throw error;
-  }
-}
-
   /**
    * Checks for saved sessions and updates UI accordingly
    */
   function checkForSavedSessions() {
     // If we have any saved sessions, pre-select the database and content
     if (Object.keys(savedSessions).length > 0) {
-      const lastSession = getMostRecentSession();
+      const lastSession = sessionManager.getMostRecentSession();
       if (lastSession) {
         // Find and select the database option
         const dbOption = document.querySelector(`.option-card[data-db="${lastSession.database}"]`);
@@ -278,22 +263,6 @@ async function setDatabase(dbName) {
         }
       }
     }
-  }
-
-  /**
-   * Gets the most recent session from saved sessions
-   * @returns {Object|null} The most recent session data or null if none found
-   */
-  function getMostRecentSession() {
-    return sessionManager.getMostRecentSession();
-  }
-
-  /**
-   * Loads saved sessions from localStorage
-   * @returns {Object} An object containing all saved sessions
-   */
-  function loadSavedSessions() {
-    return sessionManager.getAllSessions();
   }
 
   /**

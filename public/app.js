@@ -10,7 +10,7 @@ import dbService from './services/dbService.js';
 import { initSchema } from './controllers/schemaController.js';
 import { initContext } from './controllers/contextController.js';
 import { initCommon } from './utils/commonInit.js';
-import { applyTranslations, t } from './controllers/localizationController.js';
+import { translate as t } from './utils/i18nManager.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('Initializing app...');
@@ -25,9 +25,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize common components (localization, theme, menu)
     await initCommon();
-
-    // Apply translations again to ensure all elements are properly translated
-    setTimeout(applyTranslations, 200);
 
     // Initialize core components: tabs, query handling, and business tables
     initTabs();
@@ -56,7 +53,7 @@ async function loadAdventureTitle() {
         // Show loading indicator
         titleElement.textContent = t('app.loading');
 
-        // Get adventure title directly from sqlab_info table
+        // Get adventure title using the service
         const adventureTitle = await dbService.getAdventureTitle();
 
         // Get content type display name
