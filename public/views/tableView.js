@@ -1,5 +1,5 @@
 import { escapeHtml } from '../utils/helpers.js';
-import { t } from '../controllers/localizationController.js';
+import { translate as t } from '../utils/i18nManager.js';
 import { renderPaginatedTable } from '../utils/paginationUtils.js';
 import { DEFAULT_PAGE_LIMIT, DRAG_END_DELAY } from '../utils/constants.js';
 

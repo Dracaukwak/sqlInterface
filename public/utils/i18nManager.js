@@ -1,0 +1,108 @@
+/**
+ * i18n Manager - Centralizes all translation-related functionality
+ * Connects the translation service with the application
+ */
+import { applyTranslations as applyTranslationsToDOM } from '../controllers/localizationController.js';
+
+/**
+ * Initializes the i18n system based on browser preferences and stored settings
+ * @param {string} defaultLocale - Default locale if no preference found (defaults to 'en')
+ * @returns {Promise<void>} - Promise that resolves when i18n is ready
+ */
+export async function initialize(defaultLocale = 'en') {
+    try {
+        // If already initialized, just return
+        if (window.i18n.isInitialized()) {
+            return;
+        }
+        
+        // Get browser language as a hint
+        const browserLang = navigator.language.split('-')[0];
+        // Get stored preference if available
+        const storedLang = localStorage.getItem('locale');
+        
+        // Determine which language to use
+        const initialLocale = storedLang || browserLang || defaultLocale;
+        
+        // Initialize the i18n service
+        await window.i18n.init(initialLocale);
+        
+        // Apply translations to the DOM
+        applyTranslationsToDOM();
+        
+        // Add global event listener for locale changes (only once)
+        if (!window.localeChangeListenerSet) {
+            window.addEventListener('localeChanged', applyTranslationsToDOM);
+            window.localeChangeListenerSet = true;
+        }
+        
+        console.log(`i18n initialized with locale: ${getLocale()}`);
+    } catch (error) {
+        console.error('Failed to initialize i18n:', error);
+    }
+}
+
+/**
+ * Gets text translation for a specific key
+ * @param {string} key - Translation key (e.g., 'common.save')
+ * @param {Object} params - Parameters for the translation (for placeholders)
+ * @returns {string} - Translated text
+ */
+export function translate(key, params = {}) {
+    return window.i18n.t(key, params);
+}
+
+/**
+ * Gets the current locale code
+ * @returns {string} - Current locale code (e.g., 'en', 'fr')
+ */
+export function getLocale() {
+    return window.i18n.getCurrentLocale();
+}
+
+/**
+ * Sets the application locale
+ * @param {string} locale - Locale code to set
+ * @returns {Promise<boolean>} - Success status
+ */
+export function setLocale(locale) {
+    return window.i18n.setLocale(locale);
+}
+
+/**
+ * Sets up the language selector dropdown if it exists in the DOM
+ */
+export function setupLanguageSelector() {
+    const languageSelector = document.getElementById('language-selector');
+    if (!languageSelector) return;
+    
+    // Set initial value of selector to current locale
+    languageSelector.value = getLocale();
+    
+    // Replace element to remove any existing listeners
+    const newSelector = languageSelector.cloneNode(true);
+    languageSelector.parentNode.replaceChild(newSelector, languageSelector);
+    
+    // Handle language change events
+    newSelector.addEventListener('change', async (event) => {
+        const newLocale = event.target.value;
+        await setLocale(newLocale);
+    });
+}
+
+/**
+ * Applies translations to the entire DOM
+ * This is a convenience method that calls the controller function
+ */
+export function applyTranslations() {
+    applyTranslationsToDOM();
+}
+
+export default {
+    initialize,
+    translate,
+    getLocale,
+    setLocale,
+    setupLanguageSelector,
+    applyTranslations
+};

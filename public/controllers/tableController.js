@@ -1,6 +1,6 @@
 import { getTables, getTableData } from '../models/tableModel.js';
 import { renderBusinessTables, renderTableData, initDragAndDrop } from '../views/tableView.js';
-import { t } from '../controllers/localizationController.js';
+import { translate as t } from '../utils/i18nManager.js';
 import { showError } from '../utils/paginationUtils.js';
 import { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT, DRAG_END_DELAY } from '../utils/constants.js';
 

@@ -1,7 +1,7 @@
 /**
  * Model for interacting with table data via the API
  */
-import { t } from '../controllers/localizationController.js';
+import { translate as t } from '../utils/i18nManager.js';
 
 /**
  * Fetches the list of available tables from the backend

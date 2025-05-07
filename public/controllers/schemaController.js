@@ -1,5 +1,5 @@
 import { getRelationalSchema } from '../models/dbModel.js';
-import { t } from './localizationController.js';
+import { translate as t } from '../utils/i18nManager.js';
 
 /**
  * Initializes the Schema tab functionality

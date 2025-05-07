@@ -1,39 +1,22 @@
 /**
  * Controller for handling localization in the UI
- * Manages language selection and applying translations to DOM elements
+ * Manages applying translations to DOM elements
  */
+import i18nManager from '../utils/i18nManager.js';
 
 /**
  * Initializes language selection and localization functionality
  * Sets up event listeners and applies initial translations
  */
 export function initLocalization() {
-    // Get reference to the language selector
-    const languageSelector = document.getElementById('language-selector');
+    // Initialize i18n system
+    i18nManager.initialize();
     
-    if (languageSelector) {
-        // Set initial value of selector to current locale
-        languageSelector.value = window.i18n.getCurrentLocale();
-        
-        // Remove previous event listeners by replacing the element
-        const newSelector = languageSelector.cloneNode(true);
-        languageSelector.parentNode.replaceChild(newSelector, languageSelector);
-        
-        // Handle language change from the selector
-        newSelector.addEventListener('change', async (event) => {
-            const newLocale = event.target.value;
-            await window.i18n.setLocale(newLocale);
-        });
-    }
+    // Setup language selector UI
+    i18nManager.setupLanguageSelector();
     
     // Apply initial translations
     applyTranslations();
-    
-    // Add event listener for locale changes, but only once
-    if (!window.localizationControllerInitialized) {
-        window.addEventListener('localeChanged', applyTranslations);
-        window.localizationControllerInitialized = true;
-    }
 }
 
 /**
@@ -46,7 +29,7 @@ export function applyTranslations() {
         const key = element.getAttribute('data-i18n');
         
         if (key) {
-            element.textContent = window.i18n.t(key);
+            element.textContent = i18nManager.translate(key);
         }
     });
     
@@ -55,7 +38,7 @@ export function applyTranslations() {
         const key = element.getAttribute('data-i18n-placeholder');
         
         if (key) {
-            element.placeholder = window.i18n.t(key);
+            element.placeholder = i18nManager.translate(key);
         }
     });
     
@@ -64,7 +47,7 @@ export function applyTranslations() {
         const key = element.getAttribute('data-i18n-title');
         
         if (key) {
-            element.title = window.i18n.t(key);
+            element.title = i18nManager.translate(key);
         }
     });
     
@@ -73,7 +56,7 @@ export function applyTranslations() {
     if (titleElement) {
         const key = titleElement.getAttribute('data-i18n');
         if (key) {
-            document.title = window.i18n.t(key);
+            document.title = i18nManager.translate(key);
         }
     }
 }
@@ -87,7 +70,7 @@ export function applyTranslations() {
  * @returns {string} - Translated string
  */
 export function t(key, params = {}) {
-    return window.i18n.t(key, params);
+    return i18nManager.translate(key, params);
 }
 
 /**
@@ -95,5 +78,5 @@ export function t(key, params = {}) {
  * @returns {string} - Current locale code (e.g., 'en', 'fr')
  */
 export function getCurrentLocale() {
-    return window.i18n.getCurrentLocale();
+    return i18nManager.getLocale();
 }

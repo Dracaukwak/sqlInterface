@@ -1,7 +1,7 @@
 import { executeQuery } from '../models/queryModel.js';
 import { displayResults } from '../views/queryView.js';
 import { showError } from '../utils/paginationUtils.js';
-import { t } from '../controllers/localizationController.js';
+import { translate as t } from '../utils/i18nManager.js';
 import { DEFAULT_PAGE_LIMIT, DEFAULT_PAGE_OFFSET } from '../utils/constants.js';
 
 

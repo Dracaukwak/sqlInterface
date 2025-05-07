@@ -1,5 +1,5 @@
 // Model for retrieving information about the connected database
-import { t } from '../controllers/localizationController.js';
+import { translate as t } from '../utils/i18nManager.js';
 
 /**
  * Gets the adventure title from the sqlab_info table

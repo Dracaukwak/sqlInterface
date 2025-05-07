@@ -1,7 +1,7 @@
 /**
  * Model for executing SQL queries via the API with pagination support
  */
-import { t } from '../controllers/localizationController.js';
+import { translate as t } from '../utils/i18nManager.js';
 import { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT } from '../utils/constants.js';
 
 /**

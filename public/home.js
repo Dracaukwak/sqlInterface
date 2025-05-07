@@ -4,6 +4,7 @@
  * And implements session saving/restoration
  */
 import { initCommon } from './utils/commonInit.js';
+import sessionManager from './utils/sessionManager.js';
 import { t } from './controllers/localizationController.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -206,22 +207,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadingOverlay.style.display = 'flex';
 
         // Get saved session data
-        const sessionKey = `${selectedDb}_${selectedContent}`;
-        const sessionData = savedSessions[sessionKey];
+        const session = sessionManager.getSession(selectedDb, selectedContent);
 
-        if (!sessionData) {
+        if (!session) {
           throw new Error('No saved session found');
         }
 
-        // Save selections to localStorage
-        localStorage.setItem('selectedDb', selectedDb);
-        localStorage.setItem('selectedContent', selectedContent);
-        localStorage.setItem('contentType', contentType);
-
-        // Set the episode token from the saved session
-        localStorage.setItem('entryToken', sessionData.entryToken || '');
-        localStorage.setItem('currentEpisodeToken', sessionData.currentToken || '');
-        localStorage.setItem('currentEpisodeNumber', sessionData.episodeNumber || '');
+        // Restore the session
+        sessionManager.restoreSession(session);
 
         // Set database for the session
         await setDatabase(selectedDb);
@@ -236,6 +229,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert(`Error resuming session: ${error.message}`);
       }
     });
+
   }
 
   /**
@@ -316,22 +310,7 @@ document.addEventListener('DOMContentLoaded', async () => {
    * @returns {Object|null} The most recent session data or null if none found
    */
   function getMostRecentSession() {
-    let mostRecent = null;
-    let mostRecentTime = 0;
-
-    for (const key in savedSessions) {
-      const session = savedSessions[key];
-      if (session.timestamp && session.timestamp > mostRecentTime) {
-        mostRecentTime = session.timestamp;
-        mostRecent = {
-          database: session.database,
-          content: session.content,
-          ...session
-        };
-      }
-    }
-
-    return mostRecent;
+    return sessionManager.getMostRecentSession();
   }
 
   /**
@@ -339,16 +318,7 @@ document.addEventListener('DOMContentLoaded', async () => {
    * @returns {Object} An object containing all saved sessions
    */
   function loadSavedSessions() {
-    try {
-      const savedSessionsStr = localStorage.getItem('sqlabSessions');
-      if (savedSessionsStr) {
-        return JSON.parse(savedSessionsStr);
-      }
-    } catch (error) {
-      console.error('Error loading saved sessions:', error);
-    }
-
-    return {};
+    return sessionManager.getAllSessions();
   }
 
   /**
