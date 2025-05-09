@@ -1,6 +1,6 @@
-import { escapeHtml } from '../utils/helpers.js';
+import { escapeHtml } from '../utils/commonUtils.js';
 import { translate as t } from '../utils/i18nManager.js';
-import { renderPaginatedTable } from '../utils/paginationUtils.js';
+import { renderPaginatedTable } from '../utils/tableUtils.js';
 import { DEFAULT_PAGE_LIMIT, DRAG_END_DELAY } from '../utils/constants.js';
 
 /**

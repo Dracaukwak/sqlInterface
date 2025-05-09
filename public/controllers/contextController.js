@@ -9,7 +9,8 @@ import {
     extractEpisodeNumber,
     enhanceQueryWithFormula
 } from '../models/episodeModel.js';
-import { showError, showLoading, activateTab } from '../utils/uiUtils.js';
+import { showError, showLoading } from '../utils/commonUtils.js'; 
+import { activateTab } from '../utils/uiUtils.js';               
 import { translate as t } from '../utils/i18nManager.js';
 
 // Current episode state

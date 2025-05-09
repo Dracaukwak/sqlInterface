@@ -3,7 +3,7 @@
  */
 import dbService from '../services/dbService.js';
 import { renderBusinessTables, renderTableData, initDragAndDrop } from '../views/tableView.js';
-import { showError } from '../utils/uiUtils.js';
+import { showError } from '../utils/commonUtils.js';
 import { DEFAULT_PAGE_OFFSET, DEFAULT_PAGE_LIMIT } from '../utils/constants.js';
 
 /**

@@ -3,7 +3,7 @@
  */
 import dbService from '../services/dbService.js';
 import { translate as t } from '../utils/i18nManager.js';
-import { showLoading, showInfo, showError } from '../utils/uiUtils.js';
+import { showLoading, showInfo, showError } from '../utils/commonUtils.js';
 
 /**
  * Initializes the Schema tab functionality
