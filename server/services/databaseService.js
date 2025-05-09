@@ -64,7 +64,7 @@ async function getTocData(databaseName) {
     
     // Query for TOC data
     const result = await conn.query(
-      "SELECT value FROM sqlab_info WHERE name = 'toc' LIMIT 1"
+      "SELECT value FROM sqlab_info WHERE name = 'parts' LIMIT 1"
     );
     
     if (result.length === 0) {

@@ -169,9 +169,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
       const contentSection = tocData[selectedContent];
-      if (contentSection && contentSection.open_tasks && contentSection.open_tasks.length > 0) {
-        // Return first entry token from open_tasks
-        return contentSection.open_tasks[0].entry_token;
+      if (contentSection && contentSection.tasks && contentSection.tasks.length > 0) {
+        // Return first entry token from tasks
+        return contentSection.tasks[0].access;
       }
     } catch (error) {
       console.error('Error getting entry token:', error);
