@@ -1,13 +1,5 @@
-/**
- * Dark mode component styles
- * Centralized dark theme overrides
- */
 
 /* ===== Dark Theme Overrides ===== */
-
-/* Most dark theme styles are kept with their respective components.
-   This file contains additional dark theme styles and overrides
-   that aren't component-specific or need to be applied globally. */
 
 /* Tab-related dark theme */
 .dark-theme .tabs {
@@ -104,7 +96,7 @@
   border-color: #444;
 }
 
-/* Adventure-specific dark theme styles */
+/* Adventure-specific dark theme styles - DÉPLACÉ DEPUIS adventure.css */
 .dark-theme .episode-statement {
   background-color: transparent;
 }
@@ -137,7 +129,47 @@
   color: #e0e0e0;
 }
 
+.dark-theme .exercise-statement {
+  background-color: #0d2234;
+  border-left-color: #2196F3;
+}
+
+.dark-theme .exercise-statement .task_number {
+  color: #64b5f6;
+}
+
+.dark-theme .exercise-correction {
+  background-color: #0a3a0a;
+  border-left-color: #2e7d32;
+}
+
+.dark-theme .exercise-correction .task_number,
+.dark-theme .exercise-correction .preamble {
+  color: #81c784;
+}
+
 .dark-theme .episode-correction {
   background-color: #0a3a0a;
   border-left-color: #2e7d32;
+}
+
+.dark-theme .episode-correction .preamble,
+.dark-theme .episode-correction .task_number {
+  color: #81c784;
+}
+  
+.dark-theme .episode-correction .solution {
+  background-color: var(--dark-element);
+  border-color: #444;
+}
+  
+.dark-theme .episode-correction pre {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+
+.dark-theme #control-container .error {
+  background-color: #3a0a0a;
+  color: #ef9a9a;
+  border-left-color: #c62828;
 }

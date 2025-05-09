@@ -240,32 +240,9 @@
   font-weight: var(--font-weight-bold);
   margin-bottom: var(--spacing-md);
 }
-  
-/* Check actions styles */
-.check-actions {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--spacing-md);
-}
-  
-#check-solution-btn {
-  background-color: var(--color-primary);
-  color: white;
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: var(--border-radius-sm);
-  border: none;
-  cursor: pointer;
-  font-weight: var(--font-weight-bold);
-  transition: all var(--transition-fast);
-  box-shadow: var(--shadow-sm);
-}
-  
-#check-solution-btn:hover {
-  background-color: var(--color-secondary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
 
+/* Styles de bouton et check-actions supprimés car définis dans forms.css */
+  
 /* Error messages */
 #control-container .error {
   background-color: #ffebee;
@@ -275,87 +252,4 @@
   border-left: 4px solid #c62828;
   margin-bottom: var(--spacing-md);
   font-weight: var(--font-weight-bold);
-}
-  
-/* Dark theme styles */
-.dark-theme #episode-container {
-  background-color: var(--dark-element);
-  border-color: #444;
-}
-
-.dark-theme .episode-statement {
-  background-color: transparent;
-}
-  
-.dark-theme .episode-statement .statement {
-  border-top-color: #444;
-}
-  
-.dark-theme .episode-statement pre,
-.dark-theme .episode-statement code {
-  background-color: #2a2a2a;
-  color: #e0e0e0;
-}
-  
-.dark-theme .episode-statement pre {
-  border-left-color: var(--dark-secondary);
-}
-
-.dark-theme .hint {
-  background-color: #332b1e;
-  border-left-color: #ff9800;
-}
-
-.dark-theme .hint .preamble,
-.dark-theme .hint .task_number {
-  color: #ffb74d;
-}
-
-.dark-theme .hint .text {
-  color: #e0e0e0;
-}
-  
-.dark-theme .episode-correction {
-  background-color: #0a3a0a;
-  border-left-color: #2e7d32;
-}
-  
-.dark-theme .episode-correction .preamble,
-.dark-theme .episode-correction .task_number {
-  color: #81c784;
-}
-  
-.dark-theme .episode-correction .solution {
-  background-color: var(--dark-element);
-  border-color: #444;
-}
-  
-.dark-theme .episode-correction pre {
-  background-color: #2a2a2a;
-  color: #e0e0e0;
-}
-
-.dark-theme .exercise-statement {
-  background-color: #0d2234;
-  border-left-color: #2196F3;
-}
-
-.dark-theme .exercise-statement .task_number {
-  color: #64b5f6;
-}
-
-.dark-theme .exercise-correction {
-  background-color: #0a3a0a;
-  border-left-color: #2e7d32;
-}
-
-.dark-theme .exercise-correction .task_number,
-.dark-theme .exercise-correction .preamble {
-  color: #81c784;
-}
-
-.dark-theme #control-container .error {
-  background-color: #3a0a0a;
-  color: #ef9a9a;
-  border-left-color: #c62828;
 }
