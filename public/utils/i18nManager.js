@@ -38,7 +38,7 @@ export async function initialize(defaultLocale = 'en') {
         
         // Add global event listener for locale changes (only once)
         if (!window.localeChangeListenerSet) {
-            window.addEventListener('localeChanged', applyTranslationsToDOM);
+            window.addEventListener('localeChanged', onLocaleChanged);
             window.localeChangeListenerSet = true;
         }
         
@@ -46,6 +46,21 @@ export async function initialize(defaultLocale = 'en') {
     } catch (error) {
         console.error('Failed to initialize i18n:', error);
     }
+}
+
+/**
+ * Gère le changement de langue
+ * @param {Event} event - L'événement de changement de langue
+ */
+function onLocaleChanged(event) {
+    // Appliquer les traductions au DOM
+    applyTranslationsToDOM();
+    
+    // Déclencher un événement personnalisé pour notifier d'autres composants
+    // (comme le titre de l'aventure) qui doivent être mis à jour
+    window.dispatchEvent(new CustomEvent('languageChanged', { 
+        detail: { locale: event.detail.locale }
+    }));
 }
 
 /**

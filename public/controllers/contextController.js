@@ -9,7 +9,6 @@ import {
     extractEpisodeNumber,
     enhanceQueryWithFormula
 } from '../models/episodeModel.js';
-import sessionManager from '../utils/sessionManager.js';
 import { showError, showLoading, activateTab } from '../utils/uiUtils.js';
 import { translate as t } from '../utils/i18nManager.js';
 
@@ -54,8 +53,8 @@ export function initContext() {
         window.location.href = 'index.html';
     });
 
-    // Try to restore session state
-    restoreSessionState();
+    // Try to restore token state
+    restoreTokenState();
 
     // Start with the entry episode stored in localStorage or fallback to default
     loadInitialEpisode();
@@ -67,7 +66,7 @@ export function initContext() {
         try {
             showLoading(episodeContainer, t('context.loading'));
 
-            // Check if we have a current episode token first (for resuming a session)
+            // Check if we have a current episode token first
             const resumeToken = localStorage.getItem('currentEpisodeToken');
 
             if (resumeToken) {
@@ -164,9 +163,6 @@ export function initContext() {
             // Load episode data using the model
             const episodeData = await loadEpisodeByToken(token);
             handleEpisodeData(episodeData);
-
-            // Save the session after loading new episode
-            sessionManager.saveCurrentSessionState();
         } catch (error) {
             console.error('Error loading next episode:', error);
             showError(episodeContainer, error.message);
@@ -201,7 +197,7 @@ export function initContext() {
             const extractedNumber = extractEpisodeNumber(episodeData.task);
             if (extractedNumber) {
                 currentEpisodeNumber = extractedNumber;
-                // Save to localStorage for session resuming
+                // Save to localStorage for token resuming
                 localStorage.setItem('currentEpisodeNumber', currentEpisodeNumber);
             }
 
@@ -213,9 +209,6 @@ export function initContext() {
             controlContainer.innerHTML = episodeData.feedback;
             goToControlTab();
         }
-
-        // Save session state after processing episode data
-        sessionManager.saveCurrentSessionState();
     }
 
     /**
@@ -287,9 +280,9 @@ export function initContext() {
     }
 
     /**
-     * Restores session state from localStorage
+     * Restores token state from localStorage
      */
-    function restoreSessionState() {
+    function restoreTokenState() {
         // Try to restore current episode token
         const savedToken = localStorage.getItem('currentEpisodeToken');
         if (savedToken) {

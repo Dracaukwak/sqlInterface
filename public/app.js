@@ -12,6 +12,10 @@ import { initContext } from './controllers/contextController.js';
 import { initCommon } from './utils/commonInit.js';
 import { translate as t } from './utils/i18nManager.js';
 
+// Variables globales pour stocker le titre de l'aventure
+let currentAdventureTitle = '';
+let currentContentType = '';
+
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('Initializing app...');
 
@@ -40,6 +44,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Load and display the adventure title in the UI
     loadAdventureTitle();
+    
+    // Ajouter un écouteur d'événement pour le changement de langue
+    window.addEventListener('localeChanged', updateAdventureTitle);
 });
 
 /**
@@ -55,20 +62,39 @@ async function loadAdventureTitle() {
 
         // Get adventure title using the unified service
         const adventureTitle = await dbService.getAdventureTitle();
+        currentAdventureTitle = adventureTitle;
 
         // Get content type display name
-        const contentType = localStorage.getItem('contentType') || 'adventure';
-        const contentLabel = contentType === 'exercises'
+        currentContentType = localStorage.getItem('contentType') || 'adventure';
+        const contentLabel = currentContentType === 'exercises'
             ? t('home.exercisesOption')
             : t('home.adventureOption');
 
         // Update page title and displayed name with content type
         document.title = `${adventureTitle} - ${contentLabel}`;
         titleElement.textContent = `${adventureTitle} - ${contentLabel}`;
+        
+        // Retirer l'attribut data-i18n pour éviter qu'il soit modifié lors du changement de langue
+        titleElement.removeAttribute('data-i18n');
     } catch (error) {
         console.error('Error loading adventure title:', error);
 
         // Fallback text in case of error
         document.getElementById('database-name').textContent = t('database.unknown');
+    }
+}
+
+/**
+ * Met à jour le titre de l'aventure après un changement de langue
+ */
+function updateAdventureTitle() {
+    if (currentAdventureTitle) {
+        const titleElement = document.getElementById('database-name');
+        const contentLabel = currentContentType === 'exercises'
+            ? t('home.exercisesOption')
+            : t('home.adventureOption');
+            
+        document.title = `${currentAdventureTitle} - ${contentLabel}`;
+        titleElement.textContent = `${currentAdventureTitle} - ${contentLabel}`;
     }
 }

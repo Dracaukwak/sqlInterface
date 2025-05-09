@@ -1,10 +1,8 @@
 /**
  * Home page controller
- * Handles database and content selection, loads content info
- * And implements session saving/restoration
+ * Handles database and content selection
  */
 import { initCommon } from './utils/commonInit.js';
-import sessionManager from './utils/sessionManager.js';
 import { translate as t } from './utils/i18nManager.js';
 import dbService from './services/dbService.js';
 
@@ -18,8 +16,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const databaseOptions = document.querySelectorAll('.database-options .option-card');
   const contentOptionsContainers = document.querySelectorAll('.content-options');
   const startButton = document.getElementById('start-button');
-  const resumeButton = document.getElementById('resume-button');
-  const sessionInfoContainer = document.getElementById('session-info');
   const loadingOverlay = document.querySelector('.loading-overlay');
 
   // State
@@ -27,10 +23,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   let selectedContent = null;
   let contentType = null;
   let tocData = null;
-  let savedSessions = sessionManager.getAllSessions();
-
-  // Check for saved sessions and update UI
-  checkForSavedSessions();
 
   // Event listeners for database selection
   databaseOptions.forEach(option => {
@@ -53,9 +45,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       try {
         // Load TOC data for selected database
         await loadTocData(selectedDb);
-
-        // Check if there's a saved session for this database
-        checkResumeAvailability();
       } catch (error) {
         console.error('Error loading TOC data:', error);
       }
@@ -93,9 +82,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
           // Enable start button
           startButton.classList.add('active');
-
-          // Check if there's a saved session for this specific content
-          checkResumeAvailability();
         });
       });
     }
@@ -116,16 +102,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Disable start button
     startButton.classList.remove('active');
-
-    // Disable and hide resume button
-    if (resumeButton) {
-      resumeButton.classList.remove('active');
-    }
-
-    // Hide session info
-    if (sessionInfoContainer) {
-      sessionInfoContainer.classList.remove('visible');
-    }
   }
 
   /**
@@ -182,42 +158,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Resume button listener (if it exists)
-  if (resumeButton) {
-    resumeButton.addEventListener('click', async function () {
-      if (!selectedDb || !selectedContent) {
-        return; // Button should be disabled anyway
-      }
-
-      try {
-        // Show loading overlay
-        loadingOverlay.style.display = 'flex';
-
-        // Get saved session data
-        const session = sessionManager.getSession(selectedDb, selectedContent);
-
-        if (!session) {
-          throw new Error('No saved session found');
-        }
-
-        // Restore the session
-        sessionManager.restoreSession(session);
-
-        // Set database for the session using unified service
-        await dbService.setDatabase(selectedDb);
-
-        // Redirect to main interface
-        window.location.href = 'app.html';
-      } catch (error) {
-        console.error('Error resuming session:', error);
-        // Hide loading overlay
-        loadingOverlay.style.display = 'none';
-        // Show error message
-        alert(`Error resuming session: ${error.message}`);
-      }
-    });
-  }
-
   /**
    * Gets the entry token for the selected content
    * @returns {string} Entry token or null if not found
@@ -238,71 +178,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     return null;
-  }
-
-  /**
-   * Checks for saved sessions and updates UI accordingly
-   */
-  function checkForSavedSessions() {
-    // If we have any saved sessions, pre-select the database and content
-    if (Object.keys(savedSessions).length > 0) {
-      const lastSession = sessionManager.getMostRecentSession();
-      if (lastSession) {
-        // Find and select the database option
-        const dbOption = document.querySelector(`.option-card[data-db="${lastSession.database}"]`);
-        if (dbOption) {
-          dbOption.click(); // This will trigger the database selection logic
-
-          // After loading the content options, select the content option
-          setTimeout(() => {
-            const contentOption = document.querySelector(`.content-options[data-db="${lastSession.database}"] .option-card[data-content="${lastSession.content}"]`);
-            if (contentOption) {
-              contentOption.click(); // This will trigger the content selection logic
-            }
-          }, 500); // Small delay to ensure content options are loaded
-        }
-      }
-    }
-  }
-
-  /**
-   * Checks if a resume is available for the current selection and updates UI
-   */
-  function checkResumeAvailability() {
-    if (!selectedDb || !selectedContent || !resumeButton || !sessionInfoContainer) {
-      return;
-    }
-
-    const sessionKey = `${selectedDb}_${selectedContent}`;
-    const sessionData = savedSessions[sessionKey];
-
-    if (sessionData && sessionData.episodeNumber) {
-      // Enable resume button
-      resumeButton.classList.add('active');
-
-      // Update and show session info
-      const dbLabel = document.querySelector(`.option-card[data-db="${selectedDb}"] .option-title`).textContent;
-      const contentLabel = contentType === 'exercises' ?
-        t('home.exercisesOption') :
-        t('home.adventureOption');
-      // Format date
-      const lastAccessDate = new Date(sessionData.timestamp);
-      const formattedDate = lastAccessDate.toLocaleString();
-
-      // Update session info
-      document.getElementById('session-database').textContent = dbLabel;
-      document.getElementById('session-content').textContent = contentLabel;
-      document.getElementById('session-episode').textContent = sessionData.episodeNumber;
-      document.getElementById('session-date').textContent = formattedDate;
-
-      // Show session info
-      sessionInfoContainer.classList.add('visible');
-    } else {
-      // Disable resume button
-      resumeButton.classList.remove('active');
-
-      // Hide session info
-      sessionInfoContainer.classList.remove('visible');
-    }
   }
 });

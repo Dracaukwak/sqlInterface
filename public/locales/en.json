@@ -19,13 +19,7 @@
     "adventureDescription": "Follow a narrative adventure solving SQL puzzles to progress.",
     "exercisesOption": "Exercises",
     "exercisesDescription": "Practice SQL with individual exercises of increasing difficulty.",
-    "startButton": "Start New",
-    "resumeButton": "Resume Session",
-    "sessionAvailable": "Saved Session Available:",
-    "sessionDatabase": "Database:",
-    "sessionContent": "Content:",
-    "sessionEpisode": "Episode:",
-    "sessionLastAccess": "Last accessed:"
+    "startButton": "Start New"
   },
   "context": {
     "loading": "Loading episode...",

@@ -3,7 +3,7 @@
  * Extracted from inline styles to be reusable and maintainable
  */
 
-.home-container {
+ .home-container {
     max-width: 800px;
     margin: 0 auto;
     padding: var(--spacing-lg);
@@ -108,7 +108,7 @@
     gap: var(--spacing-md);
 }
 
-.start-button, .resume-button {
+.start-button {
     background-color: var(--color-accent);
     color: white;
     padding: var(--spacing-md) var(--spacing-xl);
@@ -123,11 +123,7 @@
     pointer-events: none;
 }
 
-.resume-button {
-    background-color: var(--color-secondary);
-}
-
-.start-button.active, .resume-button.active {
+.start-button.active {
     opacity: 1;
     pointer-events: all;
 }
@@ -136,35 +132,6 @@
     transform: translateY(-3px);
     box-shadow: var(--shadow-md);
     background-color: #e85a25;
-}
-
-.resume-button.active:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-    background-color: var(--color-primary);
-}
-
-/* Session info display */
-.session-info {
-    margin-top: var(--spacing-md);
-    padding: var(--spacing-md);
-    background-color: rgba(0, 0, 0, 0.05);
-    border-radius: var(--border-radius-sm);
-    display: none;
-}
-
-.session-info.visible {
-    display: block;
-}
-
-.session-info-title {
-    font-weight: var(--font-weight-bold);
-    margin-bottom: var(--spacing-xs);
-}
-
-.session-detail {
-    font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-xs);
 }
 
 /* Loading overlay */
@@ -216,8 +183,4 @@
 
 .dark-theme .option-description {
     color: #aaa;
-}
-
-.dark-theme .session-info {
-    background-color: rgba(255, 255, 255, 0.1);
 }
