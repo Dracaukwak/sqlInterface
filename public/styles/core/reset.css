@@ -1,0 +1,56 @@
+/**
+ * Reset styles for SQLab Interface
+ * Basic resets and foundational styles
+ */
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-light-gray);
+  color: var(--color-dark);
+  font-family: var(--font-primary);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  line-height: 1.6;
+  transition: background-color var(--transition-medium);
+}
+
+/* Common utility classes */
+.loading {
+  text-align: center;
+  padding: var(--spacing-md);
+  color: var(--color-secondary);
+}
+
+.error {
+  color: #D8000C;
+  background-color: #FFBABA;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  margin: var(--spacing-md) 0;
+}
+
+.info {
+  color: #00529B;
+  background-color: #BDE5F8;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  margin: var(--spacing-md) 0;
+}
+
+/* Dark theme base overrides */
+.dark-theme {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+.dark-theme .info {
+  background-color: #00529B33;
+  color: #9BCBFF;
+}

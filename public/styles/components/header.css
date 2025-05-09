@@ -1,0 +1,90 @@
+/**
+ * Shared header styles for both home and app pages
+ */
+
+/* Header with logo and controls */
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md) 0;
+    position: relative;
+    background: var(--gradient-header);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+header h1 {
+    color: var(--color-white);
+    margin: 0;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Home button */
+#home-button {
+    position: absolute;
+    right: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: all var(--transition-medium);
+}
+
+#home-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Theme toggle */
+.theme-toggle {
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    position: absolute;
+    right: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color var(--transition-fast);
+}
+
+.theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.theme-icon {
+    font-size: 1.2rem;
+    color: var(--color-white);
+    transition: transform var(--transition-medium);
+}
+
+.theme-icon:hover {
+    transform: rotate(45deg);
+}
+
+/* Dark theme overrides */
+.dark-theme header {
+    background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
+}
+
+/* Responsive adaptations */
+@media (max-width: 768px) {
+    #home-button {
+        right: var(--spacing-sm);
+    }
+}

@@ -1,0 +1,143 @@
+/**
+ * Dark mode component styles
+ * Centralized dark theme overrides
+ */
+
+/* ===== Dark Theme Overrides ===== */
+
+/* Most dark theme styles are kept with their respective components.
+   This file contains additional dark theme styles and overrides
+   that aren't component-specific or need to be applied globally. */
+
+/* Tab-related dark theme */
+.dark-theme .tabs {
+  position: relative;
+  margin-bottom: var(--spacing-md);
+}
+
+.dark-theme .tabs::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #444;
+  z-index: 1;
+}
+
+.dark-theme .tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--dark-bg);
+  z-index: 2;
+}
+
+/* Query-related dark theme */
+.dark-theme .top-query {
+  background: linear-gradient(to bottom, #06384a 0%, #085570 100%);
+  border-color: rgba(76, 180, 231, 0.3);
+  position: relative;
+}
+
+.dark-theme .top-query textarea {
+  color: #B0E0E6;
+  position: relative;
+  z-index: 10;
+}
+
+/* Table-related dark theme */
+.dark-theme .row-number-header,
+.dark-theme .row-number {
+  background-color: #383838;
+  border-right: 2px solid #555;
+}
+
+.dark-theme .row-number {
+  color: #bbb;
+}
+
+/* Table accordion dark theme */
+.dark-theme .table-content.active {
+  background-color: var(--dark-element);
+}
+
+/* Table columns dark theme */
+.dark-theme .table-columns {
+  color: #aaa;
+}
+
+.dark-theme .column-names {
+  color: #bbb;
+}
+
+.dark-theme .loading-columns {
+  color: var(--dark-light);
+}
+
+.dark-theme .error-columns {
+  color: #ff7b7b;
+}
+
+/* Pagination dark theme */
+.dark-theme .pagination-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  max-width: 100%;
+  padding: var(--spacing-xs) 0;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.dark-theme .pagination-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Episode container dark theme */
+.dark-theme #episode-container {
+  background-color: var(--dark-element);
+  border-color: #444;
+}
+
+/* Adventure-specific dark theme styles */
+.dark-theme .episode-statement {
+  background-color: transparent;
+}
+  
+.dark-theme .episode-statement .statement {
+  border-top-color: #444;
+}
+  
+.dark-theme .episode-statement pre,
+.dark-theme .episode-statement code {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+}
+  
+.dark-theme .episode-statement pre {
+  border-left-color: var(--dark-secondary);
+}
+
+.dark-theme .hint {
+  background-color: #332b1e;
+  border-left-color: #ff9800;
+}
+
+.dark-theme .hint .preamble,
+.dark-theme .hint .task_number {
+  color: #ffb74d;
+}
+
+.dark-theme .hint .text {
+  color: #e0e0e0;
+}
+
+.dark-theme .episode-correction {
+  background-color: #0a3a0a;
+  border-left-color: #2e7d32;
+}

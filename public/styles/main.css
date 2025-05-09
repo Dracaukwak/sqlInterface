@@ -3,23 +3,23 @@
  * Imports all modular CSS files in the correct order
  */
 
-/* Import CSS variables first to make them available to all other files */
-@import url('variables.css');
-
-/* Import base styles (resets, typography, common elements) */
-@import url('base.css');
-
-/* Import layout (structure, containers, responsive design) */
-@import url('layout.css');
+/* Import core styles first */
+@import url('core/variables.css');    /* CSS variables */
+@import url('core/reset.css');        /* Resets and base styles */
+@import url('core/typography.css');   /* Typography styles */
 
 /* Import component styles */
-@import url('components/tabs.css');
-@import url('components/forms.css');
-@import url('components/tables.css');
-@import url('components/dropdown.css');
-@import url('components/query.css');
-@import url('components/accordion.css');
-@import url('components/adventure.css');
+@import url('components/header.css');    /* Header styles */
+@import url('components/dropdown.css');  /* Dropdown menus */
+@import url('components/forms.css');     /* Form elements */
+@import url('components/tables.css');    /* Tables and pagination */
+@import url('components/tabs.css');      /* Tab navigation */
+@import url('components/query.css');     /* SQL query input */
+@import url('components/accordion.css'); /* Accordion components */
+@import url('components/adventure.css'); /* Adventure content */
+
+/* Import page-specific styles */
+@import url('pages/home.css');          /* Home page styles */
 
 /* Import dark mode overrides last */
-@import url('components/darkmode.css');
+@import url('core/darkmode.css');       /* Dark theme */
