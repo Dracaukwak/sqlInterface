@@ -93,14 +93,12 @@ To configure your database connection:
 /
 ├── public/             # Client-side code and assets
 │   ├── controllers/    # Client-side controllers
-│   ├── data/           # TSV data files
 │   ├── models/         # Client-side data handling
 │   ├── styles/         # CSS stylesheets
 │   ├── utils/          # Utility functions
 │   ├── views/          # UI rendering components
 │   ├── index.html      # Main application page
 │   ├── main.js         # Main client-side JavaScript
-│   └── tsv-loader.js   # Utility for loading TSV files
 ├── server/             # Server-side code
 │   ├── controllers/    # Express controllers
 │   ├── middlewares/    # Custom middlewares
